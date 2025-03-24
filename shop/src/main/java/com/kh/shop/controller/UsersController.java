@@ -30,9 +30,11 @@ public class UsersController {
 	@Autowired
 	private AttachmentService attachmentService;
 	
-	//로직 postjoin1>2>3 >모두 세션에 하나하나 저장하고 마지막 form받을때 Dto불러서 insert 처리
-	//만약에 중간에 가입 취소시 세션 삭제 remove말고 그머시기..여튼간에 이건 내일함
-	//여기에 나중에 아이디검사,pw검사, 등등등하면 되지않을까?라는생각...유지보수는 구린거같긴해요
+	
+	//로직 post join1>2>3 >모두 세션에 하나하나 저장하고 마지막 form받을때 Dto불러서 insert 처리
+	//회원가입 완료시 invalidate 
+	//중간에 가입취소시 모르겠다 30분뒤만료되니 알아서해 ..:`( 
+	//회원가입------------------------------------------------------------------------------아 이거컨트롤러따로뺄까?고민(joincontroller)
 	@GetMapping("/join1")
 	public String join1() {
 		return "/WEB-INF/views/users/join1.jsp";
@@ -89,15 +91,13 @@ public class UsersController {
 		}
 		
 		session.invalidate();
-		return "redirect:join-Finish";
-		
-		
+		return "redirect:join-Finish";	
 	}
-	
+
 	@GetMapping("/join-Finish")
 	public String joinFinish() {
 		return "/WEB-INF/views/users/join-Finish.jsp";
 	}
-	
+	//--------------------------------------------------------------------------------------
 
 }
