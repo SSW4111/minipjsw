@@ -18,7 +18,7 @@ public class AttachmentDao {
 	@Autowired
 	private AttachmentMapper attachmentMapper;
 	
-	public int secquence() {
+	public int sequence() {
 		String sql ="select attachment_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
