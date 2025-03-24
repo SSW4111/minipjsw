@@ -30,6 +30,13 @@ public class UsersDao {
 		jdbcTemplate.update(sql,data);
 	}
 	
+	public void connect(int attachmentNo,String usersEmail) {
+		String sql = "insert into users_profile(attachment_no,users_email)"
+				+ " values(?,?)";
+		Object[] data = {attachmentNo,usersEmail};
+		jdbcTemplate.update(sql,data);
+	}
+	
 	public boolean update(UsersDto usersDto) {
 		String sql = "update users set , users_contact=?, "
 				+ "users_nickname= ? where users_email=?";
