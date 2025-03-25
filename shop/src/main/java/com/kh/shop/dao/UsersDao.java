@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.shop.dto.UsersDto;
 import com.kh.shop.mapper.UsersMapper;
-import com.kh.shop.vo.PageVo.PageVO;
+import com.kh.shop.vo.PageVO;
 
 @Repository
 public class UsersDao {
@@ -38,8 +38,8 @@ public class UsersDao {
 	}
 	
 	public boolean update(UsersDto usersDto) {
-		String sql = "update users set , users_contact=?, "
-				+ "users_nickname= ? where users_email=?";
+		String sql = "update users set users_contact=?, "
+				+ "users_nickname= ?, where users_email=?";
 		
 		Object[] data = {usersDto.getUsersContact(),
 				 usersDto.getUsersNickname(),usersDto.getUsersEmail()};
@@ -67,7 +67,7 @@ public class UsersDao {
 					+ " select rownum rn, TMP.*from("
 					+ "select * from users order by users_email asc"
 					+ ")TMP" 
-					+ ")where rn, between ? and ?";
+					+ ")where rn between ? and ?";
 			Object[] data  = {pageVO.getStartRownum(),pageVO.getFinishRownum()}; 
 			return jdbcTemplate.query(sql,usersMapper,data);
 		}
@@ -77,8 +77,8 @@ public class UsersDao {
 					+ "select * from users where instr(#1, ?) > 0"
 					+ "order by #1 asc, users_email asc "
 					+ ")TMP"
-					+ ")where rn, between ? and ?";
-			sql.replace("#1",pageVO.getColumn());
+					+ ")where rn between ? and ?";
+			sql = sql.replace("#1",pageVO.getColumn());
 			Object[] data = {pageVO.getKeyword(), pageVO.getStartRownum(), pageVO.getFinishRownum()};
 			return jdbcTemplate.query(sql, usersMapper,data);
 		}
@@ -91,7 +91,7 @@ public class UsersDao {
 		}
 		else {
 			String sql = "select count(*) from users where instr(#1, ?) >0";
-			sql.replace("#1", pageVO.getColumn());
+			sql=sql.replace("#1", pageVO.getColumn());
 			Object[] data= {pageVO.getKeyword()};
 			return jdbcTemplate.queryForObject(sql,int.class,data);
 		}
