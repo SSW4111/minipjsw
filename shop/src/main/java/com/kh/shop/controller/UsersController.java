@@ -115,7 +115,7 @@ public class UsersController {
 		}
 		boolean isValid = findDto.getUsersPw().equals(usersDto.getUsersPw());
 		if(isValid) {
-			session.setAttribute("usersEamil", findDto.getUsersEmail());
+			session.setAttribute("usersEmail", findDto.getUsersEmail());
 			session.setAttribute("usersLevel",findDto.getUsersLevel());
 			return "redirect:/";
 		}

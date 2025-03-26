@@ -38,7 +38,7 @@ public class UsersDao {
 	}
 	
 	public boolean update(UsersDto usersDto) {
-		String sql = "update users set , users_contact=?, "
+		String sql = "update users set , users_contact=? "
 				+ "users_nickname= ? where users_email=?";
 		
 		Object[] data = {usersDto.getUsersContact(),
@@ -67,7 +67,7 @@ public class UsersDao {
 					+ " select rownum rn, TMP.*from("
 					+ "select * from users order by users_email asc"
 					+ ")TMP" 
-					+ ")where rn, between ? and ?";
+					+ ")where rn between ? and ?";
 			Object[] data  = {pageVO.getStartRownum(),pageVO.getFinishRownum()}; 
 			return jdbcTemplate.query(sql,usersMapper,data);
 		}
@@ -77,7 +77,7 @@ public class UsersDao {
 					+ "select * from users where instr(#1, ?) > 0"
 					+ "order by #1 asc, users_email asc "
 					+ ")TMP"
-					+ ")where rn, between ? and ?";
+					+ ")where rn between ? and ?";
 			sql.replace("#1",pageVO.getColumn());
 			Object[] data = {pageVO.getKeyword(), pageVO.getStartRownum(), pageVO.getFinishRownum()};
 			return jdbcTemplate.query(sql, usersMapper,data);
