@@ -11,20 +11,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.shop.dao.UsersDao;
 import com.kh.shop.dto.UsersDto;
+import com.kh.shop.mapper.UsersMapper;
 
 import jakarta.servlet.http.HttpSession;
 
-
 @Controller
-@RequestMapping("/myPage")
+@RequestMapping("/mypage")
 public class MypageController {
 
 	@Autowired
 	private UsersDao usersDao;
+	
+
 
 	//마이페이지
 	@GetMapping("/home")
-	public String myPage(Model model, HttpSession session) {
+	public String mypage(Model model, HttpSession session) {
 		String usersEamil = (String)session.getAttribute("usersEmail");
 		UsersDto usersDto = usersDao.selectOne(usersEamil);
 		model.addAttribute("userDto",usersDto); 
