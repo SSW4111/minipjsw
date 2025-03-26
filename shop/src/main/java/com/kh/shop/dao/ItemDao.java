@@ -1,5 +1,6 @@
 package com.kh.shop.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,27 +56,45 @@ public class ItemDao {
 		List<ItemDto> list = jdbcTemplate.query(sql,itemMapper,data);
 		return list.isEmpty()? null : list.get(0);
 	}
-	//카운트
-	public int count(ItemVO itemVO) {
-		if(itemVO.isList()) {
-			String sql = "select count(*) from item";
-			return jdbcTemplate.queryForObject(sql, int.class);
-		}
-		else {
-			String sql= "select count(*) from item where instr(#1, ?)>0";
-			sql = sql.replace("#1", itemVO.getColumn());
-			Object[] data = {itemVO.getKeyword()};
-			return jdbcTemplate.queryForObject(sql, int.class,data);
-		}
+//	//카운트 , color size 체크시 목록계산추가
+//	public int count(ItemVO itemVO) {
+//		StringBuilder sql = new StringBuilder();
+//		if(itemVO.isList()) {
+//			sql.append("select count(*) from item");
+//			return jdbcTemplate.queryForObject(sql.toString(), int.class);
+//		}
+//		else {
+//			//모든타입넣는리스트생성
+//			List<Object> dataList = new ArrayList <>();
+//			 sql.append("select count(*) from item ");
+//			//전체검색 이게뭐임ㅠㅠ디비막쓴다
+//			if(itemVO.isSearch()) {
+//				 sql.append(" and ( ")
+//	                .append("instr(item_color, ?) > 0 or ")
+//	                .append("instr(item_size, ?) > 0 or ")
+//	                .append("instr(item_title, ?) > 0 or ")
+//	                .append("instr(item_content, ?) > 0 or ")
+//	                .append("instr(item_gender, ?) > 0 or ")
+//	                .append("instr(item_category, ?) > 0 or ")
+//	                .append("instr(item_detail, ?) > 0)");
+//				
+//			String keyword = itemVO.getKeyword();
+//			for (int i=0; i<7 ; i++) {
+//				dataList.add(keyword);
+//			}
+//			}
+//			//컬러골랐다면
+//			if(itemVO.colorCheck()) {
+//				sql.append("and( ")
+//				.append(
+//					for(int i=0; i< itemVO.colorCheck().size(); i++) {
+//							"instr(item_color," 하ㅋㅋ
+//						}
+//					}
+//						
+//			}
+//		}
 		
 	}
 	
-	//리스트 아이거 리스트뽑으려면  메인이미지 추가해서 해야되는거 아닌감
-//	public List<ItemDto> selectList(ItemVO itemVO){
-//		String sql = "select * from( "
-//				+ "select rownum rn, TMP.* from("
-//				+ "select * from item order by item_no desc"
-//				+ ")TMP"
-//				+ ")where rn between ? and ? ";
-//	}
-}
+
