@@ -96,4 +96,11 @@ public class UsersDao {
 			return jdbcTemplate.queryForObject(sql,int.class,data);
 		}
 	}
+
+	public int findAttachment(String usersEmail) {
+		String sql = "select attachment_no from users_profile "
+				+ "where users_email = ?";
+		Object[]data = {usersEmail};
+		return jdbcTemplate.queryForObject(sql, int.class,data);
+	}
 }

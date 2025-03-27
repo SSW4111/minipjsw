@@ -1,7 +1,8 @@
 package com.kh.shop.vo;
 
-import java.util.List;
+import lombok.Data;
 
+@Data
 public class ItemVO extends PageVO{
 	//컬러체크박스 안 객체이름
 	private String color; 
