@@ -3,19 +3,19 @@ package com.kh.shop.vo;
 import java.util.List;
 
 public class ItemVO extends PageVO{
-	//컬러체크박스 안 객체이름리스트 ex)color -> *black, red (colors)  
-	private List<String> colors; 
+	//컬러체크박스 안 객체이름
+	private String color; 
 	
-	//사이즈 이름리스트 ex(s,m,xxl)
-	private List<String> clothesSizes;
+	//사이즈 이름 ex(s,m,xxl)
+	private String clothesSize;
 	
 	//얘는 체크박스 선택시 컬러체크 ㅠ 작명부끄러움
 	public boolean colorCheck() {
-		return colors != null && !colors.isEmpty();
+		return color != null;
 	}
 	//사이즈체크박스 선택시 
 	public boolean sizeCheck() {
-		return clothesSizes != null && !clothesSizes.isEmpty();
+		return clothesSize != null;
 	}
 	@Override
 	public boolean isSearch() {
@@ -52,18 +52,17 @@ public class ItemVO extends PageVO{
 				parameters.append("&keyword=").append(keyword);
 			}
 			
-			//생각해보니까 애 &colors계속나오겠네 얘도내일수정
-			if(colors != null) {
-				for(int i =0; i < colors.size(); i++) {
-				parameters.append("&colors=").append(colors.get(i));
+	
+			if(colorCheck()) {
+				parameters.append("&color=").append(color);
+			
 				}
-			}
-			if(clothesSizes != null) {
-			    for(int i = 0; i < clothesSizes.size(); i++) {
-			        parameters.append("&clothesSizes=").append(clothesSizes.get(i));
+			if(sizeCheck()) {
+				parameters.append("&clothesSize=").append(clothesSize);
 			    }
-			}
 			return parameters.toString();
+			}
+		}
 	}
-}
-}
+
+
