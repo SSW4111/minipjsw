@@ -95,21 +95,74 @@ public class ItemDao {
 				sql.append(" and item_size= ? ");
 				dataList.add(itemVO.getClothesSize());
 			}
-		return jdbcTemplate.queryForObject(sql.toString(), int.class,dataList.toArray());
-			
-		}
+		return jdbcTemplate.queryForObject(sql.toString(), int.class,dataList.toArray());		
+		}	
 		}
 	
-	
-//	//리스트
-//public List<itemDto>selctList(ItemVO itemVO){
-//	
-//	select * from item inner join item_images 
-//	on item.item_no = item_images.item_no
-//	inner join attachment 
-//	on item_images.attachment_no = attachment.attachment_no
-//	where item_images.item_no=?
-//}
+	//아이템번호로 어태치리스트 조회 이미지무조건들어가기로
+	public List<Integer> findAttachments(int itemNo) {
+	    String sql = "select attachment.attachment_no from item "
+	               + "inner join item_images on item.item_no = item_images.item_no "
+	               + "inner join attachment on item_images.attachment_no = attachment.attachment_no "
+	               + "where item.item_no = ?";
+
+	    return jdbcTemplate.queryForList(sql, Integer.class, itemNo);
 	}
+
+	public List<ItemDto>selectList(ItemVO itemVO){
+	//그냥리스트
+		if(itemVO.isList()) {
+			String sql = "select * from( "
+					+ "select rownum rn, TMP.*from( "
+					+ " select*from item order by item_no desc "
+					+ " )TMP "
+					+ " )where rn between ? and ? ";
+			Object[] data = {itemVO.getStartRownum(), itemVO.getFinishRownum()};
+			return jdbcTemplate.query(sql,itemMapper,data);
+		}
+		
+		else {
+			StringBuilder sql = new StringBuilder();
+			List<Object> dataList = new ArrayList<>();
+			sql.append("select * from( ")
+				.append("select rownum rn, TMP.*from( ")
+				.append("select * from item ");
+			//검색이면 사이에 top n query사이조건괄호 ()맞춰야함 ㄹㅇ짤라서넣어버리는;
+			if(itemVO.isSearch()) {
+				 sql.append("where ( ")
+				 .append("instr(item_color, ?) > 0 or ")
+	                .append("instr(item_size, ?) > 0 or ")
+	                .append("instr(item_title, ?) > 0 or ")
+	                .append("instr(item_content, ?) > 0 or ")
+	                .append("instr(item_gender, ?) > 0 or ")
+	                .append("instr(item_category, ?) > 0 or ")
+	                .append("instr(item_detail, ?) > 0)");
+		       
+				 String keyword = itemVO.getKeyword();
+					for (int i=0; i<7 ; i++) {
+					dataList.add(keyword);
+			};
+			//컬러선택이면 
+			if(itemVO.colorCheck()) {
+				sql.append(" and item_color = ? ");
+		        dataList.add(itemVO.getColor());
+			}
+			//사이즈선택이면 
+			if(itemVO.sizeCheck()) {
+				 sql.append(" AND item_size = ? ");
+			     dataList.add(itemVO.getClothesSize());
+			}
+			sql.append(" order by item_no desc) TMP) where rn between ? and ?");
+		}
+			dataList.add(itemVO.getStartRownum());
+		    dataList.add(itemVO.getFinishRownum());   
+		    return jdbcTemplate.query(sql.toString(), itemMapper, dataList.toArray());
+		}
+	}
+}
+
+	 
+
+	
 	
 
