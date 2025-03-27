@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.shop.dao.UsersDao;
 import com.kh.shop.dto.UsersDto;
-import com.kh.shop.mapper.UsersMapper;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -31,6 +30,17 @@ public class MypageController {
 		UsersDto usersDto = usersDao.selectOne(usersEamil);
 		model.addAttribute("userDto",usersDto); 
 		return "/WEB-INF/views/mypage/home.jsp";
+	}
+	//조인안함 url반환
+	@RequestMapping("/image")
+	public String image(@RequestParam String usersEmail) {
+		try {
+		int attachmentNo = usersDao.findAttachment(usersEmail);
+		return "redirect:/attachment/download?attachmentNo="+attachmentNo;
+		}
+		catch(Exception e) {
+			return "redirect:http://placehold.co/100x100?text=P";
+		}
 	}
 
 	//변경페이지;
