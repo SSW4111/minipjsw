@@ -22,7 +22,7 @@ public class ItemRestController {
 	
 	@Autowired
 	private AttachmentService attachmentService;
-
+//근데 얘가 썸머노트 쓰나?
 	//썸머노트파일1
 	@PostMapping("/upoad")
 	public int upload(@RequestParam MultipartFile attach) throws IllegalStateException, IOException {

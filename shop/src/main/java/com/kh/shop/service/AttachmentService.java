@@ -2,6 +2,8 @@ package com.kh.shop.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +64,28 @@ public class AttachmentService {
 			
 			byte[] data = FileUtils.readFileToByteArray(target);
 			return data;
+		}
+		
+		//여러장ㅡ_ㅡ
+		public List<Integer> saveList(List<MultipartFile> attach) throws IllegalStateException, IOException {
+			List<Integer> attachList = new ArrayList<>();
+			if(attach.isEmpty()) return new ArrayList<>();
+			File dir = new File("C:/uploadDir");
+			if(!dir.exists())dir.mkdirs();
+			
+			for(MultipartFile file : attach) {
+				int attachmentNo = attachmentDao.sequence();
+				 File target = new File(dir, String.valueOf(attachmentNo));
+		         file.transferTo(target);
+		     	AttachmentDto attachmentDto = new AttachmentDto();
+				attachmentDto.setAttachmentNo(attachmentNo);
+				attachmentDto.setAttachmentName(file.getOriginalFilename());
+				attachmentDto.setAttachmentType(file.getContentType());
+				attachmentDto.setAttachmentSize(file.getSize());
+				attachmentDao.insert(attachmentDto);
+				attachList.add(attachmentNo);
+			}
+			
+			return attachList;//파일수반환
 		}
 }
