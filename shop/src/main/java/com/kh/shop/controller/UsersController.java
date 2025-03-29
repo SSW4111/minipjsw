@@ -102,31 +102,33 @@ public class UsersController {
 	//--------------------------------------------------------------------------------------
 
 	//로긘
-	@GetMapping("/login") 
-	public String login() {
-		return"/WEB-INF/views/users/login.jsp";
-	}
+//	@GetMapping("/login") 
+//	public String login() {
+//		return"/WEB-INF/views/users/login.jsp";
+//	}
+//	
+//	
+//	@PostMapping("/login")
+//	public String login(@ModelAttribute UsersDto usersDto, HttpSession session) {
+//		UsersDto findDto = usersDao.selectOne(usersDto.getUsersEmail());
+//		if (findDto ==null) {
+//			return "redirect:login?error";
+//		}
+//		boolean isValid = findDto.getUsersPw().equals(usersDto.getUsersPw());
+//		if(isValid) {
+//			session.setAttribute("usersEmail", findDto.getUsersEmail());
+//			session.setAttribute("usersLevel",findDto.getUsersLevel());
+//			
+//			return "redirect:/";
+//		}
+//		return "redirect:login?error";
+//	}
 	
-	@PostMapping("/login")
-	public String login(@ModelAttribute UsersDto usersDto, HttpSession session) {
-		UsersDto findDto = usersDao.selectOne(usersDto.getUsersEmail());
-		if (findDto ==null) {
-			return "redirect:login?error";
-		}
-		boolean isValid = findDto.getUsersPw().equals(usersDto.getUsersPw());
-		if(isValid) {
-			session.setAttribute("usersEamil", findDto.getUsersEmail());
-			session.setAttribute("usersLevel",findDto.getUsersLevel());
-			return "redirect:/";
-		}
-		return "redirect:login?error";
-	}
-	
-	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		session.removeAttribute("usersEmail");
-		return "redirect:/";
-	}
+//	@RequestMapping("/logout")
+//	public String logout(HttpSession session) {
+//		session.removeAttribute("usersEmail");
+//		return "redirect:/";
+//	}
 	
 	
 }
