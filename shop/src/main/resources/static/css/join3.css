@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+
+ .photo-card{
+            position: relative;
+        }
+        .photo-btn {
+            position: absolute;  /* 버튼을 절대 위치로 설정 */
+            top: 50%;            /* 세로 가운데 */
+            left: 50%;           /* 가로 가운데 */
+            transform: translate(-50%, -50%); /* 정확히 가운데로 위치시키기 위해 이동 */
+          
+        }
+        #photoView{
+            width:300px;
+            height: 300px;
+        }

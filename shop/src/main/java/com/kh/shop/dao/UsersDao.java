@@ -55,7 +55,7 @@ public class UsersDao {
 	}
 	
 	public UsersDto selectOne(String usersEmail) {
-		String sql = "select*from users where users_email=?";
+		String sql = "select * from users where users_email=?";
 		Object[] data = {usersEmail};
 		List<UsersDto> list = jdbcTemplate.query(sql, usersMapper, data);
 		return list.isEmpty() ? null : list.get(0);
