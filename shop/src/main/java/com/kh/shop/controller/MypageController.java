@@ -48,6 +48,8 @@ public class MypageController {
 	public String change(Model model,HttpSession session) {
 		String usersEmail = (String)session.getAttribute("usersEmail");
 		UsersDto usersDto = usersDao.selectOne(usersEmail);
+		String phone = usersDto.getUsersContact().replaceAll("(\\d{3})(\\d{4})(\\d{4})", "$1-$2-$3");
+		usersDto.setUsersContact(phone);
 		model.addAttribute("usersDto",usersDto); 
 		return "/WEB-INF/views/mypage/change.jsp";
 	}
@@ -62,6 +64,7 @@ public class MypageController {
 			return "redirect:change?error";
 			}
 		else {
+			
 		findDto.setUsersContact(usersDto.getUsersContact());
 		findDto.setUsersNickname(usersDto.getUsersNickname());
 		usersDao.update(findDto);
