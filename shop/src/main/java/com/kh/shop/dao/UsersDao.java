@@ -97,7 +97,7 @@ public class UsersDao {
 		}
 	}
 
-	public int findAttachment(String usersEmail) {
+	public Integer findAttachment(String usersEmail) {
 		String sql = "select attachment_no from users_profile "
 				+ "where users_email = ?";
 		Object[]data = {usersEmail};

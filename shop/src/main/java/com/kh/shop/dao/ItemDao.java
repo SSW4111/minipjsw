@@ -126,7 +126,7 @@ public class ItemDao {
 		if(itemVO.isList()) {
 			String sql = "select * from( "
 					+ "select rownum rn, TMP.* From( "
-					+ "select * from item where gender = 'F' order by item_no desc ) "
+					+ "select * from item where item_gender = 'F' order by item_no desc ) "
 					+ "TMP) "
 					+ "where rn between ? and ? ";
 			Object[] data = {itemVO.getStartRownum(), itemVO.getFinishRownum()};
@@ -138,7 +138,7 @@ public class ItemDao {
 			List<Object> dataList = new ArrayList<>();
 			sql.append("select * from( ")
 				.append("select rownum rn, TMP.*from( ")
-				.append("select * from item where gender = 'F' " );
+				.append("select * from item where item_gender = 'F' " );
 			//검색이면 사이에 top n query사이조건괄호 ()맞춰야함 ㄹㅇ짤라서넣어버리는;
 			if(itemVO.isSearch()) {
 				 sql.append("and ( ")
@@ -177,7 +177,7 @@ public class ItemDao {
 			if(itemVO.isList()) {
 				String sql = "select * from( "
 						+ "select rownum rn, TMP.* From( "
-						+ "select * from item where gender = 'F' order by item_no desc ) "
+						+ "select * from item where item_gender = 'F' order by item_no desc ) "
 						+ "TMP) "
 						+ "where rn between ? and ? ";
 				Object[] data = {itemVO.getStartRownum(), itemVO.getFinishRownum()};
@@ -189,7 +189,7 @@ public class ItemDao {
 				List<Object> dataList = new ArrayList<>();
 				sql.append("select * from( ")
 					.append("select rownum rn, TMP.*from( ")
-					.append("select * from item where gender = 'M' " );
+					.append("select * from item where item_gender = 'M' " );
 
 				if(itemVO.isSearch()) {
 					 sql.append("and ( ")
