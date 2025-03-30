@@ -2,6 +2,7 @@ $(function() {
 	var status = {
 		usersEmail: false,
 		usersPw: false,
+		usersPwRe:false,
 		contact: false,
 		nickname: false,
 		ok: function() {
@@ -34,12 +35,7 @@ $(function() {
 	             }
 	             $(this).removeClass("is-valid is-invalid").addClass(isValid ? "is-valid":"is-invalid");
 	             status.usersPwRe = isValid;
-			 /*  if(status.ok){
-					$(".next").prop("disabled",false);
-			   }*/
-			   if(status.usersPw && status.usersPwRe){
-				$(".next").prop("disabled",false);
-			   }
+			
 	         });
 
 
