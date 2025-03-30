@@ -44,6 +44,7 @@ public class UsersController {
 	@PostMapping("/join1")
 	public String join1(@RequestParam String usersEmail, HttpSession session) {
 		session.setAttribute("usersEmail", usersEmail);
+		System.out.println("emal = " + usersEmail);
 		return "redirect:join2";
 	}
 	
@@ -56,6 +57,7 @@ public class UsersController {
 	@PostMapping("/join2")
 	public String join2(@RequestParam String usersPw, HttpSession session) {
 		session.setAttribute("usersPw",usersPw);
+		System.out.println("pw = " + usersPw);
 		return "redirect:join3";
 		
 	}
@@ -69,15 +71,18 @@ public class UsersController {
 	public String join3(@RequestParam String usersNickname, @RequestParam String usersContact,
 							HttpSession session, MultipartFile usersProfile)throws IOException {
 		session.setAttribute("usersNickname", usersNickname);
-		session.setAttribute("usersContact", usersContact);
+		
+		String contact = usersContact.replace("-", "");
+		System.out.println(contact + "  번호 ");
+		session.setAttribute("usersContact", contact);
 		
 		//빈세션 있나 체크
-		boolean emptySession = (session.getAttribute("usersEmail") == null || session.getAttribute("usersPw") ==null
-								||session.getAttribute("usersNickname") ==null || session.getAttribute("usersContact")==null );
-		
-		if(emptySession) {
-			return "redirect:join3?error";
-		}
+//		boolean emptySession = (session.getAttribute("usersEmail") == null || session.getAttribute("usersPw") ==null
+//								||session.getAttribute("usersNickname") ==null || session.getAttribute("usersContact")==null );
+//		
+//		if(emptySession) {
+//			return "redirect:join3?error";
+//		}
 		//Dto불러와서 다저장
 		UsersDto usersDto = new UsersDto();
 		usersDto.setUsersEmail((String)session.getAttribute("usersEmail"));
@@ -92,10 +97,10 @@ public class UsersController {
 		}
 		
 		session.invalidate();
-		return "redirect:/";	
+		return "redirect:join-Finish";	
 	}
 
-	@GetMapping("/join-Finish")
+	@RequestMapping("/join-Finish")
 	public String joinFinish() {
 		return "/WEB-INF/views/users/join-Finish.jsp";
 	}

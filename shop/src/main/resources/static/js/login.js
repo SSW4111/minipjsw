@@ -38,7 +38,7 @@ $(function() {
 					$('#loginModal').modal('hide');
 					$("#login-modal-open").hide();
 					$("#logout-modal-open").show();
-
+					location.reload();
 				}
 			}
 		});
@@ -64,6 +64,25 @@ $(function() {
 	});
 
 
+	
+	// 로그인, 로그아웃 상태에 따라 
+	// navbar에서 보이게끔 처리
+	$.ajax({
+	    url: "/rest/users/checkLogin",
+	    method: "get",
+	    success: function(response) {
+	        if (response.loggedIn) {
+	            $("#login-modal-open").hide();
+	            $("#logout-modal-open").show();
+	        } else {
+	            $("#login-modal-open").show();
+	            $("#logout-modal-open").hide();
+	        }
+	    }
+	});
+	
+	
+	
 	$("form-check").submit(function() {
 
 		return status.ok();

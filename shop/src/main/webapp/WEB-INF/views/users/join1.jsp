@@ -9,7 +9,7 @@
 		<h2 class="text-center">이메일로 가입하기</h2>
 		<div style="min-height: 80px;"></div>
 
-		<form action="join2" method="get" class="form-check" autocomplete="off">
+		<form action="join1" method="post" class="form-check" autocomplete="off">
 			<label class="me-1 form-label" for="joinEmail">이메일 입력</label>
 			<div class="mb-3 input-group">
 				<input type="email" inputmode="email" class="form-control"

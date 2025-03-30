@@ -48,7 +48,7 @@ public class MypageController {
 	public String change(Model model,HttpSession session) {
 		String usersEmail = (String)session.getAttribute("usersEmail");
 		UsersDto usersDto = usersDao.selectOne(usersEmail);
-		model.addAttribute("userDto",usersDto); 
+		model.addAttribute("usersDto",usersDto); 
 		return "/WEB-INF/views/mypage/change.jsp";
 	}
 	

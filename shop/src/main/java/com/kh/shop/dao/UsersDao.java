@@ -22,7 +22,7 @@ public class UsersDao {
 	
 	public void insert(UsersDto usersDto) {
 		String sql= "insert into users( "
-				+ "users_email, users_pw,users_contact, users_nickname)"
+				+ "users_email, users_pw, users_contact, users_nickname)"
 				+ " values(? ,? ,? ,?)";
 		Object[] data = {usersDto.getUsersEmail(), usersDto.getUsersPw(), usersDto.getUsersContact(),
 							usersDto.getUsersNickname()};

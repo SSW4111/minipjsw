@@ -1,8 +1,11 @@
 package com.kh.shop.restcontroller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,11 +41,11 @@ public class UsersRestController {
 	public boolean login(@ModelAttribute UsersDto usersDto, HttpSession session) {
 		
 		String ema = usersDto.getUsersEmail();
-		System.out.println(ema);
+		//System.out.println(ema);
 		UsersDto findDto = usersDao.selectOne(ema);
 
 
-		System.out.println("dkssdsdfs");
+//		System.out.println("dkssdsdfs");
 		if (findDto ==null) {
 			
 			return false;
@@ -51,8 +54,8 @@ public class UsersRestController {
 		if(isValid) {
 			session.setAttribute("usersEmail", findDto.getUsersEmail());
 			session.setAttribute("usersLevel",findDto.getUsersLevel());
-			String em = (String) session.getAttribute("usersEmail");
-					System.out.println("userEmail: em " +em);
+//			String em = (String) session.getAttribute("usersEmail");
+//					System.out.println("userEmail: em " +em);
 			
 			return true;
 		}
@@ -63,11 +66,24 @@ public class UsersRestController {
 	public void logout(HttpSession session) {
 		session.removeAttribute("usersEmail");
 	    session.removeAttribute("usersLevel");
+	    session.invalidate(); 
 	}
 	
 	@PostMapping("/image-save")
 	public void imageSave() {
 		
+	}
+	
+	// 로그인 확인 매핑
+	@GetMapping("/checkLogin")
+	public Map<String, Boolean> checkLogin(HttpSession session) {
+	    // 세션에서 usersEmail 속성이 있는지 확인 (있으면 로그인한 상태)
+	    boolean loggedIn = session.getAttribute("usersEmail") != null;
+	    
+	    // 로그인 상태를 JSON 응답으로 반환
+	    Map<String, Boolean> response = new HashMap<>();
+	    response.put("loggedIn", loggedIn);
+	    return response;
 	}
 
 }

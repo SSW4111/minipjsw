@@ -43,7 +43,8 @@
                 <div class="modal-body">
                     <div class="d-flex justify-content-center align-items-center photo-card">
                         <!-- <img id="photoView" src="https://placehold.co/450x450" style="border-radius: 50%; position: relative;"> -->
-                        <img id="photoView" src="/images/basic.png" style="border-radius: 50%; position: relative;">
+                        <!-- <input type="file" name="attach" accept=".png,jpg" class="field w-100" > -->
+                        <img id="photoView" src="/images/basic.png"  name ="attach" accept=".png,jpg" style="border-radius: 50%; position: relative;">
                         <button type="button" class="btn photo-btn">
                             <span class="badge text-bg-secondary file">
                                 <i class="fa-solid fa-plus fs-3"></i>
