@@ -1,9 +1,9 @@
 $(function(){
            var status = {
-             
+               contact : false,
                nickname : false,
                ok : function(){
-                   return nickname;
+                   return this.contact && this.nickname;
                }
            };
 
@@ -26,7 +26,7 @@ $(function(){
            })
 		   
 		   $(".btn-save").click(function(){
-			
+				$("#profileModal").modal('hide');
 		   })
 		   
 
@@ -57,6 +57,7 @@ $(function(){
                status.nickname = isValid;
            })
 		   $(".form-check").submit(function(){
+			$("[name]").trigger("blur");
 		   	          return status.ok();
 		   });
            

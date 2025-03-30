@@ -64,6 +64,11 @@ public class UsersRestController {
 		session.removeAttribute("usersEmail");
 	    session.removeAttribute("usersLevel");
 	}
+	
+	@PostMapping("/image-save")
+	public void imageSave() {
+		
+	}
 
 }
 

@@ -92,13 +92,14 @@ public class UsersController {
 		}
 		
 		session.invalidate();
-		return "redirect:join-Finish";	
+		return "redirect:/";	
 	}
 
 	@GetMapping("/join-Finish")
 	public String joinFinish() {
 		return "/WEB-INF/views/users/join-Finish.jsp";
 	}
+	
 	//--------------------------------------------------------------------------------------
 
 	//로긘
