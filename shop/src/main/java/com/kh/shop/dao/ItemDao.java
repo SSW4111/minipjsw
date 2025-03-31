@@ -154,6 +154,7 @@ public class ItemDao {
 					for (int i=0; i<7 ; i++) {
 					dataList.add(keyword);
 			};
+			};
 			//컬러선택이면 
 			if(itemVO.colorCheck()) {
 				sql.append(" and item_color = ? ");
@@ -165,7 +166,7 @@ public class ItemDao {
 			     dataList.add(itemVO.getClothesSize());
 			}
 			sql.append(" order by item_no desc) TMP) where rn between ? and ?");
-		}
+		
 			dataList.add(itemVO.getStartRownum());
 		    dataList.add(itemVO.getFinishRownum());   
 		    return jdbcTemplate.query(sql.toString(), itemMapper, dataList.toArray());
@@ -177,7 +178,7 @@ public class ItemDao {
 			if(itemVO.isList()) {
 				String sql = "select * from( "
 						+ "select rownum rn, TMP.* From( "
-						+ "select * from item where item_gender = 'F' order by item_no desc ) "
+						+ "select * from item where item_gender = 'M' order by item_no desc ) "
 						+ "TMP) "
 						+ "where rn between ? and ? ";
 				Object[] data = {itemVO.getStartRownum(), itemVO.getFinishRownum()};
@@ -205,6 +206,7 @@ public class ItemDao {
 						for (int i=0; i<7 ; i++) {
 						dataList.add(keyword);
 				};
+				};
 				//컬러선택이면 
 				if(itemVO.colorCheck()) {
 					sql.append(" and item_color = ? ");
@@ -216,7 +218,8 @@ public class ItemDao {
 				     dataList.add(itemVO.getClothesSize());
 				}
 				sql.append(" order by item_no desc) TMP) where rn between ? and ?");
-			}
+			
+			
 				dataList.add(itemVO.getStartRownum());
 			    dataList.add(itemVO.getFinishRownum());   
 			    return jdbcTemplate.query(sql.toString(), itemMapper, dataList.toArray());

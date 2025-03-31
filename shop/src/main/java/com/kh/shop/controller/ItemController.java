@@ -29,22 +29,22 @@ public class ItemController {
 
 	
 	
-	@RequestMapping("/women/list")
-	public String listW(@ModelAttribute ("itemVO") ItemVO itemVO,Model model) {
+	@RequestMapping("/women-list")
+	public String listW(@ModelAttribute ("itemVO") ItemVO itemVO,Model model ) {
 		List<ItemDto> listW = itemDao.selectListF(itemVO);
 		model.addAttribute("listW",listW); //이름..그저 미안할뿐
 		int count = itemDao.count(itemVO);
 		itemVO.setCount(count);
-		return "/WEB-INF/views/item/women/list.jsp";
+		return "/WEB-INF/views/item/women-list.jsp";
 	}
 	
-	@RequestMapping("/men/list")
-	public String listM(@ModelAttribute ("iteeVO") ItemVO itemVO, Model model) {
+	@RequestMapping("/man-list")
+	public String listM(@ModelAttribute ("itemVO") ItemVO itemVO, Model model) {
 		List<ItemDto> listM = itemDao.selectListM(itemVO);
 		model.addAttribute("listM",listM); //이름....
 		int count = itemDao.count(itemVO);
 		itemVO.setCount(count);
-		return "/WEB-INF/views/item/men/list.jsp";
+		return "/WEB-INF/views/item/man-list.jsp";
 	}
 	
 	//사진리스트로 보내기
@@ -69,7 +69,7 @@ public class ItemController {
 		itemDto.setItemNo(itemNo);
 		itemDao.insert(itemDto);
 
-		if (!attach.isEmpty()==false) { //없는경우는 없겠지만 그냥..
+		if (!attach.isEmpty()) { //없는경우는 없겠지만 그냥..
 			// 리스트에서 하나씩빼서저장
 		   List<Integer> attachList = attachmentService.saveList(attach); 
 		   for (int attachmentNo : attachList) {
@@ -80,10 +80,10 @@ public class ItemController {
 		return "redirect:addFinish"; 
 		}
 	//등록완료 빼도됌 모달해도됌 whatever you wantzzz
-//	@RequestMapping("/addFinish")
-//	public String addFinish() {
-//		return "/WEB-INF/view/pokemon/addFinish.jsp";
-//	}
+	@RequestMapping("/addFinish")
+	public String addFinish() {
+		return "/WEB-INF/views/item/addFinish.jsp";
+	}
 	
 	//상세는 view만들고 하꾸
 	

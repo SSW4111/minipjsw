@@ -9,7 +9,7 @@ public class ItemVO extends PageVO{
 	
 	//사이즈 이름 ex(s,m,xxl)
 	private String clothesSize;
-	
+
 	//얘는 체크박스 선택시 컬러체크 ㅠ 작명부끄러움
 	public boolean colorCheck() {
 		return color != null;
@@ -24,7 +24,7 @@ public class ItemVO extends PageVO{
 	}
 	
 	public boolean isList() {
-		return !isSearch();
+		return !isSearch() && !colorCheck() && !sizeCheck();
 	}
 	
 	
@@ -42,7 +42,7 @@ public class ItemVO extends PageVO{
 	
 	@Override
 	public String getParameters() {
-		if(isList()) {
+		if(isList()) { 
 			return "size=" + size;
 		}
 		else {
@@ -64,6 +64,9 @@ public class ItemVO extends PageVO{
 			return parameters.toString();
 			}
 		}
+	
+
+
 	}
 
 
