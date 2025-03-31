@@ -8,12 +8,12 @@
 	<div class="col-4 offset-4">
 		<h2 class="text-center">이메일로 가입하기</h2>
 
-		<form action="join3" method="get" class="form-check" autocomplete="off">
-			<label class="form-label me-1" for="pwCheck">비밀번호*</label>
+		<form action="join2" method="post" class="form-check" autocomplete="off">
+			<label class="form-label me-1" for="pwCheck">비밀번호</label>
 			<div class="mb-3 input-group">
 				<input type="password" id="pwCheck" name="usersPw" class="form-control">
 			</div>
-			<label class="form-label me-1" for="pw-re">비밀번호 재입력*</label>
+			<label class="form-label me-1" for="pw-re">비밀번호 재입력</label>
 			<div class="mb-3 input-group">
 				<input type="password" id="pw-re" name="usersPwRe"
 					class="form-control">

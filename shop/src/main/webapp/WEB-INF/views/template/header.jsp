@@ -86,7 +86,7 @@
                                 <i class="fa-solid fa-user me-1"></i>
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item custom-dropdown" href="#">개인정보변경</a>
+                                <a class="dropdown-item custom-dropdown" href="/mypage/change">개인정보변경</a>
                                 <a class="dropdown-item custom-dropdown" href="#">주문내역</a>
                                 <a class="dropdown-item custom-dropdown" href="#">배송현황</a>
                                 <a class="dropdown-item custom-dropdown" href="/users/join1">회원가입</a>

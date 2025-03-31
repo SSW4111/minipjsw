@@ -3,7 +3,7 @@ $(function(){
                usersPw : false,
                usersPwRe : false,
                ok:function(){
-                   return usersPw && usersPwRe;
+                   return this.usersPw && this.usersPwRe;
                }
            };
            $("#pwCheck").blur(function(){
