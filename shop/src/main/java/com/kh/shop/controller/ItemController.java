@@ -46,7 +46,7 @@ public class ItemController {
 		itemVO.setCount(count);
 		return "/WEB-INF/views/item/man-list.jsp";
 	}
-	
+	 
 	//사진리스트로 보내기
 	@RequestMapping("/images")
 	public String images(@RequestParam int itemNo, Model model){
