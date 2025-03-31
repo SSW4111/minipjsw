@@ -2,13 +2,16 @@
     pageEncoding="UTF-8"%>
    <jsp:include page = "/WEB-INF/views/template/header.jsp"></jsp:include>
      <script src="/js/change.js"></script>
-		<!-- userDto -->
+     <script src="/js/join3.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/join3.css">
 
 <div class="row mt-4">
 	<div class="col-4 offset-4">
      <h2 class="text-center">개인정보변경</h2>
-		<form action="change" method="post" class="form-check"
-			enctype="multipart/form-data">
+		<form action="change" method="post" class="form-check" enctype="multipart/form-data">
+			
+			              
+               
 
 			<label class="me-1 form-label" for="joinEmail">이메일 입력</label>
 			<div class="mb-3 input-group">
