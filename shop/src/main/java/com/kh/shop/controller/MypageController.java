@@ -61,7 +61,10 @@ public class MypageController {
 		model.addAttribute("usersDto",usersDto); 
 
 		Integer attachmentNo = usersDao.findAttachment(usersEmail); 
-		model.addAttribute("attachmentNo",attachmentNo);
+		if(attachmentNo != null) {
+			
+			model.addAttribute("attachmentNo",attachmentNo);
+		}
 
 		return "/WEB-INF/views/mypage/change.jsp";
 	}
