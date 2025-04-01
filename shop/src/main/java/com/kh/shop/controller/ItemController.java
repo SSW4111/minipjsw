@@ -50,9 +50,9 @@ public class ItemController {
 	//사진리스트로 보내기
 	@RequestMapping("/images")
 	public String images(@RequestParam int itemNo, Model model){
-		List<Integer> attachmentNo = itemDao.findAttachments(itemNo);
-		model.addAttribute("attachList",attachmentNo);
-		 return "/WEB-INF/views/item/images.jsp";
+		List<Integer> attachmentList = itemDao.findAttachments(itemNo);
+		model.addAttribute("attachList",attachmentList);
+		 return "redirect:/item/images?itemNo="+itemNo;//어캐넘김?
 	}
 	
 	//등록
