@@ -123,8 +123,6 @@
                     <div class="mb-3">
                     <label for="loginEmail" class="form-label">이메일 주소</label>
                     <input type="email" name="usersEmail" class="form-control" id="loginEmail">
-                    <div class="valid-feedback">tjdrh</div>
-                    <div class="invalid-feedback">tjd123123rh</div>
                     </div>
                   <div class="mb-3">
                     <label for="loginPw" class="form-label">패스워드 입력</label>

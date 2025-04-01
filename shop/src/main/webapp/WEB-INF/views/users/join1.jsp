@@ -40,23 +40,25 @@
                             
                         </div>
                     </div> -->
-			<div class="cert-wrapper" style="display: none;">
+			<div class="cert-wrapper" >
 				<label class="me-1 form-label" for="certNumber">인증번호 입력</label>
-				<div class="mb-3 input-group">
+				<div class="mb-3 d-flex">
 					<div class="col-3">
 						<input type="text" inputmode="numeric" name="certNumber"
 							class="form-control">
 						<div class="invalid-feedback">인증번호가 일치하지 않습니다</div>
 						<div class="valid-feedback">인증완료</div>
 					</div>
-
+					<div class="col-3">
 					<button type="button"
 						class="btn btn-secondary confirm-cert rounded ms-1">
 						<span>인증하기</span>
 					</button>
-
+					</div>
+					<div class="ms-auto">
 					<button type="submit" class="btn btn-secondary next ms-auto rounded"
 						disabled>다음</button>
+					</div>
 				</div>
 			</div>
 			<div class="col-2 offset-10"></div>

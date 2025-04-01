@@ -44,7 +44,7 @@ public class UsersController {
 	@PostMapping("/join1")
 	public String join1(@RequestParam String usersEmail, HttpSession session) {
 		session.setAttribute("usersEmail", usersEmail);
-		System.out.println("emal = " + usersEmail);
+//		System.out.println("emal = " + usersEmail);
 		return "redirect:join2";
 	}
 	
@@ -57,7 +57,7 @@ public class UsersController {
 	@PostMapping("/join2")
 	public String join2(@RequestParam String usersPw, HttpSession session) {
 		session.setAttribute("usersPw",usersPw);
-		System.out.println("pw = " + usersPw);
+//		System.out.println("pw = " + usersPw);
 		return "redirect:join3";
 		
 	}
@@ -69,11 +69,11 @@ public class UsersController {
 
 	@PostMapping("/join3")
 	public String join3(@RequestParam String usersNickname, @RequestParam String usersContact,
-							HttpSession session, MultipartFile usersProfile)throws IOException {
+							HttpSession session, @RequestParam MultipartFile usersProfile)throws IOException {
 		session.setAttribute("usersNickname", usersNickname);
 		
 		String contact = usersContact.replace("-", "");
-		System.out.println(contact + "  번호 ");
+//		System.out.println(contact + "  번호 ");
 		session.setAttribute("usersContact", contact);
 		
 		//빈세션 있나 체크
@@ -90,17 +90,17 @@ public class UsersController {
 		usersDto.setUsersNickname((String)session.getAttribute("usersNickname"));
 		usersDto.setUsersContact((String)session.getAttribute("usersContact"));
 		usersDao.insert(usersDto);
-		
+//		
 		if(usersProfile != null && !usersProfile.isEmpty()){
 			int attachmentNo = attachmentService.save(usersProfile);
 			usersDao.connect(attachmentNo,usersDto.getUsersEmail());
 		}
 		
 		session.invalidate();
-		return "redirect:join-Finish";	
+		return "redirect:/";	
 	}
 
-	@RequestMapping("/join-Finish")
+	@GetMapping("/join-Finish")
 	public String joinFinish() {
 		return "/WEB-INF/views/users/join-Finish.jsp";
 	}

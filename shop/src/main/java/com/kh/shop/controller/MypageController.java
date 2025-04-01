@@ -55,8 +55,10 @@ public class MypageController {
 	public String change(Model model,HttpSession session) {
 		String usersEmail = (String)session.getAttribute("usersEmail");
 		UsersDto usersDto = usersDao.selectOne(usersEmail);
-
+//		System.out.println(usersEmail);
+//		System.out.println(usersDto.getUsersNickname());
 		String phone = usersDto.getUsersContact().replaceAll("(\\d{3})(\\d{4})(\\d{4})", "$1-$2-$3");
+//		System.out.println(usersDto.getUsersContact());
 		usersDto.setUsersContact(phone);
 		model.addAttribute("usersDto",usersDto); 
 

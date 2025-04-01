@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="/js/change.js"></script>
-<script src="/js/join3.js"></script>
+<!-- <script src="/js/join3.js"></script> -->
 <link rel="stylesheet" type="text/css" href="/css/join3.css">
 
 <div class="row mt-4">
