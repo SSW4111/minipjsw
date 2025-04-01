@@ -7,12 +7,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.shop.dto.ReviewsDto;
+import com.kh.shop.mapper.ReviewsMapper;
 
 @Repository
 public class ReviewsDao {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private ReviewsMapper reviewsMapper;
 	//시쿠너스
 	public int sequence() {
 		String sql="select reviews_seq.nextval from dual";
@@ -42,6 +46,13 @@ public class ReviewsDao {
 	
 	//리스트패스
 	
+	//찾는용
+	public ReviewsDto selectOne(int reviewsNo) {
+		String sql = "select * from reviews where reviews_no=? ";
+		Object[] data = {reviewsNo};
+		List<ReviewsDto>list = jdbcTemplate.query(sql, reviewsMapper,data);
+		return list.isEmpty() ? null : list.get(0);
+	}
 	//파일커넥
 	public void connect(int reviewsNo, int attachmentNo) {
 		String sql = "insert into reviews_images( "
