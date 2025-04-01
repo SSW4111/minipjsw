@@ -114,7 +114,8 @@ public class ItemDao {
 	    String sql = "select attachment.attachment_no from item "
 	               + "inner join item_images on item.item_no = item_images.item_no "
 	               + "inner join attachment on item_images.attachment_no = attachment.attachment_no "
-	               + "where item.item_no = ?";
+	               + "where item.item_no = ? "
+	               + "order by attachment_no asc";
 
 	    return jdbcTemplate.queryForList(sql, Integer.class, itemNo);
 	}

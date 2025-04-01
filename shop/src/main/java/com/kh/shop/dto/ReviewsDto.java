@@ -1,5 +1,7 @@
 package com.kh.shop.dto;
 
+import java.sql.Timestamp;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +13,7 @@ public class ReviewsDto {
   private String reviewsTitle;
   private String reviewsContent;
   private Integer reviewsStar;
+  private Timestamp reviewsWtime;
   private String usersEmail;
   private int itemNo;
 }

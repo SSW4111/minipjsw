@@ -12,6 +12,7 @@
     <table class="table">
         <thead>
             <tr>
+            	<th>이미지</th>
                 <th>No</th>
                 <th>color</th>
                 <th>size</th>
@@ -25,6 +26,11 @@
         <tbody>
             <c:forEach var="itemDto" items="${listM}">
    				 <tr>
+   				 <td>
+   				 <c:forEach var="attach" items="${attachList}">
+   				 <img src="/item/images?itemNo=${itemDto.itemNo}">
+   				 </c:forEach>
+   				<td>
 			        <td>${itemDto.itemNo}</td>
 			        <td>${itemDto.itemColor}</td>
 			        <td>${itemDto.itemSize}</td>
