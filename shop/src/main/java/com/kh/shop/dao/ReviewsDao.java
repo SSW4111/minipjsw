@@ -44,7 +44,8 @@ public class ReviewsDao {
 		return jdbcTemplate.update(sql,data)>0;
 	}
 	
-	//리스트패스
+	//리스트
+	
 	
 	//찾는용
 	public ReviewsDto selectOne(int reviewsNo) {
