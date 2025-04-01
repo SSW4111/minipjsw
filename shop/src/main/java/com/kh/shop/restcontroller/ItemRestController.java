@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.shop.dao.ItemDao;
+import com.kh.shop.dto.ItemDto;
 import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.service.AttachmentService;
 
@@ -20,6 +22,8 @@ import com.kh.shop.service.AttachmentService;
 @RequestMapping("/rest/item")
 public class ItemRestController {
 	
+	@Autowired
+	private ItemDao itemDao;
 	@Autowired
 	private AttachmentService attachmentService;
 //근데 얘가 썸머노트 쓰나?
@@ -43,4 +47,10 @@ public class ItemRestController {
 		return numbers;
 	}
 	
+	//타이틀확인
+	@RequestMapping("/checkTitle")
+	public boolean checkTitle(@RequestParam int itemNo) {
+		ItemDto itemDto = itemDao.selectOne(itemNo);
+		return itemDto == null;
+	}
 }
