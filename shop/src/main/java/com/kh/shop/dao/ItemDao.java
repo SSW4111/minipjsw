@@ -112,8 +112,8 @@ public class ItemDao {
 	//아이템번호로 어태치리스트 조회 이미지무조건들어가기로
 	public List<Integer> findAttachments(int itemNo) {
 	    String sql = "select attachment.attachment_no from item "
-	               + "inner join item_images on item.item_no = item_images.item_no "
-	               + "inner join attachment on item_images.attachment_no = attachment.attachment_no "
+	               + "LEFT OUTER JOIN item_images on item.item_no = item_images.item_no "
+	               + "LEFT OUTER JOIN attachment on item_images.attachment_no = attachment.attachment_no "
 	               + "where item.item_no = ? "
 	               + "order by attachment_no asc";
 
