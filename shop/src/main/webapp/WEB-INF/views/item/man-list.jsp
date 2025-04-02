@@ -12,7 +12,6 @@
     <table class="table">
         <thead>
             <tr>
-            	<th>이미지</th>
                 <th>No</th>
                 <th>color</th>
                 <th>size</th>
@@ -21,24 +20,23 @@
                 <th>gender</th>
                 <th>category</th>
                 <th>detail</th>     
+                <th>별점</th>
+                <th>리뷰수</th>
             </tr>
         </thead>
         <tbody>
-            <c:forEach var="itemDto" items="${listM}">
+            <c:forEach var="itemListViewDto" items="${listM}">
    				 <tr>
-   				 <td>
-   				 <c:forEach var="attach" items="${attachList}">
-   				 <img src="/item/images?itemNo=${itemDto.itemNo}">
-   				 </c:forEach>
-   				<td>
-			        <td>${itemDto.itemNo}</td>
-			        <td>${itemDto.itemColor}</td>
-			        <td>${itemDto.itemSize}</td>
-			        <td>${itemDto.itemTitle}</td>
-			        <td>${itemDto.itemContent}</td>
-			        <td>${itemDto.itemGender}</td>
-			        <td>${itemDto.itemCategory}</td>
-			        <td>${itemDto.itemDetail}</td>
+			        <td>${itemListViewDto.itemNo}</td>
+			        <td>${itemListViewDto.itemColor}</td>
+			        <td>${itemListViewDto.itemSize}</td>
+			        <td>${itemListViewDto.itemTitle}</td>
+			        <td>${itemListViewDto.itemContent}</td>
+			        <td>${itemListViewDto.itemGender}</td>
+			        <td>${itemListViewDto.itemCategory}</td>
+			        <td>${itemListViewDto.itemDetail}</td>
+			        <th>${itemListViewDto.itemAveStar}</th>
+			        <th>${itemListViewDto.itemReviewsCount}</th>
 			    </tr>
 			</c:forEach>
         </tbody>

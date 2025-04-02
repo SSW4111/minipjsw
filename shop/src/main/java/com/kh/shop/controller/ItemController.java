@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.shop.dao.ItemDao;
+import com.kh.shop.dao.ItemListViewDao;
 import com.kh.shop.dto.ItemDto;
+import com.kh.shop.dto.ItemListViewDto;
 import com.kh.shop.service.AttachmentService;
 import com.kh.shop.vo.ItemVO;
 
@@ -25,24 +27,27 @@ public class ItemController {
 	private ItemDao itemDao;
 	
 	@Autowired
+	private ItemListViewDao itemListViewDao;
+	
+	@Autowired
 	private AttachmentService attachmentService;
 
 	
 	
 	@RequestMapping("/women-list")
 	public String listW(@ModelAttribute ("itemVO") ItemVO itemVO,Model model ) {
-		List<ItemDto> listW = itemDao.selectListF(itemVO);
+		List<ItemListViewDto> listW = itemListViewDao.selectListF(itemVO);
 		model.addAttribute("listW",listW); //이름..그저 미안할뿐
-		int count = itemDao.count(itemVO);
+		int count = itemListViewDao.count(itemVO);
 		itemVO.setCount(count);
 		return "/WEB-INF/views/item/women-list.jsp";
 	}
 	
 	@RequestMapping("/man-list")
 	public String listM(@ModelAttribute ("itemVO") ItemVO itemVO, Model model) {
-		List<ItemDto> listM = itemDao.selectListM(itemVO);
+		List<ItemListViewDto> listM = itemListViewDao.selectListM(itemVO);
 		model.addAttribute("listM",listM); //이름....
-		int count = itemDao.count(itemVO);
+		int count = itemListViewDao.count(itemVO);
 		itemVO.setCount(count);
 		return "/WEB-INF/views/item/man-list.jsp";
 	}
