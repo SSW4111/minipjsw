@@ -8,78 +8,32 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.shop.dto.ItemDto;
-import com.kh.shop.mapper.ItemMapper;
+import com.kh.shop.dto.ItemListViewDto;
+import com.kh.shop.mapper.ItemListViewMapper;
 import com.kh.shop.vo.ItemVO;
 
 @Repository
-public class ItemDao {
+public class ItemListViewDao {
 
-	@Autowired
-	ItemMapper itemMapper;
-	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-
-	//시퀀스
-	public int sequence() {
-		String sql="select item_seq.nextval from dual";
-		return jdbcTemplate.queryForObject(sql, int.class);
-	}
-	//등록
-	public void insert(ItemDto itemDto) {
-		String sql="insert into item(item_no, item_color, item_size, item_title, item_content,"
-				+ " item_gender, item_category, item_detail) "
-				+ " values(?, ?, ?, ?, ?, ?, ?, ?)";
-		Object[] data = {itemDto.getItemNo(), itemDto.getItemColor(), itemDto.getItemSize(),
-				 itemDto.getItemTitle(), itemDto.getItemContent(), itemDto.getItemGender(),
-				  itemDto.getItemCategory(),itemDto.getItemDetail()};
-			jdbcTemplate.update(sql,data);
-	}
 	
-	//이미지connect
-	public void connect(int itemNo, int attachmentNo) {
-		String sql = "insert into item_images ("
-				+ " item_no, attachment_no "
-				+ " ) values(?,?)";
-		Object[] data = {itemNo, attachmentNo};
-		jdbcTemplate.update(sql,data);
-	}
+	@Autowired
+	private ItemListViewMapper itemListViewMapper;
 	
-	//삭제
-	public boolean delete(int itemNo) {
-		String sql="delete from item where item_no=?";
-		Object[] data = {itemNo};
-		return jdbcTemplate.update(sql,data)>0;
-	}
-	//수정
-	public boolean update(ItemDto itemDto) {
-		String sql = "update item set item_color=?, item_size=?, item_title=?, item_content=?, "
-				+ "item_gender=?, item_category=?, item_detail=? where item_no=?";
-		Object[] data = {itemDto.getItemColor(), itemDto.getItemSize(), itemDto.getItemTitle(),
-				itemDto.getItemContent(), itemDto.getItemGender(),itemDto.getItemCategory(),itemDto.getItemDetail(),
-				itemDto.getItemNo()};
-		return jdbcTemplate.update(sql,data) >0;
-	}
-	//상세 
-	public ItemDto selectOne(int itemNo) {
-		String sql="select*from item where item_no=?";
-		Object[] data = {itemNo};
-		List<ItemDto> list = jdbcTemplate.query(sql,itemMapper,data);
-		return list.isEmpty()? null : list.get(0);
-	}
 	
 	
 	//카운트 , color size 체크시 목록계산추가
 	public int count(ItemVO itemVO) {
 		StringBuilder sql = new StringBuilder();
 		if(itemVO.isList()) {
-			sql.append("select count(*) from item");
+			sql.append("select count(*) from ITEM_LIST_VIEW");
 			return jdbcTemplate.queryForObject(sql.toString(), int.class);
 		}
 		else {
 			//모든타입넣는리스트생성
 			List<Object> dataList = new ArrayList <>();
-			 sql.append("select count(*) from item ").append("where 1=1 "); 
+			 sql.append("select count(*) from ITEM_LIST_VIEW ").append("where 1=1 "); 
 			//전체검색 이게뭐임ㅠㅠ디비막쓴다
 			if(itemVO.isSearch()) {
 				 sql.append(" and ( ")
@@ -109,29 +63,17 @@ public class ItemDao {
 		}	
 		}
 	
-	//아이템번호로 어태치리스트 조회 이미지무조건들어가기로
-	public List<Integer> findAttachments(int itemNo) {
-	    String sql = "select attachment.attachment_no from item "
-	               + "LEFT OUTER JOIN item_images on item.item_no = item_images.item_no "
-	               + "LEFT OUTER JOIN attachment on item_images.attachment_no = attachment.attachment_no "
-	               + "where item.item_no = ? "
-	               + "order by attachment_no asc";
-
-	    return jdbcTemplate.queryForList(sql, Integer.class, itemNo);
-	}
-
-
 	
-	public List<ItemDto>selectListF(ItemVO itemVO){
+	public List<ItemListViewDto>selectListF(ItemVO itemVO){
 	//여자 리스트 ...... F...
 		if(itemVO.isList()) {
 			String sql = "select * from( "
 					+ "select rownum rn, TMP.* From( "
-					+ "select * from item where item_gender = 'F' order by item_no desc ) "
+					+ "select * from ITEM_LIST_VIEW where item_gender = 'F' order by item_no desc ) "
 					+ "TMP) "
 					+ "where rn between ? and ? ";
 			Object[] data = {itemVO.getStartRownum(), itemVO.getFinishRownum()};
-			return jdbcTemplate.query(sql,itemMapper,data);
+			return jdbcTemplate.query(sql,itemListViewMapper,data);
 		}
 		
 		else {
@@ -139,7 +81,7 @@ public class ItemDao {
 			List<Object> dataList = new ArrayList<>();
 			sql.append("select * from( ")
 				.append("select rownum rn, TMP.*from( ")
-				.append("select * from item where item_gender = 'F' " );
+				.append("select * from ITEM_LIST_VIEW where item_gender = 'F' " );
 			//검색이면 사이에 top n query사이조건괄호 ()맞춰야함 ㄹㅇ짤라서넣어버리는;
 			if(itemVO.isSearch()) {
 				 sql.append("and ( ")
@@ -170,20 +112,20 @@ public class ItemDao {
 		
 			dataList.add(itemVO.getStartRownum());
 		    dataList.add(itemVO.getFinishRownum());   
-		    return jdbcTemplate.query(sql.toString(), itemMapper, dataList.toArray());
+		    return jdbcTemplate.query(sql.toString(), itemListViewMapper, dataList.toArray());
 		}
 	}
 	
-	public List<ItemDto>selectListM(ItemVO itemVO){
+	public List<ItemListViewDto>selectListM(ItemVO itemVO){
 		//남자리스트....
 			if(itemVO.isList()) {
 				String sql = "select * from( "
 						+ "select rownum rn, TMP.* From( "
-						+ "select * from item where item_gender = 'M' order by item_no desc ) "
+						+ "select * from  ITEM_LIST_VIEW where item_gender = 'M' order by item_no desc ) "
 						+ "TMP) "
 						+ "where rn between ? and ? ";
 				Object[] data = {itemVO.getStartRownum(), itemVO.getFinishRownum()};
-				return jdbcTemplate.query(sql,itemMapper,data);
+				return jdbcTemplate.query(sql,itemListViewMapper,data);
 			}
 			
 			else {
@@ -191,7 +133,7 @@ public class ItemDao {
 				List<Object> dataList = new ArrayList<>();
 				sql.append("select * from( ")
 					.append("select rownum rn, TMP.*from( ")
-					.append("select * from item where item_gender = 'M' " );
+					.append("select * from ITEM_LIST_VIEW where item_gender = 'M' " );
 
 				if(itemVO.isSearch()) {
 					 sql.append("and ( ")
@@ -223,26 +165,8 @@ public class ItemDao {
 			
 				dataList.add(itemVO.getStartRownum());
 			    dataList.add(itemVO.getFinishRownum());   
-			    return jdbcTemplate.query(sql.toString(), itemMapper, dataList.toArray());
+			    return jdbcTemplate.query(sql.toString(), itemListViewMapper, dataList.toArray());
 			}
 		}
 	
-	//평균별점 구하는법 ㅋㅋ
-//		String sql = "select i.*, "
-//				+ " (select round(AVG(r.reviews_star), 1) "
-//				+ " from reviews r "
-//				+ " where r.item_no = i.item_no) AS aveStar "
-//				+ " from item i"
-		
-	//avg ->평균별점 리뷰개수는걍count
-	//round-->소숫점몇자리까지보여줄건지
-	//coalesce -->데이터값없을때 null대신 0줌
-	
-	
 }
-
-	 
-
-	
-	
-
