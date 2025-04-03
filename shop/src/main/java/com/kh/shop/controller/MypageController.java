@@ -43,44 +43,65 @@ public class MypageController {
 	public String image(@RequestParam String usersEmail) {
 		try {
 		int attachmentNo = usersDao.findAttachment(usersEmail);
+		
 		return "redirect:/attachment/download?attachmentNo="+attachmentNo;
 		}
 		catch(Exception e) {
 			return "redirect:http://placehold.co/100x100?text=P";
 		}
 	}
+	
+//	@RequestMapping("/image")
+//	public String image(@RequestParam int attachmentNo) {
+//		try {
+//		int attachmentNo = usersDao.findAttachment(usersEmail);
+//		
+//		return "redirect:/attachment/download?attachmentNo="+attachmentNo;
+//		}
+//		catch(Exception e) {
+//			return "redirect:http://placehold.co/100x100?text=P";
+//		}
+//	}
 
 	//변경페이지;
 	@GetMapping("/change")
 	public String change(Model model,HttpSession session) {
 		String usersEmail = (String)session.getAttribute("usersEmail");
 		UsersDto usersDto = usersDao.selectOne(usersEmail);
-
+//		System.out.println(usersEmail);
+//		System.out.println(usersDto.getUsersNickname());
 		String phone = usersDto.getUsersContact().replaceAll("(\\d{3})(\\d{4})(\\d{4})", "$1-$2-$3");
+//		System.out.println(usersDto.getUsersContact());
 		usersDto.setUsersContact(phone);
 		model.addAttribute("usersDto",usersDto); 
 
 		Integer attachmentNo = usersDao.findAttachment(usersEmail); 
-		model.addAttribute("attachmentNo",attachmentNo);
+		if(attachmentNo != null) {
+			
+			model.addAttribute("attachmentNo",attachmentNo);
+//			System.out.println(attachmentNo);
+		}
 
 		return "/WEB-INF/views/mypage/change.jsp";
 	}
 	
 	//변경
 	@PostMapping("/change")
-	public String change(@ModelAttribute UsersDto usersDto, HttpSession session, @RequestParam String usersPw,
-			@RequestParam(required = false) MultipartFile usersProfile,
-			@RequestParam(required = false, defaultValue = "false")boolean changeProfile) throws IllegalStateException, IOException {
+	public String change(@ModelAttribute UsersDto usersDto, HttpSession session,
+			@RequestParam(required = false) MultipartFile usersProfile, 
+			@RequestParam(required = false, defaultValue = "false") String changeProfile) throws IllegalStateException, IOException {
 		String usersEmail = (String)session.getAttribute("usersEmail");
 		UsersDto findDto = usersDao.selectOne(usersEmail); //유저정보
+		//System.out.println("input changeProfile = " + changeProfile);
+		boolean change = changeProfile.equals("true") ? true : false;
+		//System.out.println("Boolean change = " + change);
+		if(usersProfile == null) {
+			System.out.println("ㅗ디디ㅗ댜ㅐㅗ지ㅑ험ㄷ");
+		}
 		
-		boolean isValid = usersPw.equals(findDto.getUsersPw());  //비번확인
 		
-		if(!isValid) {
-			return "redirect:change?error";
-			}
-		else { //change ing--
-			if(changeProfile == true) {//프사변경요청 3가지 존재
+		 //change ing--
+			if(change == true) {//프사변경요청 3가지 존재
 				Integer originAttachNo = usersDao.findAttachment(usersEmail); //파일찾고
 				Integer newAttachNo = attachmentService.save(usersProfile); //새거 저장하고
 				//1.기존 프로필 사진이 있을경우는 넘버를 찾아서 삭제후 새로운 번호 save
@@ -100,13 +121,13 @@ public class MypageController {
 				}
 				
 			}
-
-		findDto.setUsersContact(usersDto.getUsersContact());
+			String contact = usersDto.getUsersContact().replace("-", "");
+		findDto.setUsersContact(contact);
 		findDto.setUsersNickname(usersDto.getUsersNickname());
 		usersDao.update(findDto);
-		return "redirect:home";
+		return "redirect:/";
 		}
-		}
+		
 	
 	//탈퇴
 	@GetMapping("/exit")

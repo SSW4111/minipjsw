@@ -7,7 +7,7 @@ $(function() {
 		}
 	};
 
-	$(".photo-btn").click(function () {
+/*	$(".photo-btn").click(function () {
 	               $("#fileInput").trigger("click");
 	           });
 	           var backupFile = null
@@ -43,7 +43,7 @@ $(function() {
 	           }    
 	           );		
 	    	///프로필 삭제
-			/*$("#deleteBtn").click(function(){
+			$("#deleteBtn").click(function(){
 	            $("#myPhoto").attr("src","https://placehold.co/150x150");
 	               var inputFile = $("[name=memberProfile]")[0];
 	               $(inputFile).val("");
@@ -56,7 +56,7 @@ $(function() {
 	
 	
 	
-	/*$(".photo-btn").click(function() {
+	$(".photo-btn").click(function() {
 		$("#fileInput").click();
 	});
 
@@ -86,13 +86,13 @@ $(function() {
 			}
 		}
 	});
-	*/
+	
 		
 		
 		
 	$(".btn-save").click(function() {
 		$("#profileModal").modal('hide');
-		console.log($("[name=usersProfile]").text());
+		
 	});
 
 
@@ -116,16 +116,17 @@ $(function() {
 	
 
 	$("[name=usersNickname]").blur(function() {
-		var regex = /^[가-힣0-9]{1,12}$/;
+		var regex = /^[가-힣0-9a-zA-Z]{1,12}$/;
 		var isValid = regex.test($(this).val());
 		$(this).removeClass("is-valid is-invalid").addClass(isValid ? "is-valid" : "is-invalid");
 		status.nickname = isValid;
 	})
+	
 	$(".form-check").submit(function() {
 			
 		$("[name]").trigger("blur");
-	
-		return status.ok();
+		/*console.log(status.ok());		
+		*/return status.ok();
 	});
 
 	
