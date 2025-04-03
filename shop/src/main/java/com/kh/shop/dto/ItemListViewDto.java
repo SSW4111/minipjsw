@@ -19,6 +19,5 @@ public class ItemListViewDto {
 	private String itemDetail;
 	private float itemAveStar;
 	private int itemReviewsCount;
-	//aveStar db에서 double로들어와서 null반영 Double
-	//count도 null반영 n coalesce 사용 null-->0변경
+
 }
