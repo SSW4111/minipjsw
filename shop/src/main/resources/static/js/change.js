@@ -116,8 +116,8 @@ $(function() {
 	
 
 
-		$("form-check").submit(function(event) {
-			event.prevent.default();
+		$("form-check").submit(function() {
+			
 			$("[name], #joinEmail, #pwCheck").trigger("blur");
 			
 			return status.ok();
