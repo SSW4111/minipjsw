@@ -134,7 +134,7 @@
                   </div>
 
                   <button type="submit" class="btn btn-secondary  login-btn" data-bs-dismiss="modal">로그인하기</button>
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">비밀번호 찾기</button>
+                  <button type="button" class="btn btn-secondary " data-bs-dismiss="modal">비밀번호 찾기</button>
                   
             </form>
         </div>

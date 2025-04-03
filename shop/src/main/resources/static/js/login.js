@@ -10,14 +10,14 @@ $(function() {
 	$("#loginEmail").blur(function() {
 		var regex = /^[A-Za-z0-9]+@[A-Za-z0-9.]+$/;
 		var isValid = regex.test($(this).val());
-		$(this).removeClass("is-valid", "is-invalid").addClass("is-valid", "is-invalid");
+		//$(this).removeClass("is-valid", "is-invalid").addClass("is-valid", "is-invalid");
 		status.email = isValid;
 	})
 
 	$("#loginPw").blur(function() {
 		var regex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#$])[A-Za-z0-9!@#$]{8,16}$/;
 		isValid = regex.test($(this).val());
-		$(this).removeClass("is-valid", "is-invalid").addClass("is-valid", "is-invalid");
+		//$(this).removeClass("is-valid", "is-invalid").addClass("is-valid", "is-invalid");
 		status.pw = isValid;
 	})
 
@@ -33,6 +33,10 @@ $(function() {
 			success: function(response) {
 				if (!response) {
 					window.alert("로그인 정보가 옳지 않습니다");
+						$("[name=usersEmail").val("");
+						$("[name=usersPw").val("");	
+						$("#loginModal").modal('show');
+	
 				}
 				else {
 					$('#loginModal').modal('hide');
