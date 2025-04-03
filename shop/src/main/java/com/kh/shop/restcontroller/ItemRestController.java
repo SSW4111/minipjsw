@@ -47,10 +47,5 @@ public class ItemRestController {
 		return numbers;
 	}
 	
-	//타이틀확인
-	@RequestMapping("/checkTitle")
-	public boolean checkTitle(@RequestParam int itemNo) {
-		ItemDto itemDto = itemDao.selectOne(itemNo);
-		return itemDto == null;
-	}
+
 }
