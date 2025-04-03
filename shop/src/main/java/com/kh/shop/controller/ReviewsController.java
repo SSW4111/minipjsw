@@ -79,27 +79,7 @@ public class ReviewsController {
 		return "";//미아
 	}
 	
-	//수정 (사진로직)
-	//<attachList> 찾기
-	//1.사진 (삭제/추가요청시)선택한 파일만 지울수있을까.?---> 어떻게? true=가능 false=(내수준)불가능ㅋㅋ
-	//2-true. 선택한 파일만 삭제 3.새파일 커넥하고 추가 -->안그려짐..
-	//2.-false 원래있던 파일 no를 savelist에 넣어두고 3.새로운사진connect후 list에 넣기-->이건될거같은데
-	//(백업리스트) (new리스트(구번호도들어가야하는데..))비교해서 차집합 날려버리고 리스트생성하면.. 
-	//하지만 기존이미지는 이미처리끝나서 안들어오죠 ㅋ
-	//배웠던거 set사용해서 차집합 하면? 
-	// Set<> 지울번호가뭔지알고 ㅡㅡ
-	// 결론---->애초에 말도안되는 로직
-	//요청을 true/false만 받으면 이미처리된 이미지는 안들어오기때문에 새리스트가잡히는데
-	//그럼 뭘지워야할지 찾을수가없음
-	//delete img 번호든뭐든 정보를 받아야한다
 
-	//위처럼하면 전부삭제후 새파일업로드해도 문제가없음
-	//1.(사진 추가요청만)
-	//2.원래있떤 리스트에 추가하면됌 
-	//그렇다면 심화과정으로 요청을 true false 두개로받아서
-	//그냥 true --->사진변경요청합니다 false -->내용만바굼니다
-	//(삭제/추가) (사진추가만요청) 구분어려움
-	//그럼 닥치고2-false 방식으로 구현 
 //	@GetMapping("/update")
 //	public String update(Model model, @RequestParam int reviewsNo) {
 //		ReviewsDto reviewsDto = reviewsDao.selectOne(reviewsNo);

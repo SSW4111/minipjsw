@@ -1,3 +1,4 @@
+
 package com.kh.shop.dto;
 
 import java.sql.Timestamp;
@@ -11,6 +12,5 @@ import lombok.NoArgsConstructor;
 public class CertDto {
 	private String certEmail;
 	private String certNumber;
-	private Timestamp certTime;
-	private Timestamp certConfirm;
+	private Timestamp certTime, certConfirm;
 }
