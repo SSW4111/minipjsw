@@ -1,14 +1,64 @@
 $(function() {
 	var status = {
-		usersEmail: false,
+		usersEmail: true,
 		usersPw: false,
 		usersPwRe:false,
-		contact: false,
-		nickname: false,
+		contact: true,
+		nickname: true,
 		ok: function() {
 			return this.usersEmail && this.usersPw && this.contact && this.nickname;
 		}
 	}
+
+	$(".photo-btn").click(function() {
+		$("#fileInput").click();
+	});
+
+	$("#fileInput").change(function(e) {
+		var reader = new FileReader();
+
+		var file = this.files[0];
+		var original = $("#photoView").attr("src");
+
+		if (file) {
+			var FileTypes = ['image/png', 'image/jpeg'];
+			if (!FileTypes.includes(file.type)) {
+				alert("허용되지 않는 파일 형식입니다.");
+				$(this).val('');
+				return;
+			}
+
+			reader.onload = function(event) {
+				$("#photoView").attr("src", event.target.result);
+			}
+
+
+			if (file) {
+				reader.readAsDataURL(file);
+				$("[name=changeProfile]").val("true");
+				$(".close-btn").click(function(){
+					$("#photoView").attr("src", original);
+					$("#profileModal").modal('hide');
+				});
+				
+			} else {
+				$("#photoView").attr("src", "./basic.png");
+			}
+		}
+	});
+
+		
+	$(".btn-save").click(function(event) {
+		event.preventDefault();
+		$("#profileModal").modal('hide');
+		
+	});
+	
+
+	
+
+	
+	
 	$("#joinEmail").blur(function() { // 형식 검사
 		var regex = /^[A-Za-z0-9]+@[A-Za-z0-9.]+$/;
 		var isValid = regex.test($(this).val());
@@ -66,10 +116,10 @@ $(function() {
 	
 
 
-
-
-		$("form-check").submit(function() {
+		$("form-check").submit(function(event) {
+			event.prevent.default();
 			$("[name], #joinEmail, #pwCheck").trigger("blur");
+			
 			return status.ok();
 		});
 

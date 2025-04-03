@@ -39,7 +39,7 @@ public class UsersDao {
 	
 	public boolean update(UsersDto usersDto) {
 		String sql = "update users set users_contact=?, "
-				+ "users_nickname= ?, where users_email=?";
+				+ "users_nickname= ? where users_email=?";
 		
 		Object[] data = {usersDto.getUsersContact(),
 				 usersDto.getUsersNickname(),usersDto.getUsersEmail()};
