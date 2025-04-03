@@ -147,7 +147,7 @@ public class MypageController {
 			int attachmentNo = usersDao.findAttachment(usersEmail);
 			attachmentService.delete(attachmentNo); //사진삭제 
 			usersDao.delete(usersEmail);
-			session.removeAttribute(usersEmail);
+			session.removeAttribute("usersEmail");
 		return "redirect:exit-Finish";
 		}
 	}
