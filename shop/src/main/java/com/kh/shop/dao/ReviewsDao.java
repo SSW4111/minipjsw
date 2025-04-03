@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.shop.dto.ReviewsDto;
 import com.kh.shop.mapper.ReviewsMapper;
+import com.kh.shop.vo.ItemVO;
 
 @Repository
 public class ReviewsDao {
@@ -46,6 +47,16 @@ public class ReviewsDao {
 	
 	//리스트
 	
+	public List<ReviewsDto>selectList(ItemVO itemVO){
+		String sql ="select * from( "
+				+ "select rownum rn, "
+				+ "TMP.* from ( "
+				+ "select * from reviews order by reviews_no desc ) "
+				+ " TMP ) "
+				+ " where rn between ? and ?";
+		Object[] data = {itemVO.getStartRownum(), itemVO.getFinishRownum()};
+		return jdbcTemplate.query(sql, reviewsMapper,data);
+	}
 	
 	//찾는용
 	public ReviewsDto selectOne(int reviewsNo) {
