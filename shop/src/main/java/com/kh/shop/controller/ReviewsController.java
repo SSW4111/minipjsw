@@ -52,16 +52,20 @@ public class ReviewsController {
 									@RequestParam int itemNo, HttpSession session) throws IllegalStateException, IOException {
 		int reviewsNo = reviewsDao.sequence();
 		reviewsDto.setReviewsNo(reviewsNo);
-		session.getAttribute("userEmail");
-		reviewsDto.setUsersEmail("userEmail");
-		reviewsDto.setItemNo(itemNo);
+		String usersEmail = (String)session.getAttribute("userEmail");
+		if(usersEmail == null) {
+			throw new TargetNotFoundException("로그인해주세욘");
+		}
+		reviewsDto.setUsersEmail(usersEmail); 
+		reviewsDto.setItemNo(itemNo); 
 		reviewsDao.insert(reviewsDto);
 		
-		if(!attach.isEmpty()){
+		if(attach != null &&!attach.isEmpty()){
 			List<Integer>attachList = attachmentService.saveList(attach);
 			for(int attachmentNo : attachList) {
 				reviewsDao.connect(reviewsNo, attachmentNo);
 			}
+		
 		}
 		return "redirect:/item/detail?itemNo="+itemNo;
 	}
@@ -70,13 +74,17 @@ public class ReviewsController {
 	public String delete(@RequestParam int reviewsNo) {
 		try {
 			List<Integer>attachmentList = reviewsDao.findAttachments(reviewsNo);
-			for(int attachment : attachmentList) {
-				attachmentService.delete(attachment);
-			}
+			if (attachmentList != null && !attachmentList.isEmpty()) {
+				for(int attachment : attachmentList) {
+					attachmentService.delete(attachment);
+				}
+			 }
+			reviewsDao.delete(reviewsNo);
 		}
-		catch(Exception e) {}
-		reviewsDao.delete(reviewsNo);
-		return "";//미아
+		catch(Exception e) {
+			e.printStackTrace(); //방어막 나중에삭제
+		}  
+		return "";//미아   
 	}
 	
 
