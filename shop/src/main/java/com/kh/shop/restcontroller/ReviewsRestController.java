@@ -40,13 +40,10 @@ public class ReviewsRestController {
 		if(usersEmail == null) {
 			throw new TargetNotFoundException("로그인해야됌내가이거써야됌?");
 		}
-		UsersDto usersDto = usersDao.selectOne(usersEmail);
-		String usersNickname = usersDto.getUsersNickname(); //3
 		
 		Map<String,Object> result = new HashMap<>();
 		result.put("list", list);
 		result.put("isLastPage", isLastPage);
-		result.put("usersNickname", usersNickname);
 		return result;
 	}
 
