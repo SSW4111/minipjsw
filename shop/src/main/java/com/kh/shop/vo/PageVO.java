@@ -67,7 +67,7 @@ public class PageVO {
 	//링크를 위한 주소 생성 메소드
 	public String getParameters() {
 		if(isList()) {
-			return "size="+ size;
+			return "size="+ size + "page=" + page;
 		}
 		else {
 			return "column="+column+"&keyword="+keyword+"&size="+size;

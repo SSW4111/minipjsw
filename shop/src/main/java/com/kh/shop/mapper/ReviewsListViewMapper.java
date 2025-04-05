@@ -17,16 +17,16 @@ public class ReviewsListViewMapper implements RowMapper<ReviewsListViewDto>{
 				.reviewsNo(rs.getInt("reviews_no"))
 				.reviewsTitle(rs.getString("reviews_title"))
 				.reviewsContent(rs.getString("reviews_content"))
-				.reviewsStar(rs.getInt("reviews_star"))
+				.reviewsStar((Integer)rs.getObject("reviews_star"))
 				.reviewsWtime(rs.getTimestamp("reviews_wtime"))
 				.itemNo(rs.getInt("item_no"))
 				.itemTitle(rs.getString("item_title"))
+				.itemSize(rs.getString("item_size"))
 				.itemGender(rs.getString("item_gender"))
 				.itemCategory(rs.getString("item_category"))
 				.itemDetail(rs.getString("item_detail"))
 				.usersEmail(rs.getString("users_email"))
-				.usersLevel(rs.getString("users_level"))
-				.usersNickname(rs.getString("usersNickname"))
+				.usersNickname(rs.getString("users_nickname"))
 				.build();
 				
 	}
