@@ -80,6 +80,7 @@ public class ItemController {
 	public String addItem(@ModelAttribute ItemDto itemDto, 
             @RequestParam List<MultipartFile> attach) throws IllegalStateException, IOException {
 		int itemNo = itemDao.sequence();
+		System.out.println(itemDao.findAttachments(18));
 		itemDto.setItemNo(itemNo);
 		itemDao.insert(itemDto);
 
@@ -115,6 +116,7 @@ public class ItemController {
 	}
 	
 	
+	
 	//삭제
 	@PostMapping("/delete")
 	public String delete(@RequestParam int itemNo) {
@@ -142,7 +144,7 @@ public class ItemController {
 		model.addAttribute(itemDto);
 		return "/WEB-INF/views/item/update.jsp";
 	}
-	
+
 	@PostMapping("/update")
 	public String update(@ModelAttribute ItemDto itemDto) {
 		int itemNo = itemDto.getItemNo();
@@ -178,4 +180,5 @@ public class ItemController {
 		return "redirect:detail?itemNo="+itemDto.getItemNo();
 		
 	}
+
 }
