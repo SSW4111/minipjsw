@@ -17,11 +17,11 @@ public class ReviewsListViewDto {
 	  private int itemNo;
 	  private String itemColor;
 	  private String itemTitle;
+	  private String itemSize;
 	  private String itemGender;
 	  private String itemCategory;
 	  private String itemDetail;
 	  private String usersEmail;
-	  private String usersLevel;
 	  private String usersNickname;
 	  
 }

@@ -18,5 +18,6 @@ public class ItemDetailViewDto {
 	private float itemAveStar;
 	private int itemReviewsCount;
 	private int itemIoTotal;
+	private int itemLike;
 
 }
