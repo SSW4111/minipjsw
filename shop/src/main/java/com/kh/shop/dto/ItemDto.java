@@ -15,4 +15,5 @@ public class ItemDto {
 	private String itemGender;
 	private String itemCategory;
 	private String itemDetail;
+	private int itemLike;
 }
