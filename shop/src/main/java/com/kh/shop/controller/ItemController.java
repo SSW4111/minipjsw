@@ -104,13 +104,11 @@ public class ItemController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int itemNo, Model model) {
 		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo);
-		if(itemDetailViewDto == null) {
-			throw new TargetNotFoundException("존재하지 않는 상품입니다");
-		}
 		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
 		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemDetailViewDto);
 		model.addAttribute("itemDetailViewDto",itemDetailViewDto);
 		model.addAttribute("colorList",colorList);
+		System.out.println(colorList);
 		model.addAttribute("sizeList",sizeList);
 		return "/WEB-INF/views/item/detail.jsp";
 	}
