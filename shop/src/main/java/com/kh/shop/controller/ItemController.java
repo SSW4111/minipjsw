@@ -71,6 +71,7 @@ public class ItemController {
 	public String addItem(@ModelAttribute ItemDto itemDto, 
             @RequestParam List<MultipartFile> attach) throws IllegalStateException, IOException {
 		int itemNo = itemDao.sequence();
+		System.out.println(itemDao.findAttachments(18));
 		itemDto.setItemNo(itemNo);
 		itemDao.insert(itemDto);
 
@@ -93,6 +94,7 @@ public class ItemController {
 	//상세는 view만들고 하꾸
 	
 	
+	
 	//삭제
 	@PostMapping("/delete")
 	public String delete(@RequestParam int itemNo) {
@@ -108,5 +110,7 @@ public class ItemController {
 	}
 	
 	//수정
+	
+	
 	
 }

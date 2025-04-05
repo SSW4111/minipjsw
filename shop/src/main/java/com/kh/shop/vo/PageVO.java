@@ -11,7 +11,7 @@ public class PageVO {
 	//필드 - 계산에 필요한 코어 데이터
 	protected String column, keyword;//검색 정보
 	protected int page=1;//현재 페이지 번호
-	protected int size=10;//표시할 게시글 수
+	protected int size=1;//표시할 게시글 수
 	protected int count;//전체 게시글 수
 	protected int blockSize=10;//표시할 블럭 개수
 	
