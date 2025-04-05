@@ -22,6 +22,7 @@ public class ItemMapper implements RowMapper<ItemDto> {
 				.itemGender(rs.getString("item_gender"))
 				.itemCategory(rs.getString("item_category"))
 				.itemDetail(rs.getString("item_detail"))
+				.itemLike(rs.getInt("item_like"))
 				.build();
 	}
 
