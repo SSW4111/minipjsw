@@ -32,7 +32,7 @@ public class ItemVO extends PageVO{
 		return page+1;
 	}
 	
-	public boolean isLastPage() {
+	public boolean isLastPage() { 
 		return getPageCount() == page;
 	}	
 	
@@ -47,6 +47,7 @@ public class ItemVO extends PageVO{
 		}
 		else {
 			StringBuilder parameters = new StringBuilder();
+			parameters.append("&page=").append(page);
 			parameters.append("&size=").append(size);
 			
 			if(keyword != null) {
