@@ -91,8 +91,15 @@ public class ItemRestController {
 		List<ItemListViewDto> list = itemListViewDao.selectListF(itemVO);
 		boolean isLastPage = itemVO.isLastPage();
 		Map<String,Object> result = new HashMap<>();
-		result.put("list", list);
+		result.put("listW", list); //이름 헷갈리면 그냥 다바꿔도됌ㅠ미안할뿐;
 		result.put("isLastPage", isLastPage);
+		Map<Integer, List<Integer>> li = new LinkedHashMap<>();
+		for(ItemListViewDto itemDto : list) {
+			li.put(itemDto.getItemNo(), itemDao.findAttachments(itemDto.getItemNo()));
+		}
+		result.put("attachmentList", li);
+		//System.out.println("result +========= " + result);
+		//return list;
 		return result;
 	}
 }

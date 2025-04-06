@@ -62,7 +62,7 @@ public class ItemDao {
 	}
 	//상세 
 	public ItemDto selectOne(int itemNo) {
-		String sql="select*from item where item_no=?";
+		String sql="select * from item where item_no=?";
 		Object[] data = {itemNo};
 		List<ItemDto> list = jdbcTemplate.query(sql,itemMapper,data);
 		return list.isEmpty()? null : list.get(0);
@@ -226,6 +226,27 @@ public class ItemDao {
 			    return jdbcTemplate.query(sql.toString(), itemMapper, dataList.toArray());
 			}
 		}
+	
+	
+	
+	
+	//컬러리스트뽑아오기
+	public List<ItemDto> selectColor(ItemDto itemDto) {
+//		public List<ItemDetailViewDto> selectColor(ItemDetailViewDto itemDetailViewDto) {
+		String sql="select item_color from item where item_title=? and item_category=? and item_detail=? ";
+		Object[] data = {itemDto.getItemTitle(), itemDto.getItemCategory(),
+				itemDto.getItemDetail()};
+//		String sql="select item_color from item_detail_view where item_title=?";
+		//Object[] data = {itemDetailViewDto.getItemTitle()};
+	//	List<ItemDetailViewDto> colorList = jdbcTemplate.query(sql, itemDetailViewMapper,data);
+	//	return colorList.isEmpty()? null : colorList;
+		return jdbcTemplate.query(sql, itemMapper,data);
+	}
+	
+	
+	
+	
+	
 	
 	//평균별점 구하는법 ㅋㅋ
 //		String sql = "select i.*, "

@@ -4,10 +4,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
 
 import com.kh.shop.dto.ItemDetailViewDto;
 
-
+@Component
 public class ItemDetailViewMapper implements RowMapper<ItemDetailViewDto>{
 	@Override
 	public ItemDetailViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -22,6 +23,7 @@ public class ItemDetailViewMapper implements RowMapper<ItemDetailViewDto>{
 				.itemDetail(rs.getString("item_detail"))
 				.itemAveStar(rs.getFloat("avestar"))
 				.itemReviewsCount(rs.getInt("reviewscount"))
+				.itemIoNo(rs.getInt("item_io_no"))
 				.itemIoTotal(rs.getInt("item_io_total"))
 				.build();
 	}

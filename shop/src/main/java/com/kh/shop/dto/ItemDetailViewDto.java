@@ -17,6 +17,7 @@ public class ItemDetailViewDto {
 	private String itemDetail;
 	private float itemAveStar;
 	private int itemReviewsCount;
+	private int itemIoNo;
 	private int itemIoTotal;
 
 }

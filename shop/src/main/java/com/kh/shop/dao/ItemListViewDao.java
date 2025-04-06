@@ -219,6 +219,12 @@ public class ItemListViewDao {
 			}
 		}
 	
+		public List<ItemListViewDto> color(int itemNo){
+				String sql = "select item_color from item_list_view where item_no = ?";
+				Object[] data = {itemNo};
+				return jdbcTemplate.query(sql, itemListViewMapper, data);
+		}
+	
 	
 	
 }
