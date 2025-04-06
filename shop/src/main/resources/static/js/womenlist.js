@@ -1,7 +1,7 @@
 $(function() {
 		
 	var currentPage = 1;
-	var size = 1;
+	var size = 12;
 	
 	$(".more-btn").click(function(){
 		currentPage += 1;
@@ -11,7 +11,7 @@ $(function() {
 	
 	function callPage(){
 		$.ajax({
-			url:"/rest/item/listM",
+			url:"/rest/item/listW",
 			method:"post",
 			data:{page:currentPage, size:size},
 			success:function(list){
@@ -32,11 +32,11 @@ $(function() {
 	          const container = $('#itemListContainer');
 //			  console.log(items.attachmentList.length());
 			 // console.log("현재페이지2 : " + currentPage);
-	          items.listM.forEach(item => {
+	          items.listW.forEach(item => {
 				const att = items.attachmentList[item.itemNo][0];
 				
 	              const itemCard = $(`
-					<a class="col-sm-4 mb-4 ms-4" href="/item/">
+					<a class="col mb-4 ms-1" href="/item/detail?itemNo=${item.itemNo}">
 					                <div class="card " style="width: 18rem;">
 					                    <div class="card-header d-flex ">
 					                        <span>${item.itemTitle}</span> 
@@ -45,6 +45,7 @@ $(function() {
 					                    <img src= "/attachment/download?attachmentNo=${att}" class="card-img-top" >
 					                    <div class="card-footer">
 					                        <ul class="list-group">
+					                            <li class="list-group-item">${item.itemNo}</li>
 					                            <li class="list-group-item">${item.itemCategory}</li>
 					                            <li class="list-group-item">${item.itemDetail}</li>
 					                            <li class="list-group-item">${item.itemAveStar}</li>

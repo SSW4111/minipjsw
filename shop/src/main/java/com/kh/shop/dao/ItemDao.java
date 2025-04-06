@@ -62,7 +62,7 @@ public class ItemDao {
 	}
 	//상세 
 	public ItemDto selectOne(int itemNo) {
-		String sql="select*from item where item_no=?";
+		String sql="select * from item where item_no=?";
 		Object[] data = {itemNo};
 		List<ItemDto> list = jdbcTemplate.query(sql,itemMapper,data);
 		return list.isEmpty()? null : list.get(0);
@@ -226,6 +226,27 @@ public class ItemDao {
 			    return jdbcTemplate.query(sql.toString(), itemMapper, dataList.toArray());
 			}
 		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//평균별점 구하는법 ㅋㅋ
+//		String sql = "select i.*, "
+//				+ " (select round(AVG(r.reviews_star), 1) "
+//				+ " from reviews r "
+//				+ " where r.item_no = i.item_no) AS aveStar "
+//				+ " from item i"
+		
+	//avg ->평균별점 리뷰개수는걍count
+	//round-->소숫점몇자리까지보여줄건지
+	//coalesce -->데이터값없을때 null대신 0줌
+	
 	//조아요
 	public void itemLike(String usersEmail, int itemNo) {
 		String sql = "insert into item_like(users_email,item_no) value ( ?, ? )";

@@ -52,13 +52,13 @@ public class ItemController {
 		return "/WEB-INF/views/item/women-list.jsp";
 	}
 	
-	@RequestMapping("/man-list")
+	@RequestMapping("/men-list")
 	public String listM(@ModelAttribute ("itemVO") ItemVO itemVO, Model model) {
 		List<ItemListViewDto> listM = itemListViewDao.selectListM(itemVO);
 		model.addAttribute("listM",listM); //이름....
 		int count = itemListViewDao.count(itemVO);
 		itemVO.setCount(count);
-		return "/WEB-INF/views/item/man-list.jsp";
+		return "/WEB-INF/views/item/men-list.jsp";
 	}
 	 
 	//사진리스트로 보내기
@@ -104,9 +104,11 @@ public class ItemController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int itemNo, Model model) {
 		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo);
+
 		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
-		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemDetailViewDto);
 		model.addAttribute("itemDetailViewDto",itemDetailViewDto);
+//		model.addAttribute("colorList",colorList);
+//		model.addAttribute("sizeList",sizeList);
 		model.addAttribute("colorList",colorList);
 		System.out.println(colorList);
 		model.addAttribute("sizeList",sizeList);
