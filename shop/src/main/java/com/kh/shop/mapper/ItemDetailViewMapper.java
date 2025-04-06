@@ -25,7 +25,30 @@ public class ItemDetailViewMapper implements RowMapper<ItemDetailViewDto>{
 				.itemReviewsCount(rs.getInt("reviewscount"))
 				.itemIoNo(rs.getInt("item_io_no"))
 				.itemIoTotal(rs.getInt("item_io_total"))
+				.itemLike(rs.getInt("item_like"))
 				.build();
 	}
+		
+@Component
+public class ItemColorMapper implements RowMapper<ItemDetailViewDto>{
 
+@Override
+public ItemDetailViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+	return ItemDetailViewDto.builder()
+			.itemColor(rs.getString("item_color"))
+			.build();
+	}
+	}
+@Component
+public class ItemSizeMapper implements RowMapper<ItemDetailViewDto>{
+
+	@Override
+	public ItemDetailViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+	
+		return ItemDetailViewDto.builder()
+				.itemSize(rs.getString("item_size"))
+				.build();
+	}
+	
+}
 }

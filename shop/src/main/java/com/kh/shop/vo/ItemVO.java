@@ -43,7 +43,7 @@ public class ItemVO extends PageVO{
 	@Override
 	public String getParameters() {
 		if(isList()) { 
-			return "size=" + size;
+			return "size=" + size + "&page=" + page;
 		}
 		else {
 			StringBuilder parameters = new StringBuilder();

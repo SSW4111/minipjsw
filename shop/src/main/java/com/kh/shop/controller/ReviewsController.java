@@ -40,7 +40,7 @@ public class ReviewsController {
 		model.addAttribute("attachList",attachmentList);
 		return "";
 	}
-	//등록
+
 	@GetMapping("/add")
 	public String addReviews(@RequestParam int itemNo,Model model) {
 		model.addAttribute("itemDto",itemDao.selectOne(itemNo));

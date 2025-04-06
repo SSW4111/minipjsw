@@ -19,5 +19,6 @@ public class ItemListViewDto {
 	private String itemDetail;
 	private float itemAveStar;
 	private int itemReviewsCount;
+	private int itemLike;
 
 }

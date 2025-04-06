@@ -230,18 +230,6 @@ public class ItemDao {
 	
 	
 	
-	//컬러리스트뽑아오기
-	public List<ItemDto> selectColor(ItemDto itemDto) {
-//		public List<ItemDetailViewDto> selectColor(ItemDetailViewDto itemDetailViewDto) {
-		String sql="select item_color from item where item_title=? and item_category=? and item_detail=? ";
-		Object[] data = {itemDto.getItemTitle(), itemDto.getItemCategory(),
-				itemDto.getItemDetail()};
-//		String sql="select item_color from item_detail_view where item_title=?";
-		//Object[] data = {itemDetailViewDto.getItemTitle()};
-	//	List<ItemDetailViewDto> colorList = jdbcTemplate.query(sql, itemDetailViewMapper,data);
-	//	return colorList.isEmpty()? null : colorList;
-		return jdbcTemplate.query(sql, itemMapper,data);
-	}
 	
 	
 	
@@ -259,7 +247,43 @@ public class ItemDao {
 	//round-->소숫점몇자리까지보여줄건지
 	//coalesce -->데이터값없을때 null대신 0줌
 	
-	
+	//조아요
+	public void itemLike(String usersEmail, int itemNo) {
+		String sql = "insert into item_like(users_email,item_no) value ( ?, ? )";
+		Object[] data = {usersEmail, itemNo};
+		jdbcTemplate.update(sql, data);
+	}
+	//조아요해제
+	public void deleteItemLike(String usersEmail, int itemNo) {
+		String sql = "delete from item_like where users_email=? and item_no = ? ";
+		Object[] data = {usersEmail, itemNo};
+		jdbcTemplate.update(sql, data);
+	}
+	//0보다 크면 좋아요가 존재한다 (조아요여부)
+	public boolean checkItemLike(String usersEmail, int itemNo) {
+		String sql = "select count(*) from item_like where users_email=? and item_no=?";
+		Object[] data = {usersEmail, itemNo};
+		return jdbcTemplate.queryForObject(sql, int.class,data) >0;
+	}
+	//개수
+	public int countItemLike(int itemNo) {
+		String sql = "select count(*) from item_like where item_no=?";
+		Object[] data = {itemNo};
+		return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
+	//조아요개수갱신
+	public boolean updateItemLike(int itemNo, int count) {
+		String sql = "update item set item_like = ? where item_no =?";
+		Object[] data = {count, itemNo};
+		return jdbcTemplate.update(sql,data)>0;
+	}
+	public boolean updateItemLike(int itemNo) {
+		String sql = "update item set item_like =( "
+				+ "select count(*) from item_like where item_no =? "
+				+ ") where item_no =?";
+		Object[] data = {itemNo, itemNo};
+		return jdbcTemplate.update(sql,data)>0;
+	}
 }
 
 	 

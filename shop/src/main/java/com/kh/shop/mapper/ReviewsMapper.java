@@ -18,6 +18,7 @@ public class ReviewsMapper implements RowMapper <ReviewsDto>{
 				.reviewsTitle(rs.getString("reviews_title"))
 				.reviewsContent(rs.getString("reviews_content"))
 				.reviewsStar((Integer)rs.getObject("reviews_star"))
+				.reviewsWtime(rs.getTimestamp("reviews_wtime"))
 				.usersEmail(rs.getString("users_eamil"))
 				.itemNo(rs.getInt("item_no"))
 				.build();

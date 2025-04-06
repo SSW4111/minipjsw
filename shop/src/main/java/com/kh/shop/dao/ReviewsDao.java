@@ -23,11 +23,19 @@ public class ReviewsDao {
 		String sql="select reviews_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
+	//카운트
+	public int count(int itemNo) {
+		String sql = "select count(*) from reviews where item_no=?";
+		Object[] data = {itemNo};
+		return jdbcTemplate.queryForObject(sql, int.class,data);
+	}
 	
+
 	public void insert(ReviewsDto reviewsDto) {
-		String sql = "insert into reviews(reviews_no,reviews_title,reviews_content, reviews_star) "
-				+ "values(?, ?, ?, ?)";
-		Object[] data = {reviewsDto.getReviewsNo(),reviewsDto.getReviewsTitle(),reviewsDto.getReviewsContent(),reviewsDto.getReviewsStar()};
+		String sql = "insert into reviews(reviews_no,reviews_title,reviews_content, reviews_star, reviews_wtime, item_no) "
+				+ "values(?, ?, ?, ?, SYSTIMESTAMP,?)";
+		Object[] data = {reviewsDto.getReviewsNo(),reviewsDto.getReviewsTitle(),reviewsDto.getReviewsContent(),
+				 			reviewsDto.getReviewsStar(), reviewsDto.getItemNo()};
 		jdbcTemplate.update(sql,data);
 	}
 	

@@ -24,6 +24,7 @@ public class ItemListViewMapper implements RowMapper<ItemListViewDto> {
 				.itemDetail(rs.getString("item_detail"))
 				.itemAveStar(rs.getFloat("avestar"))
 				.itemReviewsCount(rs.getInt("reviewscount"))
+				.itemLike(rs.getInt("item_like"))
 				.build();
 	}
 

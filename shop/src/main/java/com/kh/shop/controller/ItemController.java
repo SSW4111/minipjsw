@@ -104,29 +104,14 @@ public class ItemController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int itemNo, Model model) {
 		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo);
-		ItemDto itemDto = itemDao.selectOne(itemNo);
-		System.out.println( itemListViewDao.color(itemNo));
-		
-		
-		if(itemDetailViewDto == null) {
-			throw new TargetNotFoundException("존재하지 않는 상품입니다");
-		}
-		System.out.println("1no = " + itemDetailViewDto.getItemNo());
-		System.out.println("2size = " + itemDetailViewDto.getItemSize());
-		System.out.println("3color = " + itemDetailViewDto.getItemColor());
-		System.out.println("4dettail = " + itemDetailViewDto.getItemDetail());
-		System.out.println("5title = " + itemDetailViewDto.getItemTitle());
-		System.out.println("6category = " + itemDetailViewDto.getItemCategory());
-		System.out.println("7contemnt = " + itemDetailViewDto.getItemContent());
-		System.out.println("8avestar = " + itemDetailViewDto.getItemAveStar());
-		System.out.println("r9eviewsCount = " + itemDetailViewDto.getItemReviewsCount());
-		System.out.println("t10otal = " + itemDetailViewDto.getItemIoTotal());
-		System.out.println("11gender = " + itemDetailViewDto.getItemGender() );
-//		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemDetailViewDto);
+
 		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
 		model.addAttribute("itemDetailViewDto",itemDetailViewDto);
 //		model.addAttribute("colorList",colorList);
 //		model.addAttribute("sizeList",sizeList);
+		model.addAttribute("colorList",colorList);
+		System.out.println(colorList);
+		model.addAttribute("sizeList",sizeList);
 		return "/WEB-INF/views/item/detail.jsp";
 	}
 	

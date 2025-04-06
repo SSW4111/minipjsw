@@ -22,6 +22,8 @@ import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.service.AttachmentService;
 import com.kh.shop.vo.ItemVO;
 
+import jakarta.servlet.http.HttpSession;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/rest/item")
@@ -102,4 +104,36 @@ public class ItemRestController {
 		//return list;
 		return result;
 	}
+	
+	//좋아요
+	@RequestMapping("/check")
+	public Map<String,Object> check(@RequestParam int itemNo, HttpSession session){
+		String usersEmail = (String)session.getAttribute("usersEmail");
+		boolean done = itemDao.checkItemLike(usersEmail, itemNo);
+		int count = itemDao.countItemLike(itemNo);
+		
+		Map<String,Object> result = new HashMap<>();
+		result.put("done", done);
+		result.put("count", count);
+		return result;
+	}
+	
+	//좋아요/해제 ->개수갱신
+	@RequestMapping("/action")
+	public Map<String,Object> action(@RequestParam int itemNo, HttpSession session){
+		String usersEmail = (String)session.getAttribute("usersEmail");
+		boolean done = itemDao.checkItemLike(usersEmail, itemNo);
+		if(done) {
+			itemDao.deleteItemLike(usersEmail, itemNo);
+		}
+		else {
+			itemDao.itemLike(usersEmail, itemNo);
+		}
+		int count = itemDao.countItemLike(itemNo);
+		Map<String,Object> result = new HashMap<>();
+		result.put("done", !done);
+		result.put("count", count);
+		return result;
+	}
+		
 }

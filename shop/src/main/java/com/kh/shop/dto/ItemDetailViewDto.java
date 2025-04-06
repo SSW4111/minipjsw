@@ -19,5 +19,6 @@ public class ItemDetailViewDto {
 	private int itemReviewsCount;
 	private int itemIoNo;
 	private int itemIoTotal;
+	private int itemLike;
 
 }
