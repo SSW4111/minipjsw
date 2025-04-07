@@ -32,8 +32,8 @@ public class ReviewsDao {
 	
 
 	public void insert(ReviewsDto reviewsDto) {
-		String sql = "insert into reviews(reviews_no,reviews_title,reviews_content, reviews_star, reviews_wtime, item_no) "
-				+ "values(?, ?, ?, ?, SYSTIMESTAMP,?)";
+		String sql = "insert into reviews(reviews_no,reviews_title,reviews_content, reviews_star, item_no) "
+				+ "values(?, ?, ?, ?, ?)";
 		Object[] data = {reviewsDto.getReviewsNo(),reviewsDto.getReviewsTitle(),reviewsDto.getReviewsContent(),
 				 			reviewsDto.getReviewsStar(), reviewsDto.getItemNo()};
 		jdbcTemplate.update(sql,data);
