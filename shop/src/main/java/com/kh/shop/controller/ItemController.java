@@ -111,7 +111,7 @@ public class ItemController {
 //		model.addAttribute("sizeList",sizeList);
 		model.addAttribute("colorList",colorList);
 		System.out.println(colorList);
-		model.addAttribute("sizeList",sizeList);
+//		model.addAttribute("sizeList",sizeList);
 		return "/WEB-INF/views/item/detail.jsp";
 	}
 	
