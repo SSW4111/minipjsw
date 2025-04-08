@@ -24,6 +24,9 @@ public class ItemVO extends PageVO{
 	}
 	
 	public boolean isList() {
+
+		System.out.println("column = " + column);
+		System.out.println("keyword = " + keyword);
 		return !isSearch() && !colorCheck() && !sizeCheck();
 	}
 	
@@ -33,7 +36,7 @@ public class ItemVO extends PageVO{
 	}
 	
 	public boolean isLastPage() { 
-		return getPageCount() == page;
+		return page == getPageCount();
 	}	
 	
 	public boolean hasNextPage() {

@@ -15,10 +15,8 @@ public class ItemListViewMapper implements RowMapper<ItemListViewDto> {
 	public ItemListViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		return ItemListViewDto.builder()
 				.itemNo(rs.getInt("item_no"))
-				.itemColor(rs.getString("item_color"))
-				.itemSize(rs.getString("item_size"))
 				.itemTitle(rs.getString("item_title"))
-				.itemContent(rs.getString("item_content"))
+				.itemColor(rs.getString("item_color"))
 				.itemGender(rs.getString("item_gender"))
 				.itemCategory(rs.getString("item_category"))
 				.itemDetail(rs.getString("item_detail"))
