@@ -35,6 +35,7 @@ public class ItemColorMapper implements RowMapper<ItemDetailViewDto>{
 @Override
 public ItemDetailViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 	return ItemDetailViewDto.builder()
+			.itemNo(rs.getInt("item_no"))
 			.itemColor(rs.getString("item_color"))
 			.build();
 	}

@@ -39,7 +39,7 @@ public class ItemDetailViewDao {
 //	
 	//컬러리스트뽑아오기
 	public List<ItemDetailViewDto> selectColor(ItemDetailViewDto itemDetailViewDto) {
-		String sql="select item_color from item where item_title=? and item_category=? and item_detail=? ";
+		String sql="select item_color, item_no from item where item_title=? and item_category=? and item_detail=? ";
 		Object[] data = {itemDetailViewDto.getItemTitle(), itemDetailViewDto.getItemCategory(),
 								itemDetailViewDto.getItemDetail()};
 		List<ItemDetailViewDto> colorList = jdbcTemplate.query(sql, itemColorMapper,data);
