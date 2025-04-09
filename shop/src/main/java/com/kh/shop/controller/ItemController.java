@@ -113,12 +113,12 @@ public class ItemController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int itemNo, Model model) {
 		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo);
-		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemDetailViewDto);
+		//List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemDetailViewDto);
 		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
 		model.addAttribute("itemDetailViewDto",itemDetailViewDto);
-		model.addAttribute("sizeList",sizeList);
+		//model.addAttribute("sizeList",sizeList);
 		model.addAttribute("colorList",colorList);
-		System.out.println(colorList);
+		System.out.println("color = "+colorList);
 		return "/WEB-INF/views/item/detail.jsp";
 	}
 	

@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 public class ItemDetailViewDto {
 	private int itemNo;
 	private String itemColor;
-	private String itemSize;
 	private String itemTitle;
 	private String itemContent;
 	private String itemGender;
@@ -20,5 +19,5 @@ public class ItemDetailViewDto {
 	private int itemIoNo;
 	private int itemIoTotal;
 	private int itemLike;
-
+	private String sizeName;
 }

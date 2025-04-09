@@ -27,10 +27,10 @@ public class ItemDao {
 	}
 	//등록
 	public void insert(ItemDto itemDto) {
-		String sql="insert into item(item_no, item_color, item_size, item_title, item_content,"
+		String sql="insert into item(item_no, item_color, item_title, item_content,"
 				+ " item_gender, item_category, item_detail) "
 				+ " values(?, ?, ?, ?, ?, ?, ?, ?)";
-		Object[] data = {itemDto.getItemNo(), itemDto.getItemColor(), itemDto.getItemSize(),
+		Object[] data = {itemDto.getItemNo(), itemDto.getItemColor(), 
 				 itemDto.getItemTitle(), itemDto.getItemContent(), itemDto.getItemGender(),
 				  itemDto.getItemCategory(),itemDto.getItemDetail()};
 			jdbcTemplate.update(sql,data);
@@ -53,9 +53,9 @@ public class ItemDao {
 	}
 	//수정
 	public boolean update(ItemDto itemDto) {
-		String sql = "update item set item_color=?, item_size=?, item_title=?, item_content=?, "
+		String sql = "update item set item_color=?,  item_title=?, item_content=?, "
 				+ "item_gender=?, item_category=?, item_detail=? where item_no=?";
-		Object[] data = {itemDto.getItemColor(), itemDto.getItemSize(), itemDto.getItemTitle(),
+		Object[] data = {itemDto.getItemColor(), itemDto.getItemTitle(),
 				itemDto.getItemContent(), itemDto.getItemGender(),itemDto.getItemCategory(),itemDto.getItemDetail(),
 				itemDto.getItemNo()};
 		return jdbcTemplate.update(sql,data) >0;
@@ -84,7 +84,6 @@ public class ItemDao {
 			if(itemVO.isSearch()) {
 				 sql.append(" and ( ")
 	                .append("instr(item_color, ?) > 0 or ")
-	                .append("instr(item_size, ?) > 0 or ")
 	                .append("instr(item_title, ?) > 0 or ")
 	                .append("instr(item_content, ?) > 0 or ")
 	                .append("instr(item_gender, ?) > 0 or ")
@@ -101,10 +100,10 @@ public class ItemDao {
 				sql.append(" and item_color = ? ");
 				dataList.add(itemVO.getColor());
 			}
-			if(itemVO.sizeCheck()) {
-				sql.append(" and item_size= ? ");
-				dataList.add(itemVO.getClothesSize());
-			}
+//			if(itemVO.sizeCheck()) {
+//				sql.append(" and item_size= ? ");
+//				dataList.add(itemVO.getClothesSize());
+//			}
 		return jdbcTemplate.queryForObject(sql.toString(), int.class,dataList.toArray());		
 		}	
 		}
@@ -144,7 +143,6 @@ public class ItemDao {
 			if(itemVO.isSearch()) {
 				 sql.append("and ( ")
 				 .append("instr(item_color, ?) > 0 or ")
-	                .append("instr(item_size, ?) > 0 or ")
 	                .append("instr(item_title, ?) > 0 or ")
 	                .append("instr(item_content, ?) > 0 or ")
 	                .append("instr(item_gender, ?) > 0 or ")
@@ -162,10 +160,10 @@ public class ItemDao {
 		        dataList.add(itemVO.getColor());
 			}
 			//사이즈선택이면 
-			if(itemVO.sizeCheck()) {
-				 sql.append(" AND item_size = ? ");
-			     dataList.add(itemVO.getClothesSize());
-			}
+//			if(itemVO.sizeCheck()) {
+//				 sql.append(" AND item_size = ? ");
+//			     dataList.add(itemVO.getClothesSize());
+//			}
 			sql.append(" order by item_no desc) TMP) where rn between ? and ?");
 		
 			dataList.add(itemVO.getStartRownum());
@@ -196,7 +194,6 @@ public class ItemDao {
 				if(itemVO.isSearch()) {
 					 sql.append("and ( ")
 					 .append("instr(item_color, ?) > 0 or ")
-		                .append("instr(item_size, ?) > 0 or ")
 		                .append("instr(item_title, ?) > 0 or ")
 		                .append("instr(item_content, ?) > 0 or ")
 		                .append("instr(item_gender, ?) > 0 or ")
@@ -214,10 +211,10 @@ public class ItemDao {
 			        dataList.add(itemVO.getColor());
 				}
 				//사이즈선택이면 
-				if(itemVO.sizeCheck()) {
-					 sql.append(" AND item_size = ? ");
-				     dataList.add(itemVO.getClothesSize());
-				}
+//				if(itemVO.sizeCheck()) {
+//					 sql.append(" AND item_size = ? ");
+//				     dataList.add(itemVO.getClothesSize());
+//				}
 				sql.append(" order by item_no desc) TMP) where rn between ? and ?");
 			
 			

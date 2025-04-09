@@ -15,7 +15,6 @@ public class ItemDetailViewMapper implements RowMapper<ItemDetailViewDto>{
 		return ItemDetailViewDto.builder()
 				.itemNo(rs.getInt("item_no"))
 				.itemColor(rs.getString("item_color"))
-				.itemSize(rs.getString("item_size"))
 				.itemTitle(rs.getString("item_title"))
 				.itemContent(rs.getString("item_content"))
 				.itemGender(rs.getString("item_gender"))
@@ -26,6 +25,7 @@ public class ItemDetailViewMapper implements RowMapper<ItemDetailViewDto>{
 				.itemIoNo(rs.getInt("item_io_no"))
 				.itemIoTotal(rs.getInt("item_io_total"))
 				.itemLike(rs.getInt("item_like"))
+				.sizeName(rs.getString("size_name"))
 				.build();
 	}
 		
@@ -46,7 +46,6 @@ public class ItemSizeMapper implements RowMapper<ItemDetailViewDto>{
 	public ItemDetailViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 	
 		return ItemDetailViewDto.builder()
-				.itemSize(rs.getString("item_size"))
 				.build();
 	}
 	
