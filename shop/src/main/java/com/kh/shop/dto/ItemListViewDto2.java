@@ -1,6 +1,6 @@
 package com.kh.shop.dto;
 
-import java.sql.Timestamp;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,16 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data @Builder @NoArgsConstructor @AllArgsConstructor
-public class ItemListViewDto {
-	private int itemNo;
+public class ItemListViewDto2 {
 	private String itemTitle;
-	private String itemColor;
-	private String itemGender;
 	private String itemCategory;
 	private String itemDetail;
-	private float itemAveStar;
-	private int itemReviewsCount;
-	private int itemLike;
-	private int itemPrice;
-	private String itemContent;
+	private List<Integer> itemNoList;
 }

@@ -24,6 +24,7 @@ import com.kh.shop.dao.ItemListViewDao;
 import com.kh.shop.dto.ItemDetailViewDto;
 import com.kh.shop.dto.ItemDto;
 import com.kh.shop.dto.ItemListViewDto;
+import com.kh.shop.dto.ItemListViewDto2;
 import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.service.AttachmentService;
 import com.kh.shop.vo.ItemVO;
@@ -43,22 +44,30 @@ public class ItemController {
 	@Autowired
 	private ItemDetailViewDao itemDetailviewDao;
 	
-	@RequestMapping("/women-list")
-	public String listW(@ModelAttribute ("itemVO") ItemVO itemVO,Model model ) {
-		List<ItemListViewDto> listW = itemListViewDao.selectListF(itemVO);
-		model.addAttribute("listW",listW); //이름..그저 미안할뿐
-		int count = itemListViewDao.count(itemVO);
-		itemVO.setCount(count);
-		return "/WEB-INF/views/item/women-list.jsp";
-	}
-	
-	@RequestMapping("/men-list")
-	public String listM(@ModelAttribute ("itemVO") ItemVO itemVO, Model model) {
-		List<ItemListViewDto> listM = itemListViewDao.selectListM(itemVO);
+//	@RequestMapping("/women-list")
+//	public String listW(@ModelAttribute ("itemVO") ItemVO itemVO,Model model ) {
+//		List<ItemListViewDto> listW = itemListViewDao.selectListF(itemVO);
+//		model.addAttribute("listW",listW); //이름..그저 미안할뿐
+//		int count = itemListViewDao.count(itemVO);
+//		itemVO.setCount(count);
+//		return "/WEB-INF/views/item/women-list.jsp";
+//	}
+//	
+//	@RequestMapping("/men-list")
+//	public String listM(@ModelAttribute ("itemVO") ItemVO itemVO, Model model) {
+//		List<ItemListViewDto> listM = itemListViewDao.selectListM(itemVO);
+//		model.addAttribute("listM",listM); //이름....
+//		int count = itemListViewDao.count(itemVO);
+//		itemVO.setCount(count);
+//		return "/WEB-INF/views/item/men-list.jsp";
+//	}
+	@RequestMapping("/men")
+	public String listMen(@ModelAttribute ("itemVO") ItemVO itemVO, Model model) {
+		List<ItemListViewDto> listM = itemListViewDao.selectListMen(itemVO);
 		model.addAttribute("listM",listM); //이름....
 		int count = itemListViewDao.count(itemVO);
 		itemVO.setCount(count);
-		return "/WEB-INF/views/item/men-list.jsp";
+		return "/WEB-INF/views/item/men.jsp";
 	}
 	 
 	//사진리스트로 보내기
@@ -80,7 +89,7 @@ public class ItemController {
 	public String addItem(@ModelAttribute ItemDto itemDto, 
             @RequestParam List<MultipartFile> attach) throws IllegalStateException, IOException {
 		int itemNo = itemDao.sequence();
-		System.out.println(itemDao.findAttachments(18));
+		//System.out.println(itemDao.findAttachments(18));
 		itemDto.setItemNo(itemNo);
 		itemDao.insert(itemDto);
 
@@ -104,13 +113,12 @@ public class ItemController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int itemNo, Model model) {
 		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo);
-
+		//List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemDetailViewDto);
 		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
 		model.addAttribute("itemDetailViewDto",itemDetailViewDto);
-//		model.addAttribute("colorList",colorList);
-//		model.addAttribute("sizeList",sizeList);
+		//model.addAttribute("sizeList",sizeList);
 		model.addAttribute("colorList",colorList);
-		System.out.println(colorList);
+		System.out.println("color = "+colorList);
 //		model.addAttribute("sizeList",sizeList);
 		return "/WEB-INF/views/item/detail.jsp";
 	}

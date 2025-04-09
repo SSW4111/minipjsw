@@ -63,10 +63,10 @@
                         <a class="nav-link" href="#">Best</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/item/women-list">Women</a>
+                        <a class="nav-link" href="/item/women">Women</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/item/men-list">Men</a>
+                        <a class="nav-link" href="/item/men">Men</a>
                     </li>
                     
                 </ul>

@@ -15,7 +15,7 @@ public class ItemIoDto {
 	private Timestamp itemIoInTime;
 	private int itemIoOut;
 	private Timestamp itemIoOutTIme;
-	
+	private String sizeName;
 	public int getTotal() {
 	  return itemIoIn - itemIoOut;
 	    }

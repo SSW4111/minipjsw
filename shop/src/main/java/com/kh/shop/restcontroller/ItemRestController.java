@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,22 +59,42 @@ public class ItemRestController {
 	}
 	
 	//시간남으면 최적화해서 한번에 보낼수있나 생각해봄..
-	@RequestMapping("/list")
-	public Map<String, Object> listAll(ItemVO itemVO){
-		List<ItemListViewDto> list = itemListViewDao.selectList(itemVO);
-		boolean isLastPage = itemVO.isLastPage();
-		
-		//전달할 목록많아진다면 map변경고려
-		Map<String,Object> result = new HashMap<>();
-		result.put("list", list);
-		result.put("isLastPage", isLastPage);
-		return result;
-	}
+//	@RequestMapping("/list")
+//	public Map<String, Object> listAll(ItemVO itemVO){
+//		List<ItemListViewDto> list = itemListViewDao.selectList(itemVO);
+//		boolean isLastPage = itemVO.isLastPage();
+//		
+//		//전달할 목록많아진다면 map변경고려
+//		Map<String,Object> result = new HashMap<>();
+//		result.put("list", list);
+//		result.put("isLastPage", isLastPage);
+//		return result;
+//	}
 	
 
 	@RequestMapping("/listM")
 	public Map<String, Object> listM(ItemVO itemVO){
-		List<ItemListViewDto> list = itemListViewDao.selectListM(itemVO);
+		List<ItemListViewDto> list = itemListViewDao.selectListMen(itemVO);
+	
+		boolean isLastPage = itemVO.isLastPage();
+		Map<String,Object> result = new HashMap<>();
+		result.put("listM", list); //이름 헷갈리면 그냥 다바꿔도됌ㅠ미안할뿐;
+		result.put("isLastPage", isLastPage);
+		Map<Integer, List<Integer>> li = new LinkedHashMap<>();
+		for(ItemListViewDto itemDto : list) {
+			li.put(itemDto.getItemNo(), itemDao.findAttachments(itemDto.getItemNo()));
+		}
+		result.put("attachmentList", li);
+		//System.out.println("result +========= " + result);
+		//return list;
+		return result;
+	}
+
+	@RequestMapping("/search")
+	public Map<String, Object> search(ItemVO itemVO){
+		List<ItemListViewDto> list = itemListViewDao.selectListMen(itemVO);
+		int count = itemListViewDao.count(itemVO);
+		itemVO.setCount(count);
 		boolean isLastPage = itemVO.isLastPage();
 		Map<String,Object> result = new HashMap<>();
 		result.put("listM", list); //이름 헷갈리면 그냥 다바꿔도됌ㅠ미안할뿐;
@@ -88,22 +109,22 @@ public class ItemRestController {
 		return result;
 	}
 	
-	@RequestMapping("/listW")
-	public Map<String,Object> listW(ItemVO itemVO){
-		List<ItemListViewDto> list = itemListViewDao.selectListF(itemVO);
-		boolean isLastPage = itemVO.isLastPage();
-		Map<String,Object> result = new HashMap<>();
-		result.put("listW", list); //이름 헷갈리면 그냥 다바꿔도됌ㅠ미안할뿐;
-		result.put("isLastPage", isLastPage);
-		Map<Integer, List<Integer>> li = new LinkedHashMap<>();
-		for(ItemListViewDto itemDto : list) {
-			li.put(itemDto.getItemNo(), itemDao.findAttachments(itemDto.getItemNo()));
-		}
-		result.put("attachmentList", li);
-		//System.out.println("result +========= " + result);
-		//return list;
-		return result;
-	}
+//	@RequestMapping("/listW")
+//	public Map<String,Object> listW(ItemVO itemVO){
+//		List<ItemListViewDto> list = itemListViewDao.selectListF(itemVO);
+//		boolean isLastPage = itemVO.isLastPage();
+//		Map<String,Object> result = new HashMap<>();
+//		result.put("listW", list); //이름 헷갈리면 그냥 다바꿔도됌ㅠ미안할뿐;
+//		result.put("isLastPage", isLastPage);
+//		Map<Integer, List<Integer>> li = new LinkedHashMap<>();
+//		for(ItemListViewDto itemDto : list) {
+//			li.put(itemDto.getItemNo(), itemDao.findAttachments(itemDto.getItemNo()));
+//		}
+//		result.put("attachmentList", li);
+//		//System.out.println("result +========= " + result);
+//		//return list;
+//		return result;
+//	}
 	
 	//좋아요
 	@RequestMapping("/check")
