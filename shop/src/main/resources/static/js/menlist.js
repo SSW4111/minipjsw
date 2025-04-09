@@ -28,11 +28,12 @@ $(function() {
 	          items.listM.forEach(item => {
 //					                    <img src= "/attachment/download?attachmentNo=${att}" class="card-img-top" >
 	              const itemCard = $(`
+					<i class="fa-regular fa-heart  ms-auto like-heart" data-item-no="${item.itemNo}"></i>
 					<a class="col me-auto" href="/item/detail?itemNo=${item.itemNo}">
 					                <div class="card " style="width: 18rem;">
 					                    <div class="card-header ">
 					                        <span>${item.itemTitle}</span> 
-					                        <i class="fa-regular fa-heart ms-auto like-heart"></i>
+											
 					                    </div>
 										<div class="card-body">
 									
@@ -57,14 +58,28 @@ $(function() {
 			  /*if("${itemVO.isLastPage}" == true){
 			  }*/
 			  });
+;
+
+
 	      }
 	
+	$(document).on("click", ".like-heart", function(e){
+	var itemNo = $(this).data("item-no");
+	console.log("itemNo:", itemNo); 
+		$.ajax({
+		  url:"/rest/item/action",
+		  method:"post",
+		  data: {itemNo: itemNo},
+		 	success:function(response){
+		  		 $(e.target).removeClass("fa-solid fa-regular")
+		  			.addClass(response.done ? "fa-solid" : "fa-regular");
+		  			
+		  	}
+		  })
+	 });
 	
-	
-		  
-$(".like-heart").click(function(){
-	
-});
+
+ 
 
 
 $(function () {

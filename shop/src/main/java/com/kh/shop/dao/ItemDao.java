@@ -246,7 +246,7 @@ public class ItemDao {
 	
 	//조아요
 	public void itemLike(String usersEmail, int itemNo) {
-		String sql = "insert into item_like(users_email,item_no) value ( ?, ? )";
+		String sql = "insert into item_like(users_email,item_no) values ( ?, ? )";
 		Object[] data = {usersEmail, itemNo};
 		jdbcTemplate.update(sql, data);
 	}
