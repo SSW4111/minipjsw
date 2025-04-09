@@ -15,6 +15,8 @@ import com.kh.shop.dao.DeliveryDao;
 import com.kh.shop.dto.DeliveryDto;
 import com.kh.shop.error.TargetNotFoundException;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/delivery")
 public class DeliveryController {
@@ -28,6 +30,7 @@ public class DeliveryController {
 							Model model){
 		List<DeliveryDto> list = deliveryDao.selectUserDelivery(usersEmail);
 		model.addAttribute(list);
+		System.out.println("list" + list);
 		return "/WEB-INF/views/delivery/list.jsp";
 	}
 	
