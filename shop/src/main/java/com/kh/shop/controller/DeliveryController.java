@@ -24,7 +24,7 @@ public class DeliveryController {
 	@Autowired
 	private DeliveryDao deliveryDao;
 	
-	//유저 한명 자기 주소 리스트보는거
+	//유저 한명 자기 주소 리스트보는거 잘나옴
 	@GetMapping("/list")
 	public String list(@ModelAttribute DeliveryDto deliveryDto, @RequestParam String usersEmail,
 							Model model){
