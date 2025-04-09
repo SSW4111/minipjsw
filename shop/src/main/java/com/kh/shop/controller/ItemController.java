@@ -1,6 +1,7 @@
 package com.kh.shop.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,8 +24,8 @@ import com.kh.shop.dao.ItemDetailViewDao;
 import com.kh.shop.dao.ItemListViewDao;
 import com.kh.shop.dto.ItemDetailViewDto;
 import com.kh.shop.dto.ItemDto;
+import com.kh.shop.dto.ItemIoDto;
 import com.kh.shop.dto.ItemListViewDto;
-import com.kh.shop.dto.ItemListViewDto2;
 import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.service.AttachmentService;
 import com.kh.shop.vo.ItemVO;
@@ -44,6 +45,7 @@ public class ItemController {
 	@Autowired
 	private ItemDetailViewDao itemDetailviewDao;
 	
+
 //	@RequestMapping("/women-list")
 //	public String listW(@ModelAttribute ("itemVO") ItemVO itemVO,Model model ) {
 //		List<ItemListViewDto> listW = itemListViewDao.selectListF(itemVO);
@@ -112,14 +114,29 @@ public class ItemController {
 	//상세는 view만들고 하꾸
 	@GetMapping("/detail")
 	public String detail(@RequestParam int itemNo, Model model) {
-		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo);
-		//List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemDetailViewDto);
+		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo); //dto찾음
 		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
-		model.addAttribute("itemDetailViewDto",itemDetailViewDto);
-		//model.addAttribute("sizeList",sizeList);
 		model.addAttribute("colorList",colorList);
-		System.out.println("color = "+colorList);
-//		model.addAttribute("sizeList",sizeList);
+		//itemIo list부르고
+		List<ItemIoDto>iolist = itemDetailviewDao.selectIoList(itemNo);
+		List<ItemIoDto>iolist999 = new ArrayList<ItemIoDto>();
+		for(ItemIoDto io : iolist) { //리스트 쪼개서 gettotal 불러서 in - out 하고
+			io.setItemIoTotal(io.getTotal()); 
+			for(int i=0; i<iolist.size(); i++) {  //다시합침... 
+				iolist999.add(io); 
+			}
+		}
+		System.out.println(iolist999);
+		model.addAttribute("iolist",iolist999); //최종...
+		//SizeList 
+		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemNo);
+		model.addAttribute("sizeList",sizeList);   //사이즈리스트
+//		System.out.println("size =" + sizeList.size());
+		System.out.println("itemDetailViewDto"+ itemDetailViewDto);
+		
+		model.addAttribute("itemDetailViewDto",itemDetailViewDto); // dto넘김
+//		System.out.println("color = "+colorList);
+
 		return "/WEB-INF/views/item/detail.jsp";
 	}
 	
