@@ -6,8 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.shop.dto.ItemDto;
 import com.kh.shop.dto.UsersDto;
+import com.kh.shop.mapper.ItemMapper;
 import com.kh.shop.mapper.UsersMapper;
+import com.kh.shop.vo.MorePageVO;
 import com.kh.shop.vo.PageVO;
 
 @Repository
@@ -16,10 +19,34 @@ public class UsersDao {
 	@Autowired
 	private UsersMapper usersMapper;
 	
-	//가입수정삭제
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	private ItemMapper itemMapper;
 	
+	//위시리스트
+	public List<ItemDto> itemLikeList(String usersEmail, MorePageVO morePageVO){
+		String sql = "SELECT * FROM ( "
+				+ "    SELECT TMP.*, ROWNUM rn FROM ( "
+				+ "        SELECT i.* FROM item i  "
+				+ "        INNER JOIN item_like l ON i.item_no = l.item_no  "
+				+ "        WHERE l.users_email = ? "
+				+ "        ORDER BY l.item_no ASC "
+				+ "    ) TMP "
+				+ ") "
+				+ "WHERE rn BETWEEN ? AND ?";
+		Object[] data = {usersEmail, morePageVO.getStartRownum(), morePageVO.getFinishRownum()};
+		return jdbcTemplate.query(sql, itemMapper, data);
+	}
+	//위시카운트
+	public int wishCount(String usersEmail,MorePageVO morePageVO) {
+		String sql = "select count(*) from item_like where users_email = ? ";
+		Object[] data = { usersEmail };
+		return jdbcTemplate.queryForObject(sql, int.class,data);
+	}
+	
+	//가입수정삭제
 	public void insert(UsersDto usersDto) {
 		String sql= "insert into users( "
 				+ "users_email, users_pw, users_contact, users_nickname)"
