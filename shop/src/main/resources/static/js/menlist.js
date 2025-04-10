@@ -1,5 +1,5 @@
 $(function() {
-		
+
 	var currentPage = 1;
 	var size = 12;
 	
@@ -9,8 +9,11 @@ $(function() {
 		//console.log("현재페이지3 : " + currentPage);
 		
 	});
-	
+
 	function callPage(){
+		
+		
+
 		$.ajax({
 			url:"/rest/item/listM",
 			method:"post",
@@ -19,13 +22,34 @@ $(function() {
 				displayItems(list);
 			}
 		})
+		
+
+
+		
 	}
+	//목록에있는 itemNoList 뽑기
+//	var itemNoList = [];
+
 	callPage();
 	
-	function displayItems(items) {
+	function displayItems(items) {	
 				const att = items.attachmentList[0];
 	          const container = $('#itemListContainer');
 	          items.listM.forEach(item => {
+			
+					//좋아요 꽉찬하튼지 빈하트인지 처음에 체크해서 모양바꿔야함
+					$.ajax({
+						url:"/rest/item/check",
+						method:"post",
+						data:{itemNo : item.itemNo},
+						success:function(response){
+							$(`.like-heart[data-item-no="${item.itemNo}"]`)
+							.removeClass("fa-solid fa-regular")
+								.addClass(response.done ? "fa-solid" : "fa-regular");	
+						}
+					});
+					
+
 //					                    <img src= "/attachment/download?attachmentNo=${att}" class="card-img-top" >
 	              const itemCard = $(`
 					<i class="fa-regular fa-heart  ms-auto like-heart" data-item-no="${item.itemNo}"></i>
@@ -63,9 +87,13 @@ $(function() {
 
 	      }
 	
+		  
+		  
+	  //이건 좋아요 /좋아요해제
 	$(document).on("click", ".like-heart", function(e){
 	var itemNo = $(this).data("item-no");
-	console.log("itemNo:", itemNo); 
+
+//	console.log("itemNo:", itemNo); 
 		$.ajax({
 		  url:"/rest/item/action",
 		  method:"post",
