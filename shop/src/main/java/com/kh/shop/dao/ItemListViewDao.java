@@ -318,7 +318,7 @@ public class ItemListViewDao {
 //	
 //	
 	
-	//관리자용 All list view
+	//관리자용 All list view (+참고 최신순은 그냥 no desc임) 바꾸고싶음ㅁ바꾸생
 	public List<ItemListViewDto> adminItemList(AdminItemVO adminItemVO){
 		if(adminItemVO.isList()) {
 			String sql = "select * from( "
@@ -338,8 +338,9 @@ public class ItemListViewDao {
 			sql.append("select rownum rn, TMP.* from( ");
 			//서치
 				if(adminItemVO.isSearch()) {
-					sql.append("select * from item_list_view where #1 = ? ");
+					sql.append("select * from item_list_view where instr(" + adminItemVO.getColumn() + ", ?) > 0 ");
 					dataList.add(adminItemVO.getKeyword());
+
 				}
 			//X서치
 				else {
@@ -347,7 +348,7 @@ public class ItemListViewDao {
 				}
 			sql.append("order by ");
 				if(adminItemVO.isHighStar()) {
-				    sql.append("avestar desc ");
+					sql.append("AVESTAR desc");
 				} else if(adminItemVO.isRecent()) {
 				    sql.append("item_no desc ");
 				} else {
@@ -358,11 +359,8 @@ public class ItemListViewDao {
 			sql.append("where rn between ? and ? ");
 			dataList.add(adminItemVO.getStartRownum());
 			dataList.add(adminItemVO.getFinishRownum());
-			
-			String sqlString = sql.toString();
-			sqlString = sqlString.replace("#1", adminItemVO.getColumn());
 
-			return jdbcTemplate.query(sqlString, itemListViewMapper, dataList.toArray());
+			return jdbcTemplate.query(sql.toString(), itemListViewMapper, dataList.toArray());
 		}	
 	}
 	

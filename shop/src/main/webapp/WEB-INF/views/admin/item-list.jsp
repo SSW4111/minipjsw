@@ -41,14 +41,14 @@
 <div>
     <form action="item-list" method="get">
         <select name="column" class="field">
+        <option value="" <c:if test="${empty param.column}">selected</c:if>>선택하세요</option>
             <option value="item_title" ${param.column == 'item_title' ? 'selected' : ''}>이름</option>
             <option value="item_color" ${param.column == 'item_color' ? 'selected' : ''}>컬러</option>
         </select>
         <input type="text" name="keyword" value="${param.keyword}" class="field">
         <button class="btn btn-positive">검색</button>
 
-        <!-- Buttons for sorting by high star and recent -->
-        <button type="submit" name="highstar" value="true" >별점순</button>
+        <button type="submit" name="highStar" value="true" >별점순</button>
         <button type="submit" name="recent" value="true">최신순</button>
     </form>
 </div>
