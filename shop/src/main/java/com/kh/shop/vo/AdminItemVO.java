@@ -22,7 +22,11 @@ public class AdminItemVO extends PageVO{
 		return highStar != null && !highStar.isEmpty();
 	}
 	
-	
+	@Override
+	public boolean isSearch() {
+		return column != null && !column.trim().isEmpty()
+		        && keyword != null && !keyword.trim().isEmpty();
+	}
 	
 	// 순정 리스트
 	@Override

@@ -81,12 +81,7 @@ public class ItemController {
 		model.addAttribute("attachList",attachmentList);
 		 return "redirect:/item/images?itemNo="+itemNo;//어캐넘김?
 	}
-	
-	//등록
-	@GetMapping("/add")
-	public String addItem() {
-		return "/WEB-INF/views/item/add.jsp";
-	}
+
 	
 	//등록고민중(dto추가할거아니면 1라인씩밖에못받는다는 결론 fe컨 필요할듯?)
 	@PostMapping("/add") //사진은 국룰 attach로 받음
