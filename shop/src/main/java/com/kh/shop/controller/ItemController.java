@@ -2,7 +2,9 @@ package com.kh.shop.controller;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.jsoup.Jsoup;
@@ -24,7 +26,6 @@ import com.kh.shop.dao.ItemListViewDao;
 import com.kh.shop.dto.ItemDetailViewDto;
 import com.kh.shop.dto.ItemDto;
 import com.kh.shop.dto.ItemListViewDto;
-import com.kh.shop.dto.ItemListViewDto2;
 import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.service.AttachmentService;
 import com.kh.shop.vo.ItemVO;
@@ -113,13 +114,22 @@ public class ItemController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int itemNo, Model model) {
 		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo);
-		//List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemDetailViewDto);
 		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
+		int attachmentNo = itemDetailviewDao.findAttachment(itemNo); // itemDetailViewDto의 이미지
 		model.addAttribute("itemDetailViewDto",itemDetailViewDto);
-		//model.addAttribute("sizeList",sizeList);
+		model.addAttribute("attachmentNo",attachmentNo);
+		Map<Integer,Integer> atta = new LinkedHashMap<>();
+		for(ItemDetailViewDto color : colorList) {
+			Integer attachNo = itemDetailviewDao.findAttachment(color.getItemNo());
+			Integer imgNo = color.getItemNo();
+			
+			//System.out.println("칼라 넘버" + color.getItemNo());
+			if(attachNo != null) {
+				atta.put(imgNo,attachNo);				
+			}
+		}
+		model.addAttribute("colorListAtta",atta);
 		model.addAttribute("colorList",colorList);
-		System.out.println("color = "+colorList);
-//		model.addAttribute("sizeList",sizeList);
 		return "/WEB-INF/views/item/detail.jsp";
 	}
 	

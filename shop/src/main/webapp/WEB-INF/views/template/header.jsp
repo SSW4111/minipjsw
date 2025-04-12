@@ -89,7 +89,7 @@
                                 <a class="dropdown-item custom-dropdown" href="/mypage/change">개인정보변경</a>
                                 <a class="dropdown-item custom-dropdown" href="#">주문내역</a>
                                 <a class="dropdown-item custom-dropdown" href="#">배송현황</a>
-                                <a class="dropdown-item custom-dropdown" href="/users/join1">회원가입</a>
+                                <a class="dropdown-item custom-dropdown" href="/users/join1" id="join-page">회원가입</a>
                                 <a class="dropdown-item custom-dropdown" id="login-modal-open" data-bs-toggle="modal" data-bs-target="#loginModal" href="#">로그인</a>
                                 <a class="dropdown-item custom-dropdown" style="display:none;"  id="logout-modal-open"   data-bs-toggle="modal" data-bs-target="#logoutModal" href="#">로그아웃</a>
                             </div>

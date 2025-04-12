@@ -56,5 +56,32 @@ public class ItemDetailViewDao {
 		List<ItemDetailViewDto> sizeList = jdbcTemplate.query(sql, itemSizeMapper,data);
 		return sizeList.isEmpty()? null : sizeList;
 	}
+	
+
+	public Integer findAttachment(int itemNo) {
+		String sql = "select attachment_no from item_images "
+				+ "where item_no = ?";
+		Object[]data = {itemNo};
+//		System.out.println("attachment No : " + jdbcTemplate.queryForObject(sql, int.class,data));
+		return jdbcTemplate.queryForObject(sql, int.class,data);
+	}
+	
+	
+	public void connect(int attachmentNo,int itemNo) {
+		String sql = "insert into item_images(attachment_no, users_email)"
+				+ " values(?,?)";
+		Object[] data = {attachmentNo,itemNo};
+		jdbcTemplate.update(sql,data);
+	}
 }
+
+
+
+
+
+
+
+
+
+
  

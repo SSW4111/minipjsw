@@ -25,8 +25,8 @@ public class ItemVO extends PageVO{
 	
 	public boolean isList() {
 
-		System.out.println("column = " + column);
-		System.out.println("keyword = " + keyword);
+	//	System.out.println("column = " + column);
+	//	System.out.println("keyword = " + keyword);
 		return !isSearch() && !colorCheck() && !sizeCheck();
 	}
 	
