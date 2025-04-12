@@ -20,4 +20,5 @@ public class ItemDetailViewDto {
 	private int itemIoTotal;
 	private int itemLike;
 	private String sizeName;
+	private int itemPrice;
 }

@@ -76,10 +76,10 @@ $(function() {
 	    method: "get",
 	    success: function(response) {
 	        if (response.loggedIn) {
-	            $("#login-modal-open").hide();
+	            $("#login-modal-open, #join-page").hide();
 	            $("#logout-modal-open").show();
 	        } else {
-	            $("#login-modal-open").show();
+	            $("#login-modal-open, #join-page").fadeIn();
 	            $("#logout-modal-open").hide();
 	        }
 	    }

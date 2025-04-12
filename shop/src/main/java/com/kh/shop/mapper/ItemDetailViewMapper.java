@@ -26,6 +26,7 @@ public class ItemDetailViewMapper implements RowMapper<ItemDetailViewDto>{
 				.itemIoTotal(rs.getInt("item_io_total"))
 				.itemLike(rs.getInt("item_like"))
 				.sizeName(rs.getString("size_name"))
+				.itemPrice(rs.getInt("item_price"))
 				.build();
 	}
 		

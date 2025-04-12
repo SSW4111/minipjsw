@@ -39,24 +39,16 @@ public class UsersRestController {
 	
 	@PostMapping("/login")
 	public boolean login(@ModelAttribute UsersDto usersDto, HttpSession session) {
-		
 		String ema = usersDto.getUsersEmail();
-		//System.out.println(ema);
 		UsersDto findDto = usersDao.selectOne(ema);
 
-
-//		System.out.println("dkssdsdfs");
 		if (findDto ==null) {
-			
 			return false;
 		}
 		boolean isValid = findDto.getUsersPw().equals(usersDto.getUsersPw());
 		if(isValid) {
 			session.setAttribute("usersEmail", findDto.getUsersEmail());
 			session.setAttribute("usersLevel",findDto.getUsersLevel());
-//			String em = (String) session.getAttribute("usersEmail");
-//					System.out.println("userEmail: em " +em);
-			
 			return true;
 		}
 		return false;

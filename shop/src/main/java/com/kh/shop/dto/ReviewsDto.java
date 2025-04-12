@@ -14,7 +14,8 @@ public class ReviewsDto {
   private String reviewsContent;
   private Integer reviewsStar;
   private Timestamp reviewsWtime;
-  private String usersEmail;
+  private String usersNickname;
   private int itemNo;
+  private String usersEmail;
 }
 

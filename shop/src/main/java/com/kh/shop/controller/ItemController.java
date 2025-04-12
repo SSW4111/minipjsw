@@ -3,7 +3,9 @@ package com.kh.shop.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.jsoup.Jsoup;
@@ -114,6 +116,25 @@ public class ItemController {
 	//상세는 view만들고 하꾸
 	@GetMapping("/detail")
 	public String detail(@RequestParam int itemNo, Model model) {
+
+		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo);
+		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
+		int attachmentNo = itemDetailviewDao.findAttachment(itemNo); // itemDetailViewDto의 이미지
+		model.addAttribute("itemDetailViewDto",itemDetailViewDto);
+		model.addAttribute("attachmentNo",attachmentNo);
+		Map<Integer,Integer> atta = new LinkedHashMap<>();
+		for(ItemDetailViewDto color : colorList) {
+			Integer attachNo = itemDetailviewDao.findAttachment(color.getItemNo());
+			Integer imgNo = color.getItemNo();
+			
+			//System.out.println("칼라 넘버" + color.getItemNo());
+			if(attachNo != null) {
+				atta.put(imgNo,attachNo);				
+			}
+		}
+		model.addAttribute("colorListAtta",atta);
+		model.addAttribute("colorList",colorList);
+
 		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo); //dto찾음
 		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
 		model.addAttribute("colorList",colorList);
@@ -136,6 +157,7 @@ public class ItemController {
 		
 		model.addAttribute("itemDetailViewDto",itemDetailViewDto); // dto넘김
 //		System.out.println("color = "+colorList);
+
 
 		return "/WEB-INF/views/item/detail.jsp";
 	}

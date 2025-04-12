@@ -60,6 +60,24 @@ public class ItemDetailViewDao {
 		return sizeList.isEmpty()? null : sizeList;
 	}
 	
+
+
+	public Integer findAttachment(int itemNo) {
+		String sql = "select attachment_no from item_images "
+				+ "where item_no = ?";
+		Object[]data = {itemNo};
+//		System.out.println("attachment No : " + jdbcTemplate.queryForObject(sql, int.class,data));
+		return jdbcTemplate.queryForObject(sql, int.class,data);
+	}
+	
+	
+	public void connect(int attachmentNo,int itemNo) {
+		String sql = "insert into item_images(attachment_no, users_email)"
+				+ " values(?,?)";
+		Object[] data = {attachmentNo,itemNo};
+		jdbcTemplate.update(sql,data);
+	}
+
 	//dto 리스트가필요한데
 	public List<ItemIoDto> selectIoList(int itemNo){
 		String sql="select * from item_io where item_io_no= ?";
@@ -70,4 +88,14 @@ public class ItemDetailViewDao {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
  

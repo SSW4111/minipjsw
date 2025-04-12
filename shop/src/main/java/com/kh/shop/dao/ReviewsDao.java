@@ -32,10 +32,10 @@ public class ReviewsDao {
 	
 
 	public void insert(ReviewsDto reviewsDto) {
-		String sql = "insert into reviews(reviews_no,reviews_title,reviews_content, reviews_star, item_no) "
-				+ "values(?, ?, ?, ?, ?)";
+		String sql = "insert into reviews(reviews_no, reviews_title, reviews_content, reviews_star, users_nickname, item_no, users_email) "
+				+ "values(?, ?, ?, ?, ?, ?, ?)";
 		Object[] data = {reviewsDto.getReviewsNo(),reviewsDto.getReviewsTitle(),reviewsDto.getReviewsContent(),
-				 			reviewsDto.getReviewsStar(), reviewsDto.getItemNo()};
+				 			reviewsDto.getReviewsStar(), reviewsDto.getUsersNickname(), reviewsDto.getItemNo(), reviewsDto.getUsersEmail()};
 		jdbcTemplate.update(sql,data);
 	}
 	

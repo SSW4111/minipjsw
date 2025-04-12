@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,8 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.shop.dao.ReviewsDao;
 import com.kh.shop.dao.ReviewsListViewDao;
+import com.kh.shop.dao.UsersDao;
 import com.kh.shop.dto.ReviewsDto;
 import com.kh.shop.dto.ReviewsListViewDto;
+import com.kh.shop.dto.UsersDto;
 import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.service.AttachmentService;
 import com.kh.shop.vo.ItemVO;
@@ -33,6 +34,9 @@ public class ReviewsRestController {
 	private ReviewsDao reviewsDao;
 	
 	@Autowired
+	private UsersDao usersDao;
+	
+	@Autowired
 	private ReviewsListViewDao reviewsListViewDao;
 	
 	@Autowired
@@ -40,12 +44,21 @@ public class ReviewsRestController {
 
 	
 	@RequestMapping("/list") 	//+더보기할까바 item가져옴
-	public Map<String,Object> list(ItemVO itemVO,@RequestParam int itemNo){
+	public Map<String,Object> list(ItemVO itemVO,@RequestParam int itemNo, HttpSession session){
 		List<ReviewsListViewDto> list = reviewsListViewDao.selectList(itemNo, itemVO); //1
+		//System.out.println("list입니다 "+list);
+		
 		int count = reviewsDao.count(itemNo); //댓글수
 		Map<String,Object> result = new HashMap<>();
 		result.put("list", list); //리스트
 		result.put("count", count); //댓긁슈
+		String userEmail = (String) session.getAttribute("usersEmail");
+		String userNick = (String) session.getAttribute("usersNickname");
+		result.put("userEmailValid", userEmail);
+	//	result.put("userNicknameValid", userNick);
+	//	System.out.println("useremail = " + userEmail);
+		//System.out.println("usernickname = " + userNick);
+		//System.out.println("비동기 통신 결과 리뷰"+result);
 		return result;
 	}
 	
@@ -69,7 +82,7 @@ public class ReviewsRestController {
 		}
 
 		int reviewsNo = reviewsDao.sequence();
-
+		
 		// DTO 수동 세팅
 		ReviewsDto reviewsDto = new ReviewsDto();
 		reviewsDto.setReviewsNo(reviewsNo);
@@ -78,7 +91,10 @@ public class ReviewsRestController {
 		reviewsDto.setReviewsContent(reviewsContent);
 		reviewsDto.setReviewsStar(reviewsStar);
 		reviewsDto.setItemNo(itemNo);
-
+		UsersDto usersDto = usersDao.selectOne(usersEmail);
+		String nick = usersDto.getUsersNickname();
+		reviewsDto.setUsersNickname(nick);
+		System.out.println(reviewsDto);
 		reviewsDao.insert(reviewsDto);
 
 		// 첨부파일
@@ -90,24 +106,26 @@ public class ReviewsRestController {
 		}
 		//결과보냄
 		result.put("success", true);
+		
 		return result;
 	}
 
 	@PostMapping("/delete")
 	public Map<String,Object> delete(@RequestParam int reviewsNo) {
+		System.out.println("deleteteetetete");
 		Map<String, Object> result = new HashMap<>();
-		try {
-			List<Integer>attachmentList = reviewsDao.findAttachments(reviewsNo);
-			if (attachmentList != null && !attachmentList.isEmpty()) {
-				for(int attachment : attachmentList) {
-					attachmentService.delete(attachment);
-				}
-			 }
-			reviewsDao.delete(reviewsNo);
-		}
-		catch(Exception e) {	
-			result.put("success", false);
-		}  
+//		try { 일단 뺐음
+//			List<Integer>attachmentList = reviewsDao.findAttachments(reviewsNo);
+//			if (attachmentList != null && !attachmentList.isEmpty()) {
+//				for(int attachment : attachmentList) {
+//					attachmentService.delete(attachment);
+//				}
+//			 }
+//		}
+//		catch(Exception e) {	
+//			result.put("success", false);
+//		}  
+		reviewsDao.delete(reviewsNo);
 		result.put("success", true);
 		return result;
 	}
