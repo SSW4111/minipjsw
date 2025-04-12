@@ -46,6 +46,8 @@ public class WishRestController {
 	Map<String, Object> result = new HashMap<>();
 	result.put("list",list); //리스트
 	result.put("totalCount",totalCount);  //총 위시개수
+	result.put("isLastPage", morePaveVO.isLastPage());
+	
 	return result;
 	}
 	

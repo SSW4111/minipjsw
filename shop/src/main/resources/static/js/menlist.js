@@ -52,17 +52,17 @@ $(function() {
 
 //					                    <img src= "/attachment/download?attachmentNo=${att}" class="card-img-top" >
 	              const itemCard = $(`
-					<i class="fa-regular fa-heart  ms-auto like-heart" data-item-no="${item.itemNo}"></i>
-					<a class="col me-auto" href="/item/detail?itemNo=${item.itemNo}">
+					<div class="col me-auto" style="text-decoration:none">
 					                <div class="card " style="width: 18rem;">
-					                    <div class="card-header ">
-					                        <span>${item.itemTitle}</span> 
+					                    <div class="card-header d-flex">
+					                       <a  href="/item/detail?itemNo=${item.itemNo}"> <span>${item.itemTitle}</span> </a>
+					<i class="fa-regular fa-heart  ms-auto like-heart" data-item-no="${item.itemNo}"></i>
 											
 					                    </div>
-										<div class="card-body">
+										<a class="card-body" href="/item/detail?itemNo=${item.itemNo}">
 									
 											<img src= "https://placehold.co/300" class="card-img-top" >
-										</div>
+										</a>
 					                    <div class="card-footer">
 					                        <ul class="list-group">
 					                            <li class="list-group-item">${item.itemCategory}</li>
@@ -72,7 +72,7 @@ $(function() {
 					                        </ul>
 					                    </div>
 					                </div>
-					            </a>
+					            </div>
 	              `);
 	              
 	              container.append(itemCard);

@@ -117,10 +117,10 @@ public class ItemController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int itemNo, Model model) {
 
-		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo);
-		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
+		ItemDetailViewDto itemDetailViewDto1 = itemDetailviewDao.selectOne(itemNo);
+		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto1);
 		int attachmentNo = itemDetailviewDao.findAttachment(itemNo); // itemDetailViewDto의 이미지
-		model.addAttribute("itemDetailViewDto",itemDetailViewDto);
+		model.addAttribute("itemDetailViewDto",itemDetailViewDto1);
 		model.addAttribute("attachmentNo",attachmentNo);
 		Map<Integer,Integer> atta = new LinkedHashMap<>();
 		for(ItemDetailViewDto color : colorList) {
@@ -136,7 +136,7 @@ public class ItemController {
 		model.addAttribute("colorList",colorList);
 
 		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo); //dto찾음
-		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
+	//	List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
 		model.addAttribute("colorList",colorList);
 		//itemIo list부르고
 		List<ItemIoDto>iolist = itemDetailviewDao.selectIoList(itemNo);
@@ -147,13 +147,13 @@ public class ItemController {
 				iolist999.add(io); 
 			}
 		}
-		System.out.println(iolist999);
+		//System.out.println(iolist999);
 		model.addAttribute("iolist",iolist999); //최종...
 		//SizeList 
 		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemNo);
 		model.addAttribute("sizeList",sizeList);   //사이즈리스트
 //		System.out.println("size =" + sizeList.size());
-		System.out.println("itemDetailViewDto"+ itemDetailViewDto);
+	//	System.out.println("itemDetailViewDto"+ itemDetailViewDto);
 		
 		model.addAttribute("itemDetailViewDto",itemDetailViewDto); // dto넘김
 //		System.out.println("color = "+colorList);

@@ -99,7 +99,7 @@
                         <li><a href="#" class="nav-link"><i class="fa-solid fa-shopping-cart me-1"></i></a></li>
                     </ul>
                     <ul class="navbar-nav">
-                        <li><a href="#" class="nav-link"><i class="fa-solid fa-heart me-1"></i></a></li>
+                        <li><a href="/users/wish" class="nav-link"><i class="fa-solid fa-heart me-1"></i></a></li>
                     </ul>
                 <!-- </div> -->
             <!-- </div> -->

@@ -105,6 +105,11 @@ public class UsersController {
 		return "/WEB-INF/views/users/join-Finish.jsp";
 	}
 	
+	@GetMapping("/wish")
+	public String wish() {
+		return "/WEB-INF/views/users/wishlist.jsp";
+	}
+	
 	//--------------------------------------------------------------------------------------
 
 	//로긘
