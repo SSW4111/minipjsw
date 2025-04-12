@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
    <h1>item등록</h1>
-   <form action="add" method="post"  enctype="multipart/form-data">
+   <form action="item-add" method="post"  enctype="multipart/form-data">
    <input type="file" name="attach" multiple>
      <br>이름
    <input type="text" name="itemTitle">

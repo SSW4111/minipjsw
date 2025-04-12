@@ -66,10 +66,10 @@ public class ItemListViewDao {
 //		  //      System.out.println("colorwerwerwerwerwer = " + itemVO.getColor());
 //			}
 			//사이즈선택이면 
-			if(itemVO.sizeCheck()) {
-				 sql.append(" AND item_size = ? ");
-			     dataList.add(itemVO.getClothesSize());
-			}
+//			if(itemVO.sizeCheck()) {
+//				 sql.append(" AND item_size = ? ");
+//			     dataList.add(itemVO.getClothesSize());
+//			}
 			sql.append(" order by item_no desc) TMP) where rn between ? and ?");
 //			System.out.println("itemtieitietmietiemtietmiemi"+itemVO.getColor());
 //			System.out.println("sqlsqlsqlsqlsqlsql = "+sql.toString());
@@ -163,10 +163,10 @@ public class ItemListViewDao {
 		        dataList.add(itemVO.getColor());
 			}
 			//사이즈선택이면 
-			if(itemVO.sizeCheck()) {
-				 sql.append(" AND item_size = ? ");
-			     dataList.add(itemVO.getClothesSize());
-			}
+//			if(itemVO.sizeCheck()) {
+//				 sql.append(" AND item_size = ? ");
+//			     dataList.add(itemVO.getClothesSize());
+//			}
 			sql.append(" order by item_no desc) TMP) where rn between ? and ?");
 		
 			dataList.add(itemVO.getStartRownum());

@@ -82,31 +82,7 @@ public class ItemController {
 		 return "redirect:/item/images?itemNo="+itemNo;//어캐넘김?
 	}
 
-	
-	//등록고민중(dto추가할거아니면 1라인씩밖에못받는다는 결론 fe컨 필요할듯?)
-	@PostMapping("/add") //사진은 국룰 attach로 받음
-	public String addItem(@ModelAttribute ItemDto itemDto, 
-            @RequestParam List<MultipartFile> attach) throws IllegalStateException, IOException {
-		int itemNo = itemDao.sequence();
-		//System.out.println(itemDao.findAttachments(18));
-		itemDto.setItemNo(itemNo);
-		itemDao.insert(itemDto);
 
-		if (!attach.isEmpty()) { //없는경우는 없겠지만 그냥..
-			// 리스트에서 하나씩빼서저장
-		   List<Integer> attachList = attachmentService.saveList(attach); 
-		   for (int attachmentNo : attachList) {
-		       itemDao.connect(itemNo, attachmentNo);
-		   }
-		}
-		
-		return "redirect:addFinish"; 
-		}
-	//등록완료 빼도됌 모달해도됌 whatever you wantzzz
-	@RequestMapping("/addFinish")
-	public String addFinish() {
-		return "/WEB-INF/views/item/addFinish.jsp";
-	}
 	
 	//상세는 view만들고 하꾸
 	@GetMapping("/detail")
@@ -134,16 +110,11 @@ public class ItemController {
 	//	List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
 		model.addAttribute("colorList",colorList);
 		//itemIo list부르고
-		List<ItemIoDto>iolist = itemDetailviewDao.selectIoList(itemNo);
-		List<ItemIoDto>iolist999 = new ArrayList<ItemIoDto>();
-		for(ItemIoDto io : iolist) { //리스트 쪼개서 gettotal 불러서 in - out 하고
-			io.setItemIoTotal(io.getTotal()); 
-			for(int i=0; i<iolist.size(); i++) {  //다시합침... 
-				iolist999.add(io); 
-			}
+		List<ItemIoDto> iolist = itemDetailviewDao.selectIoList(itemNo);
+		for (ItemIoDto io : iolist) {
+		    io.setItemIoTotal(io.getTotal());
 		}
-		//System.out.println(iolist999);
-		model.addAttribute("iolist",iolist999); //최종...
+		model.addAttribute("iolist",iolist);
 		//SizeList 
 		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemNo);
 		model.addAttribute("sizeList",sizeList);   //사이즈리스트
@@ -159,68 +130,6 @@ public class ItemController {
 	
 	
 	
-	//삭제
-	@PostMapping("/delete")
-	public String delete(@RequestParam int itemNo) {
-		try {
-		List<Integer> attachmentList = itemDao.findAttachments(itemNo);
-		for(int attachment : attachmentList) {
-		attachmentService.delete(attachment);
-		}
-		}
-		catch(Exception e) {}
-		itemDao.delete(itemNo);
-		return "redirect:list";
-	}
 	
-	//기본수정 
-	//얘는 나중에io붙으면 생각을 한번더 해봐야할거같은데 큼
-	//만약에 재고까지 수정하게 되면
-	//itemDetailView 기준으로 update 로직을 다시 짜야 함
-	@GetMapping("/update")
-	public String update(@RequestParam int itemNo, Model model) {
-		ItemDto itemDto = itemDao.selectOne(itemNo);
-		if(itemDto == null) {
-			throw new TargetNotFoundException("존재하지 않는 상품정보"); //404
-		}
-		model.addAttribute(itemDto);
-		return "/WEB-INF/views/item/update.jsp";
-	}
-
-	@PostMapping("/update")
-	public String update(@ModelAttribute ItemDto itemDto) {
-		int itemNo = itemDto.getItemNo();
-		ItemDto originDto = itemDao.selectOne(itemNo);
-		
-		if(originDto == null) {
-			throw new TargetNotFoundException("존재하지 않는 상품정보"); //db에 데이터없음
-		}
-		//content섬머노트 퍼옴 근데 상품설명이미지1개만쓸거면 반복문제거가능
-		Set<Integer> before = new HashSet<>();
-		Document beforeDocument = Jsoup.parse(originDto.getItemContent());
-		//HTML 태그 하나를 다룰 수 있는 객체 element  
-		for(Element element : beforeDocument.select(".summernote-img")) {
-			int attachmentNo = Integer.parseInt(element.attr("data-attachment-no"));
-			before.add(attachmentNo);
-		}
-		
-		Set<Integer> after = new HashSet<>();
-		Document afterDocument = Jsoup.parse(itemDto.getItemContent());
-		for(Element element : afterDocument.select(".summernote-img")) {
-			int attachmentNo = Integer.parseInt(element.attr("data-attachment-no"));
-			after.add(attachmentNo);
-		}
-		//우리 이미지리스트 이렇게 ㅎ ㅏ면되지않을까?
-		Set<Integer> minus = new HashSet<>(before);
-		minus.removeAll(after);
-		//구해진 차집합의 내용만큼 이미지를 제거
-		for(int attachmentNo : minus) {
-			attachmentService.delete(attachmentNo);
-		}
-		
-		itemDao.update(itemDto);
-		return "redirect:detail?itemNo="+itemDto.getItemNo();
-		
-	}
 
 }

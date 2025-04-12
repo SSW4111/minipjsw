@@ -21,6 +21,7 @@ public class ItemIoMapper implements RowMapper<ItemIoDto>{
 				.itemIoOut(rs.getInt("item_io_out"))
 				.itemIoOutTime(rs.getTimestamp("item_io_out_time"))
 				.sizeName(rs.getString("size_name"))
+				.itemNo(rs.getInt("item_no"))
 				.build();
 					
 	}

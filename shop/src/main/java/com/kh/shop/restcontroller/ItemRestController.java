@@ -32,32 +32,11 @@ public class ItemRestController {
 	
 	@Autowired
 	private ItemDao itemDao;
-	@Autowired
-	private AttachmentService attachmentService;
+
 	
 	@Autowired
 	private ItemListViewDao itemListViewDao;
-//근데 얘가 썸머노트 쓰나?
-	//썸머노트파일1
-	@PostMapping("/upoad")
-	public int upload(@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
-		if(attach.isEmpty()) {
-			throw new TargetNotFoundException("첨부파일이 없습니다");
-		}
-		return attachmentService.save(attach);
-	}
-	//섬모노트파일여러개
-	@PostMapping("/uploads")
-	public List<Integer> uploads(@RequestParam(value="attach")List<MultipartFile>attachList) throws IllegalStateException, IOException{
-		List<Integer> numbers = new ArrayList<>();
-		for(MultipartFile attach : attachList) {
-			if(attach.isEmpty()) continue;
-			int attachmentNo = attachmentService.save(attach);
-			numbers.add(attachmentNo);
-		}
-		return numbers;
-	}
-	
+
 	//시간남으면 최적화해서 한번에 보낼수있나 생각해봄..
 //	@RequestMapping("/list")
 //	public Map<String, Object> listAll(ItemVO itemVO){
