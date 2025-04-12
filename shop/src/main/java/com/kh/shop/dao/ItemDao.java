@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.shop.dto.ItemDto;
 import com.kh.shop.mapper.ItemMapper;
+import com.kh.shop.mapper.LikeListMapper;
 import com.kh.shop.vo.ItemVO;
 
 @Repository
@@ -268,6 +269,17 @@ public class ItemDao {
 		Object[] data = {itemNo};
 		return jdbcTemplate.queryForObject(sql, int.class, data);
 	}
+	
+	@Autowired
+	private LikeListMapper likeListMapper;
+	public List<ItemDto> selectItemLike(String usersEamil){
+		String sql = "select item_no from item_like where USERS_EMAIL = ?";
+		Object[] data = {usersEamil};
+		return jdbcTemplate.query(sql, likeListMapper, data);
+	}
+	
+	
+	
 	//조아요개수갱신
 	public boolean updateItemLike(int itemNo, int count) {
 		String sql = "update item set item_like = ? where item_no =?";

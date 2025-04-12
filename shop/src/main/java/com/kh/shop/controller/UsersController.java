@@ -107,7 +107,7 @@ public class UsersController {
 	
 	@GetMapping("/wish")
 	public String wish() {
-		return "/WEB-INF/views/users/wishlist.jsp";
+		return "/WEB-INF/views/users/wishList.jsp";
 	}
 	
 	//--------------------------------------------------------------------------------------

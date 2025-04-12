@@ -1,5 +1,14 @@
 $(function() {
+	
 
+	
+	
+	
+	
+	
+	
+	
+	
 		function callPage() {
 		var itemNum = $("#itemNO").val();
 
@@ -9,6 +18,7 @@ $(function() {
 			data: { itemNo: itemNum },
 			success: function(list) {
 				if(list != null){
+					displayAttachments();
 				displayItems(list);
 				}
 			},
@@ -122,6 +132,7 @@ $(function() {
 		
 	callPage();
 });
+
 
 
 

@@ -20,6 +20,9 @@ $(function() {
 			data:{page:currentPage, size:size},
 			success:function(list){
 				displayItems(list);
+				//console.log("dkssud");
+				//console.log(list.attachmentList[118]);
+				// attachmentList 싹 다 뽑힘
 			}
 		})
 		
@@ -32,35 +35,33 @@ $(function() {
 
 	callPage();
 	
-	function displayItems(items) {	
-				const att = items.attachmentList[0];
-	          const container = $('#itemListContainer');
-	          items.listM.forEach(item => {
-			
-					//좋아요 꽉찬하튼지 빈하트인지 처음에 체크해서 모양바꿔야함
-					$.ajax({
-						url:"/rest/item/check",
-						method:"post",
-						data:{itemNo : item.itemNo},
-						success:function(response){
-							$(`.like-heart[data-item-no="${item.itemNo}"]`)
-							.removeClass("fa-solid fa-regular")
-								.addClass(response.done ? "fa-solid" : "fa-regular");	
-						}
-					});
-					
-
-//					                    <img src= "/attachment/download?attachmentNo=${att}" class="card-img-top" >
+	function displayItems(items) {    
+	            const container = $('#itemListContainer');
+	            items.listM.forEach(item => {
+	          
+	                  //좋아요 꽉찬하튼지 빈하트인지 처음에 체크해서 모양바꿔야함
+	                  $.ajax({
+	                      url:"/rest/item/check",
+	                      method:"post",
+	                      data:{itemNo : item.itemNo},
+	                      success:function(response){
+	                          $(`.like-heart[data-item-no="${item.itemNo}"]`)
+	                          .removeClass("fa-solid fa-regular")
+	                              .addClass(response.done ? "fa-solid" : "fa-regular");    
+	                      }
+	                  });
+				
 	              const itemCard = $(`
 					<div class="col me-auto" style="text-decoration:none">
 					                <div class="card " style="width: 18rem;">
 					                    <div class="card-header d-flex">
 					                       <a  href="/item/detail?itemNo=${item.itemNo}"> <span>${item.itemTitle}</span> </a>
-					<i class="fa-regular fa-heart  ms-auto like-heart" data-item-no="${item.itemNo}"></i>
+					
+										   <i class="fa-regular fa-heart  ms-auto like-heart" data-item-no="${item.itemNo}"></i>
 											
 					                    </div>
 										<a class="card-body" href="/item/detail?itemNo=${item.itemNo}">
-									
+											<div id="attachList"></div>
 											<img src= "https://placehold.co/300" class="card-img-top" >
 										</a>
 					                    <div class="card-footer">
@@ -69,24 +70,31 @@ $(function() {
 					                            <li class="list-group-item">${item.itemDetail}</li>
 					                            <li class="list-group-item">${item.itemColor}</li>
 					                            <li class="list-group-item">${item.itemNo}</li>
+												
 					                        </ul>
 					                    </div>
 					                </div>
 					            </div>
 	              `);
-	              
+				  const attachContainer = $('#attachList');
+				//  const putAttachList = $(`
+					//<img src= "/attachment/download?attachmentNo=${items.attachmentList[item.itemNo]}" class="card-img-top" >
+					//`);
+				  
+//				  console.log(items.attachmentList[118]); 3개 뽑힘
+				 // attachContainer.append(putAttachList);
 	              container.append(itemCard);
 				  if(items.isLastPage == false){
 					$(".more-btn").hide();
 				  }
-			  /*if("${itemVO.isLastPage}" == true){
-			  }*/
 			  });
-;
-
 
 	      }
 	
+		
+	
+		  
+		  
 		  
 		  
 	  //이건 좋아요 /좋아요해제
