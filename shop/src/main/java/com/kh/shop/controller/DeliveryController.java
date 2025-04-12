@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.kh.shop.dao.DeliveryDao;
 import com.kh.shop.dto.DeliveryDto;
 import com.kh.shop.error.TargetNotFoundException;
+import com.kh.shop.vo.MorePageVO;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -27,7 +28,7 @@ public class DeliveryController {
 	//유저 한명 자기 주소 리스트보는거 잘나옴
 	@GetMapping("/list")
 	public String list(@ModelAttribute DeliveryDto deliveryDto, @RequestParam String usersEmail,
-							Model model){
+							Model model, MorePageVO morePageVO){
 		List<DeliveryDto> list = deliveryDao.selectUserDelivery(usersEmail);
 		model.addAttribute(list);
 		System.out.println("list" + list);
