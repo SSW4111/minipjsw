@@ -1,5 +1,6 @@
 package com.kh.shop.restcontroller;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -143,6 +143,9 @@ public class ItemRestController {
 	@RequestMapping("/action")
 	public Map<String,Object> action(@RequestParam int itemNo, HttpSession session){
 		String usersEmail = (String)session.getAttribute("usersEmail");
+		if (usersEmail == null) {
+		    throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다");
+		}
 		boolean done = itemDao.checkItemLike(usersEmail, itemNo);
 		if(done) {
 			itemDao.deleteItemLike(usersEmail, itemNo);

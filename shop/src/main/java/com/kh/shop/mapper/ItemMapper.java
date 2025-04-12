@@ -15,14 +15,14 @@ public class ItemMapper implements RowMapper<ItemDto> {
 	public ItemDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		return ItemDto.builder()
 				.itemNo(rs.getInt("item_no"))
-				.itemColor(rs.getString("item_color"))
-				.itemSize(rs.getString("item_size"))
 				.itemTitle(rs.getString("item_title"))
-				.itemContent(rs.getString("item_content"))
 				.itemGender(rs.getString("item_gender"))
 				.itemCategory(rs.getString("item_category"))
 				.itemDetail(rs.getString("item_detail"))
 				.itemLike(rs.getInt("item_like"))
+				.itemColor(rs.getString("item_color"))
+				.itemPrice(rs.getInt("item_price"))
+				.itemContent(rs.getString("item_content"))
 				.build();
 	}
 

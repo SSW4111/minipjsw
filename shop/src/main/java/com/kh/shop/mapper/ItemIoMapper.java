@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.kh.shop.dto.ItemIoDto;
 
 @Component
-public class itemIoMapper implements RowMapper<ItemIoDto>{
+public class ItemIoMapper implements RowMapper<ItemIoDto>{
 
 	@Override
 	public ItemIoDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -18,8 +18,9 @@ public class itemIoMapper implements RowMapper<ItemIoDto>{
 				.itemIoTotal(rs.getInt("item_io_total"))
 				.itemIoIn(rs.getInt("item_io_in"))
 				.itemIoInTime(rs.getTimestamp("item_io_in_time"))
-				.itemIoOut(rs.getInt("item_in_out"))
-				.itemIoOutTIme(rs.getTimestamp("item_it_out_time"))
+				.itemIoOut(rs.getInt("item_io_out"))
+				.itemIoOutTime(rs.getTimestamp("item_io_out_time"))
+				.sizeName(rs.getString("size_name"))
 				.build();
 					
 	}

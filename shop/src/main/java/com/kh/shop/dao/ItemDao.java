@@ -246,7 +246,7 @@ public class ItemDao {
 	
 	//조아요
 	public void itemLike(String usersEmail, int itemNo) {
-		String sql = "insert into item_like(users_email,item_no) value ( ?, ? )";
+		String sql = "insert into item_like(users_email,item_no) values ( ?, ? )";
 		Object[] data = {usersEmail, itemNo};
 		jdbcTemplate.update(sql, data);
 	}
@@ -281,6 +281,29 @@ public class ItemDao {
 		Object[] data = {itemNo, itemNo};
 		return jdbcTemplate.update(sql,data)>0;
 	}
+	
+	
+	//장바구니 넣기((좋아요)) //장바구니 버튼 클릭시 들어가는것만됨 삭제는 리스트에서만
+	public void cartInsert(int itemNo, String usersEmail) {
+		String sql = "insert into cart(item_no, users_email) values(?, ?)";
+		Object[] data = {itemNo, usersEmail};
+		jdbcTemplate.update(sql,data);
+	}
+	
+//	//장바구니 리스트 itemno  이거는 버림 join해서 타이틀이랑 더많이가져와서 최신화 하는게 낫겠다생각
+//	public List<Integer>cartList(String usersEmail){
+//		String sql="select * from cart where users_email =?";
+//		Object[] data = {usersEmail};
+//		return jdbcTemplate.queryForList(sql,Integer.class, data);
+//	}
+	
+	//장바구니 아이템 삭제((좋아요해제))
+	public boolean deleteCart(int itemNo, String usersEmail) {
+		String sql = "delete from cart where item_no=? and users_email=?";
+		Object[] data = {itemNo, usersEmail};
+		return jdbcTemplate.update(sql,data)>0;
+		}
+	
 }
 
 	 

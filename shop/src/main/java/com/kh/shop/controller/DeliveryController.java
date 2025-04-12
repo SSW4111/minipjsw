@@ -15,6 +15,8 @@ import com.kh.shop.dao.DeliveryDao;
 import com.kh.shop.dto.DeliveryDto;
 import com.kh.shop.error.TargetNotFoundException;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 @RequestMapping("/delivery")
 public class DeliveryController {
@@ -22,12 +24,13 @@ public class DeliveryController {
 	@Autowired
 	private DeliveryDao deliveryDao;
 	
-	//유저 한명 자기 주소 리스트보는거
+	//유저 한명 자기 주소 리스트보는거 잘나옴
 	@GetMapping("/list")
 	public String list(@ModelAttribute DeliveryDto deliveryDto, @RequestParam String usersEmail,
 							Model model){
 		List<DeliveryDto> list = deliveryDao.selectUserDelivery(usersEmail);
 		model.addAttribute(list);
+		System.out.println("list" + list);
 		return "/WEB-INF/views/delivery/list.jsp";
 	}
 	

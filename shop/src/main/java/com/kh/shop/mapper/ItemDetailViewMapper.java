@@ -41,6 +41,7 @@ public ItemDetailViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 			.build();
 	}
 	}
+
 @Component
 public class ItemSizeMapper implements RowMapper<ItemDetailViewDto>{
 
@@ -48,6 +49,7 @@ public class ItemSizeMapper implements RowMapper<ItemDetailViewDto>{
 	public ItemDetailViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 	
 		return ItemDetailViewDto.builder()
+				.sizeName(rs.getString("size_name"))
 				.build();
 	}
 	
