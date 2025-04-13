@@ -14,6 +14,9 @@
             <option value="" ${empty param.column ? 'selected' : ''}>선택하세요</option>
             <option value="item_title" ${param.column == 'item_title' ? 'selected' : ''}>이름</option>
             <option value="item_color" ${param.column == 'item_color' ? 'selected' : ''}>컬러</option>
+            <option value="item_gender" ${param.column == 'item_gender' ? 'selected' : ''}>색</option>
+            <option value="item_category" ${param.column == 'item_category' ? 'selected' : ''}>분류</option>
+            <option value="item_detail" ${param.column == 'item_detail' ? 'selected' : ''}>디테일</option>
           </select>
           <input type="text" name="keyword" value="${param.keyword}" class="form-control  me-2 " placeholder="검색어를 입력하세요">
           <button type="submit" class="btn btn-outline-primary"><i class="fa fa-search"></i></button>
@@ -39,7 +42,7 @@
                 <th>평균 만족도</th>
                 <th>댓글수</th>
                 <th>좋아요</th>
-                <th>Price</th>
+                <th>가격</th>
                 <th>관리</th>
             </tr>
         </thead>
