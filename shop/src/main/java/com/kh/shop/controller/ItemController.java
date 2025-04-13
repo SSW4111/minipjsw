@@ -87,26 +87,23 @@ public class ItemController {
 	//상세는 view만들고 하꾸
 	@GetMapping("/detail")
 	public String detail(@RequestParam int itemNo, Model model) {
-
-		ItemDetailViewDto itemDetailViewDto1 = itemDetailviewDao.selectOne(itemNo);
-		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto1);
-		int attachmentNo = itemDetailviewDao.findAttachment(itemNo); // itemDetailViewDto의 이미지
-		model.addAttribute("itemDetailViewDto",itemDetailViewDto1);
-		model.addAttribute("attachmentNo",attachmentNo);
-		Map<Integer,Integer> atta = new LinkedHashMap<>();
-		for(ItemDetailViewDto color : colorList) {
-			Integer attachNo = itemDetailviewDao.findAttachment(color.getItemNo());
-			Integer imgNo = color.getItemNo();
-			
-			//System.out.println("칼라 넘버" + color.getItemNo());
-			if(attachNo != null) {
-				atta.put(imgNo,attachNo);				
+		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo); //dto찾음
+		
+		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
+		model.addAttribute("colorList", colorList);
+		
+		List<Integer> attachList = itemDao.findAttachments(itemNo);
+		model.addAttribute("attachList",attachList);
+		
+		List<ItemIoDto>iolist = itemDetailviewDao.selectIoList(itemNo);
+		List<ItemIoDto>iolist999 = new ArrayList<ItemIoDto>();
+		for(ItemIoDto io : iolist) { //리스트 쪼개서 gettotal 불러서 in - out 하고
+			io.setItemIoTotal(io.getTotal()); 
+			for(int i=0; i<iolist.size(); i++) {  //다시합침... 
+				iolist999.add(io); 
 			}
 		}
-		model.addAttribute("colorListAtta",atta);
-		model.addAttribute("colorList",colorList);
-
-		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo); //dto찾음
+		model.addAttribute("iolist",iolist999); //최종...
 	//	List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
 		model.addAttribute("colorList",colorList);
 		//itemIo list부르고
@@ -118,18 +115,83 @@ public class ItemController {
 		//SizeList 
 		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemNo);
 		model.addAttribute("sizeList",sizeList);   //사이즈리스트
-//		System.out.println("size =" + sizeList.size());
-	//	System.out.println("itemDetailViewDto"+ itemDetailViewDto);
-		
 		model.addAttribute("itemDetailViewDto",itemDetailViewDto); // dto넘김
-//		System.out.println("color = "+colorList);
-
-
 		return "/WEB-INF/views/item/detail.jsp";
 	}
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+//	@GetMapping("/detail")
+//	public String detail(@RequestParam int itemNo, Model model) {
+//
+//		ItemDetailViewDto itemDetailViewDto1 = itemDetailviewDao.selectOne(itemNo);
+//		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto1);
+//		int attachmentNo = itemDetailviewDao.findAttachment(itemNo); // itemDetailViewDto의 이미지
+//		model.addAttribute("itemDetailViewDto",itemDetailViewDto1);
+//		model.addAttribute("attachmentNo",attachmentNo);
+//		Map<Integer,Integer> atta = new LinkedHashMap<>();
+//		for(ItemDetailViewDto color : colorList) {
+//			Integer attachNo = itemDetailviewDao.findAttachment(color.getItemNo());
+//		//	Integer attachNo = null;
+//			Integer imgNo = color.getItemNo();
+//			
+//			//System.out.println("칼라 넘버" + color.getItemNo());
+//			if(attachNo != null) {
+//				atta.put(imgNo,attachNo);				
+//			}
+//		}
+//		model.addAttribute("colorListAtta",atta);
+//		model.addAttribute("colorList",colorList);
+//
+//		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo); //dto찾음
+//	//	List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
+//		model.addAttribute("colorList",colorList);
+//		//itemIo list부르고
+//		List<ItemIoDto>iolist = itemDetailviewDao.selectIoList(itemNo);
+//		List<ItemIoDto>iolist999 = new ArrayList<ItemIoDto>();
+//		for(ItemIoDto io : iolist) { //리스트 쪼개서 gettotal 불러서 in - out 하고
+//			io.setItemIoTotal(io.getTotal()); 
+//			for(int i=0; i<iolist.size(); i++) {  //다시합침... 
+//				iolist999.add(io); 
+//			}
+//		}
+//		//System.out.println(iolist999);
+//		model.addAttribute("iolist",iolist999); //최종...
+//		//SizeList 
+//		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemNo);
+//		model.addAttribute("sizeList",sizeList);   //사이즈리스트
+////		System.out.println("size =" + sizeList.size());
+//	//	System.out.println("itemDetailViewDto"+ itemDetailViewDto);
+//		
+//		model.addAttribute("itemDetailViewDto",itemDetailViewDto); // dto넘김
+////		System.out.println("color = "+colorList);
+//
+//
+//		return "/WEB-INF/views/item/detail.jsp";
+//	}
+	
+	
+	
+	//삭제
+	@PostMapping("/delete")
+	public String delete(@RequestParam int itemNo) {
+		try {
+		List<Integer> attachmentList = itemDao.findAttachments(itemNo);
+		for(int attachment : attachmentList) {
+		attachmentService.delete(attachment);
+		}
+		}
+		catch(Exception e) {}
+		itemDao.delete(itemNo);
+		return "redirect:list";
+	}
 	
 
 }

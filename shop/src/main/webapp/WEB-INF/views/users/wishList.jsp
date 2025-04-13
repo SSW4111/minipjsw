@@ -6,11 +6,18 @@
  
  <div class="container">
  	<div class="row mt-4">
- 		<div class="col">
- 			<h2 class="wishCount"></h2>
+ 		<div class="col d-flex">
+ 			<div class="ms-auto">
+ 				<span >총 갯수:</span>
+ 			<span class="wishCount ms-auto"></span>
+ 			</div>
  		</div>
  	</div>
- 	<div class="row justify-content-start mt-4" id="wishListContainer"></div>
+ 	<div class="row justify-content-start mt-4" >
+ 		<div class="col">
+ 			<div  id="wishListContainer"></div>
+ 		</div>
+ 	</div>
  </div>
 
 
@@ -20,6 +27,13 @@
 		<button class="btn more-btn">더보기</button>
 	</div>
 </div>
- 
+
+<div class="container">
+<div class="row mt-4">
+	<div class="col d-flex">
+		<!--  <a class="btn btn-success ms-auto"></a>-->
+	</div>
+</div>
+ </div>
 
  <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>
