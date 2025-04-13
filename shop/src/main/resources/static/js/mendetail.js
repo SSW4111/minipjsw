@@ -1,14 +1,5 @@
 $(function() {
 	
-
-	
-	
-	
-	
-	
-	
-	
-	
 		function callPage() {
 		var itemNum = $("#itemNO").val();
 
@@ -20,6 +11,7 @@ $(function() {
 				if(list != null){
 					displayAttachments();
 				displayItems(list);
+				//console.log(list);
 				}
 			},
 			error: function(xhr, status, error) {
@@ -30,7 +22,7 @@ $(function() {
 
 	
 	function displayItems(items) {
-		          const container = $('#reviewsList', 	);
+		          const container = $('#reviewsList' 	);
 				 const currentUserEmail = items.userEmailValid; //받아온거
 		          items.list.forEach(item => {
 	//					                    <img src= "/attachment/download?attachmentNo=${att}" class="card-img-top" >

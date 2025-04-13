@@ -8,7 +8,7 @@ $(function(){
 		callPage(currentPage);
 	});
 	
-	function callPage(){
+	function callPage(currentPage){
 		$.ajax({
 			url:"/rest/wish/list",
 			method:"post",
@@ -58,7 +58,7 @@ $(function(){
 	    }
 	}
 	
-	callPage();
+	callPage(currentPage);
 	
 	
 		$(document).on("click", ".like-heart", function(e){
