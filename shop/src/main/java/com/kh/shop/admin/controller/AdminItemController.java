@@ -48,10 +48,10 @@ public class AdminItemController {
 	@RequestMapping("/item-list")
 	public String itemList (@ModelAttribute("adminItemVO")AdminItemVO adminItemVO
 											,Model model, HttpSession session) {
-		String level = (String)session.getAttribute("usersLevel");
-		if(level.equals("관리자") || level ==null) {
-			throw new TargetNotFoundException("안돼요");
-		}
+//		String level = (String)session.getAttribute("usersLevel");
+//		if(level.equals("관리자") || level ==null) {
+//			throw new TargetNotFoundException("안돼요");
+//		}
 		List<ItemListViewDto> list = itemListViewDao.adminItemList(adminItemVO);
 		model.addAttribute("list",list);
 //		System.out.println("highStar: " + adminItemVO.getHighStar());

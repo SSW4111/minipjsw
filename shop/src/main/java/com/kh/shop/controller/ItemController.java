@@ -95,23 +95,23 @@ public class ItemController {
 		List<Integer> attachList = itemDao.findAttachments(itemNo);
 		model.addAttribute("attachList",attachList);
 		
-		List<ItemIoDto>iolist = itemDetailviewDao.selectIoList(itemNo);
-		List<ItemIoDto>iolist999 = new ArrayList<ItemIoDto>();
-		for(ItemIoDto io : iolist) { //리스트 쪼개서 gettotal 불러서 in - out 하고
-			io.setItemIoTotal(io.getTotal()); 
-			for(int i=0; i<iolist.size(); i++) {  //다시합침... 
-				iolist999.add(io); 
-			}
-		}
-		model.addAttribute("iolist",iolist999); //최종...
-	//	List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
-		model.addAttribute("colorList",colorList);
+//		List<ItemIoDto>iolist = itemDetailviewDao.selectIoList(itemNo);
+//		List<ItemIoDto>iolist999 = new ArrayList<ItemIoDto>();
+//		for(ItemIoDto io : iolist) { //리스트 쪼개서 gettotal 불러서 in - out 하고
+//			io.setItemIoTotal(io.getTotal()); 
+//			for(int i=0; i<iolist.size(); i++) {  //다시합침... 
+//				iolist999.add(io); 
+//			}
+//		}
+//		model.addAttribute("iolist",iolist999); //최종...
+
 		//itemIo list부르고
-		List<ItemIoDto> iolist = itemDetailviewDao.selectIoList(itemNo);
-		for (ItemIoDto io : iolist) {
-		    io.setItemIoTotal(io.getTotal());
-		}
-		model.addAttribute("iolist",iolist);
+//		List<ItemIoDto> iolist = itemDetailviewDao.selectIoList(itemNo);
+//		for (ItemIoDto io : iolist) {
+//		    io.setItemIoTotal(io.getTotal());
+//		}
+//		model.addAttribute("iolist",iolist);
+		
 		//SizeList 
 		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemNo);
 		model.addAttribute("sizeList",sizeList);   //사이즈리스트
