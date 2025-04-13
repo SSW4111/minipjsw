@@ -28,13 +28,14 @@ public class ItemDao {
 	}
 	//등록
 	public void insert(ItemDto itemDto) {
-		String sql="insert into item(item_no, item_color, item_title, item_content,"
-				+ " item_gender, item_category, item_detail) "
+		String sql="insert into item(item_no, item_title, item_gender, item_category, "
+				+ " item_detail, item_color, item_price, item_content ) "
 				+ " values(?, ?, ?, ?, ?, ?, ?, ?)";
-		Object[] data = {itemDto.getItemNo(), itemDto.getItemColor(), 
-				 itemDto.getItemTitle(), itemDto.getItemContent(), itemDto.getItemGender(),
-				  itemDto.getItemCategory(),itemDto.getItemDetail()};
-			jdbcTemplate.update(sql,data);
+		Object[] data = {itemDto.getItemNo(), itemDto.getItemTitle(), itemDto.getItemGender(),
+							itemDto.getItemCategory(), itemDto.getItemDetail(), itemDto.getItemColor(),
+							itemDto.getItemPrice(), itemDto.getItemContent()};
+		jdbcTemplate.update(sql,data);
+		
 	}
 	
 	//이미지connect
@@ -54,11 +55,11 @@ public class ItemDao {
 	}
 	//수정
 	public boolean update(ItemDto itemDto) {
-		String sql = "update item set item_color=?,  item_title=?, item_content=?, "
-				+ "item_gender=?, item_category=?, item_detail=? where item_no=?";
-		Object[] data = {itemDto.getItemColor(), itemDto.getItemTitle(),
-				itemDto.getItemContent(), itemDto.getItemGender(),itemDto.getItemCategory(),itemDto.getItemDetail(),
-				itemDto.getItemNo()};
+		String sql = "update item set item_title=?, item_gender=?, item_category=?, item_detail=?, "
+						+"item_color=?, item_price=?, item_content=? where item_no =? ";
+		Object[] data = {itemDto.getItemTitle(), itemDto.getItemGender(), itemDto.getItemCategory(),
+								itemDto.getItemDetail(), itemDto.getItemColor(), itemDto.getItemPrice(),
+								itemDto.getItemContent(), itemDto.getItemNo()};
 		return jdbcTemplate.update(sql,data) >0;
 	}
 	//상세 

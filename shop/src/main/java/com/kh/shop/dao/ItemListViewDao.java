@@ -8,10 +8,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.shop.dto.ItemListViewDto;
-import com.kh.shop.dto.ItemListViewDto2;
 import com.kh.shop.mapper.ItemListViewMapper;
 import com.kh.shop.mapper.ItemListViewMapper2;
+import com.kh.shop.vo.AdminItemVO;
 import com.kh.shop.vo.ItemVO;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Repository
 public class ItemListViewDao {
@@ -24,13 +26,7 @@ public class ItemListViewDao {
 	@Autowired
 	private ItemListViewMapper2 itemListViewMapper2;
 	
-	
-	
-	
-	
-	
-	
-	
+
 	public List<ItemListViewDto> selectListMen(ItemVO itemVO){
 		if(itemVO.isList()) {
 			String sql = "select * from( "
@@ -70,10 +66,10 @@ public class ItemListViewDao {
 //		  //      System.out.println("colorwerwerwerwerwer = " + itemVO.getColor());
 //			}
 			//사이즈선택이면 
-			if(itemVO.sizeCheck()) {
-				 sql.append(" AND item_size = ? ");
-			     dataList.add(itemVO.getClothesSize());
-			}
+//			if(itemVO.sizeCheck()) {
+//				 sql.append(" AND item_size = ? ");
+//			     dataList.add(itemVO.getClothesSize());
+//			}
 			sql.append(" order by item_no desc) TMP) where rn between ? and ?");
 //			System.out.println("itemtieitietmietiemtietmiemi"+itemVO.getColor());
 //			System.out.println("sqlsqlsqlsqlsqlsql = "+sql.toString());
@@ -128,57 +124,57 @@ public class ItemListViewDao {
 			return jdbcTemplate.queryForObject(sql.toString(), int.class,dataList.toArray());		
 			}	
 		}
-//	
-//	//전체검색추가
-//	public List<ItemListViewDto>selectList(ItemVO itemVO){
-//		if(itemVO.isList()) {
-//		String sql="select * from ("
-//				+ "select rownum rn, TMP.* From( "
-//				+ "select * from ITEM_LIST_VIEW order by item_no desc "
-//				+ ")TMP "
-//				+ ")where rn between ? and ?";
-//		Object[] data = {itemVO.getStartRownum(), itemVO.getFinishRownum()};
-//		return jdbcTemplate.query(sql, itemListViewMapper,data);
-//		}
-//		else {
-//			StringBuilder sql = new StringBuilder();
-//			List<Object> dataList = new ArrayList<>();
-//			sql.append("select * from( ")
-//				.append("select rownum rn, TMP.*from(  ")
-//				.append("select * from ITEM_LIST_VIEW ");
-//			if(itemVO.isSearch()) {
-//				 sql.append(" and ( ")
-//				 .append("instr(item_color, ?) > 0 or ")
-//	                .append("instr(item_size, ?) > 0 or ")
-//	                .append("instr(item_title, ?) > 0 or ")
-//	                .append("instr(item_content, ?) > 0 or ")
-//	                .append("instr(item_gender, ?) > 0 or ")
-//	                .append("instr(item_category, ?) > 0 or ")
-//	                .append("instr(item_detail, ?) > 0)");
-//		       
-//				 String keyword = itemVO.getKeyword();
-//					for (int i=0; i<7 ; i++) {
-//					dataList.add(keyword);
-//			};
-//			};
-//			//컬러선택이면 
-//			if(itemVO.colorCheck()) {
-//				sql.append(" and item_color = ? ");
-//		        dataList.add(itemVO.getColor());
-//			}
-//			//사이즈선택이면 
+	
+	//전체검색추가
+	public List<ItemListViewDto>selectList(ItemVO itemVO){
+		if(itemVO.isList()) {
+		String sql="select * from ("
+				+ "select rownum rn, TMP.* From( "
+				+ "select * from ITEM_LIST_VIEW order by item_no desc "
+				+ ")TMP "
+				+ ")where rn between ? and ?";
+		Object[] data = {itemVO.getStartRownum(), itemVO.getFinishRownum()};
+		return jdbcTemplate.query(sql, itemListViewMapper,data);
+		}
+		else {
+			StringBuilder sql = new StringBuilder();
+			List<Object> dataList = new ArrayList<>();
+			sql.append("select * from( ")
+				.append("select rownum rn, TMP.*from(  ")
+				.append("select * from ITEM_LIST_VIEW ");
+			if(itemVO.isSearch()) {
+				 sql.append(" and ( ")
+				 .append("instr(item_color, ?) > 0 or ")
+	                .append("instr(item_size, ?) > 0 or ")
+	                .append("instr(item_title, ?) > 0 or ")
+	                .append("instr(item_content, ?) > 0 or ")
+	                .append("instr(item_gender, ?) > 0 or ")
+	                .append("instr(item_category, ?) > 0 or ")
+	                .append("instr(item_detail, ?) > 0)");
+		       
+				 String keyword = itemVO.getKeyword();
+					for (int i=0; i<7 ; i++) {
+					dataList.add(keyword);
+			};
+			};
+			//컬러선택이면 
+			if(itemVO.colorCheck()) {
+				sql.append(" and item_color = ? ");
+		        dataList.add(itemVO.getColor());
+			}
+			//사이즈선택이면 
 //			if(itemVO.sizeCheck()) {
 //				 sql.append(" AND item_size = ? ");
 //			     dataList.add(itemVO.getClothesSize());
 //			}
-//			sql.append(" order by item_no desc) TMP) where rn between ? and ?");
-//		
-//			dataList.add(itemVO.getStartRownum());
-//		    dataList.add(itemVO.getFinishRownum());   
-//		    return jdbcTemplate.query(sql.toString(), itemListViewMapper, dataList.toArray());
-//			
-//		}
-//	}
+			sql.append(" order by item_no desc) TMP) where rn between ? and ?");
+		
+			dataList.add(itemVO.getStartRownum());
+		    dataList.add(itemVO.getFinishRownum());   
+		    return jdbcTemplate.query(sql.toString(), itemListViewMapper, dataList.toArray());
+			
+		}
+	}
 //	
 //	
 //	public List<ItemListViewDto>selectListF(ItemVO itemVO){
@@ -321,4 +317,52 @@ public class ItemListViewDao {
 //	
 //	
 //	
+	
+	//관리자용 All list view (+참고 최신순은 그냥 no desc임) 바꾸고싶음ㅁ바꾸생
+	public List<ItemListViewDto> adminItemList(AdminItemVO adminItemVO){
+		if(adminItemVO.isList()) {
+			String sql = "select * from( "
+					+ "select rownum rn, TMP.* from( "
+					+ "select * from item_list_view order by item_no asc "
+					+ ")  "
+					+ "TMP) "
+					+ "where rn between ? and ? ";
+			Object[] data = {adminItemVO.getStartRownum(), adminItemVO.getFinishRownum()};
+			return jdbcTemplate.query(sql, itemListViewMapper,data);
+		}
+		
+		else {
+			StringBuilder sql = new StringBuilder();
+			List<Object> dataList = new ArrayList<>();
+			sql.append("select * from( ");
+			sql.append("select rownum rn, TMP.* from( ");
+			//서치
+				if(adminItemVO.isSearch()) {
+					sql.append("select * from item_list_view where instr(" + adminItemVO.getColumn() + ", ?) > 0 ");
+					dataList.add(adminItemVO.getKeyword());
+
+				}
+			//X서치
+				else {
+					sql.append("select * from item_list_view ");
+				}
+			sql.append("order by ");
+				if(adminItemVO.isHighStar()) {
+					sql.append("AVESTAR desc");
+				} else if(adminItemVO.isRecent()) {
+				    sql.append("item_no desc ");
+				} else {
+				    sql.append("item_no asc ");
+				}
+			sql.append(") ");
+			sql.append("TMP) ");
+			sql.append("where rn between ? and ? ");
+			dataList.add(adminItemVO.getStartRownum());
+			dataList.add(adminItemVO.getFinishRownum());
+
+			return jdbcTemplate.query(sql.toString(), itemListViewMapper, dataList.toArray());
+		}	
+	}
+	
+	
 }
