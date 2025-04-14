@@ -26,16 +26,16 @@ public class ItemIoDao {
 	
 	//인서트추가
 	public void insert(ItemIoDto itemIoDto, int itemNo) {
-		String sql = "insert into item_io(item_io_no, item_io_in, size_name, item_no) values(?, ?, ?, ?)";
-		Object[] data = {itemIoDto.getItemIoNo(), itemIoDto.getItemIoIn(), itemIoDto.getSizeName()
+		String sql = "insert into item_io(item_io_no, item_io_total, item_io_in, size_name, item_no) values(?, ?, ?, ?, ?)";
+		Object[] data = {itemIoDto.getItemIoNo(),itemIoDto.getItemIoTotal() ,itemIoDto.getItemIoIn(), itemIoDto.getSizeName()
 									,itemNo};
 		jdbcTemplate.update(sql,data);
 	}
 	//수정 (수정시각변경)
 	public boolean update(ItemIoDto itemIoDto) {
-		String sql = "update item_io set item_io_in = ?,item_io_in_time =systimestamp ,item_io_out = ?, "
+		String sql = "update item_io set item_io_total, item_io_in = ?,item_io_in_time =systimestamp ,item_io_out = ?, "
 				+ "	size_name = ? where item_io_no = ?";
-		Object[] data = {itemIoDto.getItemIoIn(),itemIoDto.getItemIoOut(),itemIoDto.getSizeName(),itemIoDto.getItemIoNo()};
+		Object[] data = {itemIoDto.getTotal(),itemIoDto.getItemIoIn(),itemIoDto.getItemIoOut(),itemIoDto.getSizeName(),itemIoDto.getItemIoNo()};
 		return jdbcTemplate.update(sql,data)>0;
 	}
 	//item지울때 전부삭제
