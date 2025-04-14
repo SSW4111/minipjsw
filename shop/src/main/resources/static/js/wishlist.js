@@ -33,7 +33,7 @@ $(function(){
 	    items.list.forEach(item => {
 			const gender = item.itemGender === 'M' ? '남자' : '여자';
 	        const table = $(`
-	            <div class="cart-item d-flex align-items-center p-3" style="border: 1px solid black; position: relative;">
+	            <div class="cart-item d-flex align-items-center p-3 border border-muted"  position: relative;">
 	                <a style="text-decoration:none;"><i class="fa-solid fa-heart  ms-auto like-heart" data-item-no="${item.itemNo}"></i></i></a>
 	                 <a  href="/item/detail?itemNo=${item.itemNo}">
 					 <img src="http://placehold.co/80" class="ms-5" style="width: 80px; height: 80px;">

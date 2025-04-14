@@ -64,9 +64,9 @@ public class AdminItemController {
 	@GetMapping("/item-add")
 	public String addItem(HttpSession session) {
 		String level = (String)session.getAttribute("usersLevel");
-		if(level.equals("관리자") || level ==null) {
-			throw new TargetNotFoundException("안돼요");
-		}
+//		if(level.equals("관리자") || level ==null) {
+//			throw new TargetNotFoundException("안돼요");
+//		}
 		return "/WEB-INF/views/admin/item-add.jsp";
 	}
 	//등록 

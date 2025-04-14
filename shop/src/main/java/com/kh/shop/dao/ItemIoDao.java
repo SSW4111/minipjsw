@@ -45,9 +45,9 @@ public class ItemIoDao {
 		return jdbcTemplate.update(sql, data) > 0;
 	}
 	//io하나만삭제
-	public boolean deleteOne(int itemIoNo) {
-		String sql=" delete from item_io where item_io_no =?";
-		Object[] data = {itemIoNo};
+	public boolean deleteOne(String sizeName, int itemNo) {
+		String sql=" delete from item_io where size_name = ? and item_no =?";
+		Object[] data = {sizeName, itemNo};
 		return jdbcTemplate.update(sql,data)>0;
 	}
 	

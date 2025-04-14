@@ -83,6 +83,17 @@
 		<div id="itemAttachList"></div>
 	</div>
 
+<div class="row mt-4">
+
+	사이즈, 재고	
+	<%-- "${iolist.item_io_total}" --%>
+	<select>
+	<c:forEach var="ioDto" items="${iolist}">
+		<option>${ioDto.sizeName}, ${ioDto.itemIoTotal}</option>	 	
+		 
+	</c:forEach>
+	</select>
+</div>
 
 
 <!-- 

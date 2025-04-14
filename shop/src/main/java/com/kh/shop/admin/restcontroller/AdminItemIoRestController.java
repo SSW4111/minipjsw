@@ -25,15 +25,16 @@ public class AdminItemIoRestController {
 	//io리스트임 얘까지만 테스트완 나머지는 내일..
 	//관리자관련 aop나중에함
 	@RequestMapping("/list")
-	public Map<String,Object> list(int itemNo,MorePageVO morePageVO ){
+//	public Map<String,Object> list(int itemNo,MorePageVO morePageVO ){
+		public List<ItemIoDto> list(int itemNo,MorePageVO morePageVO ){
 	
 		List<ItemIoDto> list = itemIoDao.selectList(itemNo, morePageVO);
-		boolean isLastPage = morePageVO.isLastPage();
-		
-		Map<String, Object>result = new HashMap<>();
-		result.put("list", list);
-		result.put("isLastPage", isLastPage);
-		return result;
+//		boolean isLastPage = morePageVO.isLastPage();
+//		
+//		Map<String, Object>result = new HashMap<>();
+//		result.put("list", list);
+//		result.put("isLastPage", isLastPage);
+		return list;
 	}
 	//하..얘네 깜빡하고 그냥 단일처리했는데 월요일ㅇ ㅔ 리스트로바꾸던지 할게유^_^
 	//io인서트임
@@ -59,8 +60,8 @@ public class AdminItemIoRestController {
 	}
 	
 	@RequestMapping("/delete")
-	public Map<String,Object>delete(@RequestParam int itemIoNo){
-		itemIoDao.deleteOne(itemIoNo);
+	public Map<String,Object>delete(@RequestParam String sizeName, @RequestParam int itemNo){
+		itemIoDao.deleteOne(sizeName, itemNo);
 		Map<String,Object> result = new HashMap<>();
 		result.put("success", true);
 		return result;

@@ -9,7 +9,7 @@ $(function() {
 			data: { itemNo: itemNum },
 			success: function(list) {
 				if(list != null){
-					displayAttachments();
+					//displayAttachments();
 				displayItems(list);
 				//console.log(list);
 				}
