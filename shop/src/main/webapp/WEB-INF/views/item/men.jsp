@@ -96,12 +96,11 @@
 		<div class="col-sm-1 ms-auto">
 			<div class="dropdown">
 				<button class="btn  dropdown-toggle" type="button"
-					data-bs-toggle="dropdown" aria-expanded="false">Size</button>
+					data-bs-toggle="dropdown" aria-expanded="false">Price</button>
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="#">S</a></li>
-					<li><a class="dropdown-item" href="#">M</a></li>
-					<li><a class="dropdown-item" href="#">L</a></li>
-					<li><a class="dropdown-item" href="#">XL</a></li>
+					<li><a class="dropdown-item" href="#">1만원 미만</a></li>
+					<li><a class="dropdown-item" href="#">2만원 미만</a></li>
+					<li><a class="dropdown-item" href="#">3만원 미만</a></li>
 				</ul>
 			</div>
 		</div>

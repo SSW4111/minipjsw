@@ -106,11 +106,11 @@ public class ItemController {
 //		model.addAttribute("iolist",iolist999); //최종...
 
 		//itemIo list부르고
-//		List<ItemIoDto> iolist = itemDetailviewDao.selectIoList(itemNo);
-//		for (ItemIoDto io : iolist) {
-//		    io.setItemIoTotal(io.getTotal());
-//		}
-//		model.addAttribute("iolist",iolist);
+		List<ItemIoDto> iolist = itemDetailviewDao.selectIoList(itemNo);
+		for (ItemIoDto io : iolist) {
+		    io.setItemIoTotal(io.getTotal());
+		}
+		model.addAttribute("iolist",iolist);
 		
 		//SizeList 
 		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemNo);

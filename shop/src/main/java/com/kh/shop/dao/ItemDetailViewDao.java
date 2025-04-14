@@ -80,7 +80,7 @@ public class ItemDetailViewDao {
 
 	//dto 리스트가필요한데
 	public List<ItemIoDto> selectIoList(int itemNo){
-		String sql="select * from item_io where item_io_no= ?";
+		String sql="select * from item_io where item_no= ?";
 		Object[] data = {itemNo};
 		List<ItemIoDto> ioList = jdbcTemplate.query(sql, itemIoMapper,data);
 		return ioList.isEmpty()? null : ioList;

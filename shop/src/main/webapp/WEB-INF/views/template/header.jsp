@@ -45,68 +45,66 @@
         </div>
     </div>
     
+    <nav class="navbar navbar-expand-lg bg-light text-dark fixed-top" data-bs-theme="light">
+  <div class="container-fluid">
+    <!-- 왼쪽 네비게이션 메뉴 -->
+    <a class="navbar-brand" href="#">KH</a> <!-- 브랜드 로고나 이름 -->
     
-<div class="container fluid">
-    <div class="row">
-        <div class="col-lg-2 col-md-3 col-sm-4 col-6">
-            <nav class="navbar navbar-expand-lg bg-light text-dark fixed-top"
-            data-bs-theme="light">
-            <!-- <div class="container-fluid"> -->
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">New</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Best</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/item/women">Women</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/item/men">Men</a>
-                    </li>
-                    
-                </ul>
+    <!-- 토글 버튼 (모바일에서 메뉴를 토글) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <!-- 네비게이션 항목을 collapse 안에 넣어줘야 모바일에서만 숨겨지고 토글 가능해짐 -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">New</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Best</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/item/women">Women</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/item/men">Men</a>
+        </li>
+      </ul>
 
+      <!-- 오른쪽 메뉴 (간편로그인, 사용자 메뉴 등) -->
+      <ul class="navbar-nav ms-auto">
+        <li><a href="#" class="nav-link">간편로그인</a></li>
+      </ul>
 
-                <ul class="navbar-nav">
-                    <li><a href="#" class="nav-link">간편로그인</a></li>
-                </ul>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#user-menu" aria-controls="user-menu" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <!-- <div class="collapse navbar-collapse ms-auto" id="user-menu"> -->
-                    <ul class="navbar-nav dropdown">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa-solid fa-user me-1"></i>
-                            </a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item custom-dropdown" href="/mypage/change">개인정보변경</a>
-                                <a class="dropdown-item custom-dropdown" href="#">주문내역</a>
-                                <a class="dropdown-item custom-dropdown" href="#">배송현황</a>
-                                <a class="dropdown-item custom-dropdown" href="/users/join1" id="join-page">회원가입</a>
-                                <a class="dropdown-item custom-dropdown" id="login-modal-open" data-bs-toggle="modal" data-bs-target="#loginModal" href="#">로그인</a>
-                                <a class="dropdown-item custom-dropdown" style="display:none;"  id="logout-modal-open"   data-bs-toggle="modal" data-bs-target="#logoutModal" href="#">로그아웃</a>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li><a href="#" class="nav-link"><i class="fa-solid fa-shopping-cart me-1"></i></a></li>
-                    </ul>
-                    <ul class="navbar-nav">
-                        <li><a href="/users/wish" class="nav-link"><i class="fa-solid fa-heart me-1"></i></a></li>
-                    </ul>
-                <!-- </div> -->
-            <!-- </div> -->
-            </nav>
-        </div>
-	</div>
-</div>
+      <!-- 사용자 메뉴 -->
+      <ul class="navbar-nav dropdown">
+        <li class="nav-item">
+          <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <i class="fa-solid fa-user me-1"></i> <!-- 사용자 아이콘 -->
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item custom-dropdown" href="/mypage/change">개인정보변경</a>
+            <a class="dropdown-item custom-dropdown" href="#">주문내역</a>
+            <a class="dropdown-item custom-dropdown" href="#">배송현황</a>
+            <a class="dropdown-item custom-dropdown" href="/users/join1" id="join-page">회원가입</a>
+            <a class="dropdown-item custom-dropdown" id="login-modal-open" data-bs-toggle="modal" data-bs-target="#loginModal" href="#">로그인</a>
+            <a class="dropdown-item custom-dropdown" style="display:none;" id="logout-modal-open" data-bs-toggle="modal" data-bs-target="#logoutModal" href="#">로그아웃</a>
+          </div>
+        </li>
+      </ul>
+
+      <!-- 장바구니, 찜목록 -->
+      <ul class="navbar-nav">
+        <li><a href="#" class="nav-link"><i class="fa-solid fa-shopping-cart me-1"></i></a></li>
+        <li><a href="/users/wish" class="nav-link"><i class="fa-solid fa-heart me-1"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
 <!-- 로그인 모달-->
 

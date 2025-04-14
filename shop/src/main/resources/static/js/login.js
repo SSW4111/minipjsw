@@ -62,7 +62,7 @@ $(function() {
 				$('#logoutModal').modal('hide');
 				$("#login-modal-open").show();
 				$("#logout-modal-open").hide();
-				
+				$("#join-page").show();
 			}
 		});
 	});
@@ -79,7 +79,7 @@ $(function() {
 	            $("#login-modal-open, #join-page").hide();
 	            $("#logout-modal-open").show();
 	        } else {
-	            $("#login-modal-open, #join-page").fadeIn();
+	            $("#login-modal-open").show();
 	            $("#logout-modal-open").hide();
 	        }
 	    }
