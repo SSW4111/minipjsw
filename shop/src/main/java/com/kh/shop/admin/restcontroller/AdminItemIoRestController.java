@@ -27,7 +27,7 @@ public class AdminItemIoRestController {
 	@RequestMapping("/list")
 //	public Map<String,Object> list(int itemNo,MorePageVO morePageVO ){
 		public List<ItemIoDto> list(int itemNo,MorePageVO morePageVO ){
-	
+	//jsp = 총합: ${dto.total}
 		List<ItemIoDto> list = itemIoDao.selectList(itemNo, morePageVO);
 //		boolean isLastPage = morePageVO.isLastPage();
 //		
@@ -44,8 +44,11 @@ public class AdminItemIoRestController {
 
 		for(ItemIoDto itemIoDto : itemIoDtoList) {
 			int itemIoNo = itemIoDao.sequence();
-			itemIoDto.setItemIoNo(itemIoNo);
+			itemIoDto.setItemIoNo(itemIoNo);	
+			int total = itemIoDto.getTotal();
+			itemIoDto.setItemIoTotal(total);
 			itemIoDao.insert(itemIoDto, itemNo);
+			
 		}
 		Map<String,Object>result = new HashMap<>();
 		result.put("success",true);
@@ -56,6 +59,8 @@ public class AdminItemIoRestController {
 	@RequestMapping("/update")
 	public Map<String, Object>update(@ModelAttribute List<ItemIoDto> itemIoDtoList){
 		for(ItemIoDto itemIoDto : itemIoDtoList) {
+			int total= itemIoDto.getTotal();
+			itemIoDto.setItemIoTotal(total);
 			itemIoDao.update(itemIoDto);
 		}
 		 Map<String, Object> result = new HashMap<>();
