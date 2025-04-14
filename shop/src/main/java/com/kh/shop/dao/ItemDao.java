@@ -295,6 +295,13 @@ public class ItemDao {
 		return jdbcTemplate.update(sql,data)>0;
 	}
 	
+	//itemNo 만추출 
+	public List<Integer>myItemLikeList(String usersEmail){
+		String sql = "select item_no from item_like where users_email = ?";
+		Object[] data = {usersEmail};
+		return jdbcTemplate.queryForList(sql,Integer.class, data);
+	}
+	
 	
 	//장바구니 넣기((좋아요)) //장바구니 버튼 클릭시 들어가는것만됨 삭제는 리스트에서만
 	public void cartInsert(int itemNo, String usersEmail) {

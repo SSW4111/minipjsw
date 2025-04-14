@@ -55,7 +55,10 @@ public class ItemRestController {
 	
 
 	@RequestMapping("/listM")
-	public Map<String, Object> listM(ItemVO itemVO){
+	public Map<String, Object> listM(ItemVO itemVO, HttpSession session){
+//		String usersEmail = (String)session.getAttribute("usersEmail"); 
+//		List<Integer>myLikeItems = itemDao.myItemLikeList(usersEmail);   //item좋아요 integer list
+		
 		List<ItemListViewDto> list = itemListViewDao.selectListMen(itemVO);
 	
 		boolean isLastPage = itemVO.isLastPage();

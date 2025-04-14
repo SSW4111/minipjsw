@@ -38,12 +38,14 @@ public class AdminItemIoRestController {
 	//하..얘네 깜빡하고 그냥 단일처리했는데 월요일ㅇ ㅔ 리스트로바꾸던지 할게유^_^
 	//io인서트임
 	@RequestMapping("/add")
-	public Map<String,Object> add(@ModelAttribute ItemIoDto itemIoDto,
+	public Map<String,Object> add(@ModelAttribute List<ItemIoDto> itemIoDtoList,
 												int itemNo){
 
-		int itemIoNo = itemIoDao.sequence();
-		itemIoDto.setItemIoNo(itemIoNo);
-		itemIoDao.insert(itemIoDto, itemNo);
+		for(ItemIoDto itemIoDto : itemIoDtoList) {
+			int itemIoNo = itemIoDao.sequence();
+			itemIoDto.setItemIoNo(itemIoNo);
+			itemIoDao.insert(itemIoDto, itemNo);
+		}
 		Map<String,Object>result = new HashMap<>();
 		result.put("success",true);
 		return result;
@@ -51,8 +53,10 @@ public class AdminItemIoRestController {
 	
 	//io수정
 	@RequestMapping("/update")
-	public Map<String, Object>update(@ModelAttribute ItemIoDto itemIoDto){
-		itemIoDao.update(itemIoDto);
+	public Map<String, Object>update(@ModelAttribute List<ItemIoDto> itemIoDtoList){
+		for(ItemIoDto itemIoDto : itemIoDtoList) {
+			itemIoDao.update(itemIoDto);
+		}
 		 Map<String, Object> result = new HashMap<>();
 		    result.put("success", true);
 		    return result;
