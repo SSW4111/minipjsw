@@ -35,7 +35,7 @@ var nono = 0;
 					        </td>
 					        <td>
 					        </td>
-							<td><i class="fa-solid fa-trash text-danger ms-2"></i></td>
+							<td><i class="fa-solid fa-trash text-danger ms-2 delete-io-btn"></i></td>
 					      </tr>
 					    `);
 
@@ -51,8 +51,9 @@ var nono = 0;
 		var itemNum =nono;
 		var size = $("[name=sizeName]").val()
 		var inIo = $("[name=itemIoIn]").val()
-		
-		$.ajax({
+		console.log(nono);
+		console.log("nononono");
+				$.ajax({
 				url:"/rest/admin/item-io/add",
 				method:"post",
 				data:{itemNo : itemNum, sizeName: size, itemIoIn:inIo},
@@ -60,7 +61,7 @@ var nono = 0;
 					if(success){
 						console.log("wlqrkwk");
 						$(".insert-box").empty();
-					//	$(".table").empty();
+						$("#ioList").empty();
 						$("#io").click();
 					}
 				
@@ -69,10 +70,27 @@ var nono = 0;
 			})
 	});
 	
-	$(".delete-btn").click(function(){
-		var itemNum = $(this).closest("tr").find("td[data-item-no]").data("item-no");
-			
+	$(document).on('click', '.delete-io-btn', function(){
+		var itemNum = nono;
+		 const sizeName = $(this).closest('tr').find('td').eq(1).text(); 
+		
+		$.ajax({
+				url:"/rest/admin/item-io/delete",
+				method:"get",
+				data:{itemNo : itemNum, sizeName : sizeName},
+				success: function(success){
+					if(success){
+						console.log("dkssud");
+						$("#ioList").empty();
+						$("#io").click();
+					}
+			}
+		});
 	});
+	
+	
+	
+	
 	
 });
 
