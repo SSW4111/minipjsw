@@ -25,10 +25,10 @@ public class ItemIoDao {
 	}
 	
 	//인서트추가
-	public void insert(ItemIoDto itemIoDto, int itemNo) {
+	public void insert(ItemIoDto itemIoDto) {
 		String sql = "insert into item_io(item_io_no, item_io_total, item_io_in, size_name, item_no) values(?, ?, ?, ?, ?)";
 		Object[] data = {itemIoDto.getItemIoNo(),itemIoDto.getItemIoTotal() ,itemIoDto.getItemIoIn(), itemIoDto.getSizeName()
-									,itemNo};
+						,itemIoDto.getItemNo()};
 		jdbcTemplate.update(sql,data);
 	}
 	//수정 (수정시각변경)

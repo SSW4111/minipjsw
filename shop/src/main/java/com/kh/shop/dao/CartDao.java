@@ -39,6 +39,7 @@ public class CartDao {
 				+ "               i.avestar, i.reviewscount, i.item_io_no, i.item_io_total, i.item_like, i.item_content, i.item_price "
 				+ "        FROM ITEM_DETAIL_VIEW i "
 				+ "        WHERE i.item_no IN (SELECT item_no FROM cart WHERE users_email = ?) "
+				+ "			order by item_no asc "
 				+ "    ) TMP "
 				+ ") WHERE rn BETWEEN ? AND ? ";
 		Object[] data = {usersEmail,morePageVO.getStartRownum(), morePageVO.getFinishRownum()};
