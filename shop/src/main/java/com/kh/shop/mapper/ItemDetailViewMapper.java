@@ -54,4 +54,16 @@ public class ItemSizeMapper implements RowMapper<ItemDetailViewDto>{
 	}
 	
 }
+
+@Component
+public class CartMapper implements RowMapper <ItemDetailViewDto>{
+
+	@Override
+	public ItemDetailViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+		return ItemDetailViewDto.builder()
+				.itemNo(rs.getInt("item_no")).build();
+	}
+	
+}
 }

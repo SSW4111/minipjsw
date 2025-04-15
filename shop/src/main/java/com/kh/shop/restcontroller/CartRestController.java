@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.shop.dao.CartDao;
 import com.kh.shop.dto.ItemDetailViewDto;
+import com.kh.shop.dto.ItemDto;
 import com.kh.shop.vo.MorePageVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -25,9 +26,9 @@ public class CartRestController {
 	private CartDao cartDao;
 	
 	@RequestMapping("/list")
-	public Map<String,Object> list(MorePageVO morePageVO, HttpSession session){
+	public Map<String,Object> list(HttpSession session, MorePageVO morePageVO){
 		String usersEmail = (String)session.getAttribute("usersEmail");
-		List<ItemDetailViewDto>list = cartDao.cartList(usersEmail, morePageVO);
+		List<ItemDetailViewDto>list = cartDao.myCartList(usersEmail, morePageVO);
 		int count = cartDao.countCart(usersEmail);
 		
 		Map <String,Object>result = new HashMap<>();
