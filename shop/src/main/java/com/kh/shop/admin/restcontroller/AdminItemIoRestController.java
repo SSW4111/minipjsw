@@ -54,7 +54,7 @@ public class AdminItemIoRestController {
 		return result;
 	}
 	
-	//io수정
+	//io수정 터질확률 90퍼센트 
 	@RequestMapping("/update")
 	public Map<String, Object>update(@ModelAttribute List<ItemIoDto> itemIoDtoList){
 		for(ItemIoDto itemIoDto : itemIoDtoList) {
