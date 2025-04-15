@@ -39,17 +39,16 @@ public class AdminItemIoRestController {
 	//하..얘네 깜빡하고 그냥 단일처리했는데 월요일ㅇ ㅔ 리스트로바꾸던지 할게유^_^
 	//io인서트임
 	@RequestMapping("/add")
-	public Map<String,Object> add(@ModelAttribute List<ItemIoDto> itemIoDtoList,
-												int itemNo){
+	public Map<String,Object> add(ItemIoDto itemIoDto){
 
-		for(ItemIoDto itemIoDto : itemIoDtoList) {
+		
 			int itemIoNo = itemIoDao.sequence();
 			itemIoDto.setItemIoNo(itemIoNo);	
 			int total = itemIoDto.getTotal();
 			itemIoDto.setItemIoTotal(total);
-			itemIoDao.insert(itemIoDto, itemNo);
+			itemIoDao.insert(itemIoDto);
 			
-		}
+	
 		Map<String,Object>result = new HashMap<>();
 		result.put("success",true);
 		return result;
