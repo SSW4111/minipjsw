@@ -27,7 +27,7 @@
 		<div class="row mt-2">
 			<label class="col-sm-3 form-label">제목</label>
 			<div class="col-sm-9">
-				<input class="form-control" type="text" name="itemTitle"
+				<input class="form-control" type="text" name="itemTitle" value="${itemDto.itemTitle}"
 					placeholder="제목을 입력하세요">
 			</div>
 		</div>
@@ -35,48 +35,33 @@
 		<div class="row mt-2">
 			<label class="col-sm-3 form-label">분류</label>
 			<div class="col-sm-9">
-				<input class="form-control" type="text" name="itemCategory"
+				<input class="form-control" type="text" name="itemCategory" value="${itemDto.itemCategory}"
 					placeholder="분류을 입력하세요 ex) 상의, 하의">
 			</div>
 		</div>
 		<div class="row mt-2">
 			<label class="col-sm-3 form-label">디테일</label>
 			<div class="col-sm-9">
-				<input class="form-control" type="text" name="itemDetail"
+				<input class="form-control" type="text" name="itemDetail" value="${itemDto.itemDetail}"
 					placeholder="옷의 종류를 적어주세요 ex) 자켓, 후드">
 			</div>
 		</div>
 		<div class="row mt-2">
 			<label class="col-sm-3 form-label">색깔</label>
 			<div class="col-sm-9">
-				<input class="form-control" type="text" name="itemColor"
+				<input class="form-control" type="text" name="itemColor" value="${itemDto.itemColor}"
 					placeholder="색을 영여 소문자로만 입력하세요">
 			</div>
 		</div>
 		<div class="row mt-2">
 			<label class="col-sm-3 form-label">가격</label>
 			<div class="col-sm-9">
-				<input class="form-control" type="text" inputMode="numeric"
+				<input class="form-control" type="text" inputMode="numeric" value="${itemDto.itemPrice}"
 					name="itemPrice" placeholder="가격을 입력하세요">
 			</div>
 		</div>
 
-		<div class="row mt-2">
-			<label class="col-sm-3 form-label">성별</label>
-			<div class="col-sm-9 d-flex">
-				<div class="form-check">
-					<input class="form-check-input" type="checkbox" value="M" name="itemGender"
-						id="maleCheck"> <label class="form-check-label"
-						for="maleCheck">남</label>
-				</div>
-				<div class="form-check ms-2">
-					<input class="form-check-input" type="checkbox" value="F" name="itemGender"
-						id="femaleCheck"> <label class="form-check-label"
-						for="femaleCheck">여</label>
-				</div>
-
-			</div>
-		</div>
+	
 
 
 
@@ -85,7 +70,7 @@
 		<div class="row mt-2">
 			<label class="col-sm-3 form-label">내용</label>
 			<div class="col-sm-9">
-			<textarea id="summernote"  name="itemContent" class="form-control"></textarea>
+			<textarea id="summernote"  name="itemContent" class="form-control" value="${itemDto.itemContent}"></textarea>
 			</div>
 		</div>
 
@@ -93,7 +78,7 @@
 			<div class="d-flex">
 				<a href="#"  type="button" class="btn btn-secondary ms-auto"
 				data-bs-toggle="modal" data-bs-target="#itemImageModal"  id="profile">
-					<i class="fa-solid fa-image"></i><span class="ms-1">이미지등록</span>
+					<i class="fa-solid fa-image"></i><span class="ms-1">이미지수정</span>
 				</a>
 			</div>
 		</div>
@@ -101,7 +86,7 @@
 
 		<div class="row mt-2">
 			<div class="d-flex">
-				<button class="btn btn-success btn-lg w-100" type="submit">등록</button>
+				<button class="btn btn-success btn-lg w-100" type="submit">수정</button>
 			</div>
 		</div>
 

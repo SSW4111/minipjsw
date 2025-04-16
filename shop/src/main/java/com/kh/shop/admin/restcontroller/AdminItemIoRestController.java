@@ -26,7 +26,7 @@ public class AdminItemIoRestController {
 	//관리자관련 aop나중에함
 	@RequestMapping("/list")
 //	public Map<String,Object> list(int itemNo,MorePageVO morePageVO ){
-		public List<ItemIoDto> list(int itemNo,MorePageVO morePageVO ){
+		public List<ItemIoDto> list(@RequestParam int itemNo,MorePageVO morePageVO ){
 	//jsp = 총합: ${dto.total}
 		List<ItemIoDto> list = itemIoDao.selectList(itemNo, morePageVO);
 //		boolean isLastPage = morePageVO.isLastPage();
@@ -38,22 +38,20 @@ public class AdminItemIoRestController {
 	}
 	//하..얘네 깜빡하고 그냥 단일처리했는데 월요일ㅇ ㅔ 리스트로바꾸던지 할게유^_^
 	//io인서트임
-	@RequestMapping("/add")
-	public Map<String,Object> add(@ModelAttribute List<ItemIoDto> itemIoDtoList,
-												int itemNo){
+	 //io인서트임
+    @RequestMapping("/add")
+    public Map<String,Object>add(@ModelAttribute List<ItemIoDto> itemIoDtoList){
 
-		for(ItemIoDto itemIoDto : itemIoDtoList) {
-			int itemIoNo = itemIoDao.sequence();
-			itemIoDto.setItemIoNo(itemIoNo);	
-			int total = itemIoDto.getTotal();
-			itemIoDto.setItemIoTotal(total);
-			itemIoDao.insert(itemIoDto, itemNo);
-			
-		}
-		Map<String,Object>result = new HashMap<>();
-		result.put("success",true);
-		return result;
-	}
+        for(ItemIoDto itemIoDto : itemIoDtoList) {
+            int total = itemIoDto.getTotal();
+            itemIoDto.setItemIoTotal(total);
+           // itemIoDao.insert(itemIoDto);
+            System.out.println("itemIoDto =" + itemIoDto);
+        }
+        Map<String,Object>result = new HashMap<>();
+        result.put("success",true);
+        return result;
+    }
 	
 	//io수정
 	@RequestMapping("/update")

@@ -86,6 +86,6 @@ public class AttachmentService {
 				attachList.add(attachmentNo);
 			}
 			
-			return attachList;//파일수반환
+			return attachList;
 		}
 }

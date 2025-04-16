@@ -39,12 +39,12 @@ public class ItemDao {
 	}
 	
 	//이미지connect
-	public void connect(int itemNo, int attachmentNo) {
+	public boolean connect(int itemNo, int attachmentNo) {
 		String sql = "insert into item_images ("
 				+ " item_no, attachment_no "
 				+ " ) values(?,?)";
 		Object[] data = {itemNo, attachmentNo};
-		jdbcTemplate.update(sql,data);
+		return jdbcTemplate.update(sql,data) > 0;
 	}
 	
 	//삭제

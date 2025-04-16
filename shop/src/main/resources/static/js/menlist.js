@@ -10,7 +10,7 @@ $(function() {
 		
 	});
 
-	function callPage(){
+	function callPage(currentPage){
 		
 		
 
@@ -19,6 +19,7 @@ $(function() {
 			method:"post",
 			data:{page:currentPage, size:size},
 			success:function(list){
+				
 				displayItems(list);
 				//console.log("dkssud");
 				//console.log(list.attachmentList[118]);
@@ -33,7 +34,7 @@ $(function() {
 	//목록에있는 itemNoList 뽑기
 //	var itemNoList = [];
 
-	callPage();
+	callPage(currentPage);
 	
 	function displayItems(items) {    
 	            const container = $('#itemListContainer');
@@ -84,8 +85,11 @@ $(function() {
 //				  console.log(items.attachmentList[118]); 3개 뽑힘
 				 // attachContainer.append(putAttachList);
 	              container.append(itemCard);
-				  if(items.isLastPage == false){
+				  if(items.isLastPage){
 					$(".more-btn").hide();
+				  }
+				  else{
+					$(".more-btn").show();
 				  }
 			  });
 

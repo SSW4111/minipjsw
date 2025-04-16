@@ -50,7 +50,7 @@
             <c:forEach var="item" items="${list}">
                 <tr class="trtr">
                     <td data-item-no="${item.itemNo}">${item.itemNo}</td>
-                    <td>${item.itemTitle}</td>
+                    <td><a href="/admin/update?itemNo=${item.itemNo}">${item.itemTitle}</a></td>
                     <td>${item.itemColor}</td>
                     <td>${item.itemGender}</td>
                     <td>${item.itemCategory}</td>
@@ -145,6 +145,7 @@
           
         </div>
       </div>
+    </div>
     </div>
 
 
