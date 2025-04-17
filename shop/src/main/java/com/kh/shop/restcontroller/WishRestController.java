@@ -44,7 +44,7 @@ public class WishRestController {
 	int totalCount = usersDao.wishCount(usersEmail, morePaveVO);
 	morePaveVO.setCount(totalCount);
 	List<ItemDto> list = usersDao.itemLikeList(usersEmail, morePaveVO);
-
+ 
 	Map<String, Object> result = new HashMap<>();
 	result.put("list",list); //리스트
 	result.put("totalCount",totalCount);  //총 위시개수
