@@ -336,16 +336,14 @@ public class ItemListViewDao {
 			List<Object> dataList = new ArrayList<>();
 			sql.append("select * from( ");
 			sql.append("select rownum rn, TMP.* from( ");
+			sql.append("select * from item_list_view ");
 			//서치
 				if(adminItemVO.isSearch()) {
-					sql.append("select * from item_list_view where instr(" + adminItemVO.getColumn() + ", ?) > 0 ");
+					sql.append("where instr(" + adminItemVO.getColumn() + ", ?) > 0 ");
 					dataList.add(adminItemVO.getKeyword());
+					
+				}
 
-				}
-			//X서치
-				else {
-					sql.append("select * from item_list_view ");
-				}
 			sql.append("order by ");
 				if(adminItemVO.isHighStar()) {
 					sql.append("AVESTAR desc");
@@ -364,5 +362,15 @@ public class ItemListViewDao {
 		}	
 	}
 	
-	
+	//admin list count..
+	public int adminItemCount(AdminItemVO adminItemVO) {
+		   StringBuilder sql = new StringBuilder();
+		    List<Object> dataList = new ArrayList<>();
+		    sql.append("select count(*) from item ");
+		    if(adminItemVO.isSearch()) {
+		    	sql.append( "where instr(" + adminItemVO.getColumn() + ", ?) > 0 ");
+		    	dataList.add(adminItemVO.getKeyword());
+		    }
+		    return jdbcTemplate.queryForObject(sql.toString(), int.class, dataList.toArray());
+	}
 }

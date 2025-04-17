@@ -39,8 +39,10 @@ public class WishRestController {
 		if(usersEmail == null) {
 			throw new TargetNotFoundException("로그인 해주세요");
 		}
+		
 //	String usersEmail = "testuser@goog.com";
 	int totalCount = usersDao.wishCount(usersEmail, morePaveVO);
+	morePaveVO.setCount(totalCount);
 	List<ItemDto> list = usersDao.itemLikeList(usersEmail, morePaveVO);
 
 	Map<String, Object> result = new HashMap<>();

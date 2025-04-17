@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
+
 <script src="/js/itemlist.js"></script>
 
 
@@ -69,20 +70,26 @@
             </c:forEach>
         </tbody>
     </table>
-    </div>
 
+    </div>
+    
 
 
 <div class="container">
     <div class="row mt-2">
     <div class="col d-flex">
    	 	<div class="ms-auto">
+   	 	<form action="item-list" method="get">
         	<button type="submit" class="btn btn-secondary" name="highStar" value="true" >만족도순</button>
         	<button type="submit"  class="btn btn-secondary" name="recent" value="true">최신순</button>
+    	</form>
     	</div>
     </div>
     </div>
-</div>    
+</div>
+    <div class="container">
+		<jsp:include page="/WEB-INF/views/template/pagination.jsp"></jsp:include>
+	</div>    
 
 <div class="modal fade" id="itemIoModal" tabindex="-1" data-bs-backdrop="static">
   <div class="modal-dialog modal-lg">
@@ -146,7 +153,6 @@
         </div>
       </div>
     </div>
-
 
 
 

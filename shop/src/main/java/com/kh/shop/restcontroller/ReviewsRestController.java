@@ -49,6 +49,7 @@ public class ReviewsRestController {
 		//System.out.println("list입니다 "+list);
 		
 		int count = reviewsDao.count(itemNo); //댓글수
+		itemVO.setCount(count);
 		Map<String,Object> result = new HashMap<>();
 		result.put("list", list); //리스트
 		result.put("count", count); //댓긁슈

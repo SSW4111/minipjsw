@@ -30,6 +30,7 @@ public class CartRestController {
 		String usersEmail = (String)session.getAttribute("usersEmail");
 		List<ItemDetailViewDto>list = cartDao.myCartList(usersEmail, morePageVO);
 		int count = cartDao.countCart(usersEmail);
+		morePageVO.setCount(count);
 		
 		Map <String,Object>result = new HashMap<>();
 		result.put("list", list);

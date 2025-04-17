@@ -38,8 +38,8 @@ public class InterceptorConfiguration implements WebMvcConfigurer{
 						));
 		
 		//관리자 전용 기능
-		registry.addInterceptor(adminInterceptor)
-						.addPathPatterns("/admin/**");
+//		registry.addInterceptor(adminInterceptor)
+//						.addPathPatterns("/admin/**");
 		
 		
 	}
