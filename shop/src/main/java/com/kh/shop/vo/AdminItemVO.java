@@ -50,7 +50,7 @@ public class AdminItemVO extends PageVO{
 	        parameters.append("&recent=").append(recent);
 	    }
 	    if(isHighStar()) {
-	        parameters.append("&highstar=").append(highStar);
+	        parameters.append("&highStar=").append(highStar);
 	    }
 	    return parameters.toString();
 	}

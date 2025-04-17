@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.shop.dto.ItemDto;
 import com.kh.shop.mapper.ItemMapper;
 import com.kh.shop.mapper.LikeListMapper;
+import com.kh.shop.vo.AdminItemVO;
 import com.kh.shop.vo.ItemVO;
 
 @Repository
@@ -363,6 +364,9 @@ public class ItemDao {
 
 	    return jdbcTemplate.queryForObject(sql.toString(), int.class, dataList.toArray());
 	}
+	
+	
+
 	
 }
 
