@@ -302,8 +302,67 @@ public class ItemDao {
 		return jdbcTemplate.queryForList(sql,Integer.class, data);
 	}
 	
-	
+	public int countM(ItemVO itemVO) {
+	    StringBuilder sql = new StringBuilder();
+	    List<Object> dataList = new ArrayList<>();
+	    
+	    sql.append("select count(*) from item where item_gender = 'M' "); 
 
+
+	    if (itemVO.isSearch()) {
+	        sql.append("and ( ")
+//	           .append("instr(item_color, ?) > 0 or ")
+	           .append("instr(item_title, ?) > 0 or ");
+//	           .append("instr(item_content, ?) > 0 or ")
+//	           .append("instr(item_gender, ?) > 0 or ")
+//	           .append("instr(item_category, ?) > 0 or ")
+//	           .append("instr(item_detail, ?) > 0)");
+	        
+	        String keyword = itemVO.getKeyword();
+	        for (int i = 0; i < 7; i++) {
+	            dataList.add(keyword);  
+	        }
+	    }
+
+	    if (itemVO.colorCheck()) {
+	        sql.append(" and item_color = ? ");
+	        dataList.add(itemVO.getColor());
+	    }
+
+
+	    return jdbcTemplate.queryForObject(sql.toString(), int.class, dataList.toArray());
+	}
+
+	public int countF(ItemVO itemVO) {
+	    StringBuilder sql = new StringBuilder();
+	    List<Object> dataList = new ArrayList<>();
+	    
+	    sql.append("select count(*) from item where item_gender = 'F' "); 
+
+
+	    if (itemVO.isSearch()) {
+	        sql.append("and ( ")
+//	           .append("instr(item_color, ?) > 0 or ")
+	           .append("instr(item_title, ?) > 0 or ");
+//	           .append("instr(item_content, ?) > 0 or ")
+//	           .append("instr(item_gender, ?) > 0 or ")
+//	           .append("instr(item_category, ?) > 0 or ")
+//	           .append("instr(item_detail, ?) > 0)");
+	        
+	        String keyword = itemVO.getKeyword();
+	        for (int i = 0; i < 7; i++) {
+	            dataList.add(keyword);  
+	        }
+	    }
+
+	    if (itemVO.colorCheck()) {
+	        sql.append(" and item_color = ? ");
+	        dataList.add(itemVO.getColor());
+	    }
+
+
+	    return jdbcTemplate.queryForObject(sql.toString(), int.class, dataList.toArray());
+	}
 	
 }
 

@@ -84,7 +84,7 @@ $(function() {
 //				  console.log(items.attachmentList[118]); 3개 뽑힘
 				 // attachContainer.append(putAttachList);
 	              container.append(itemCard);
-				  if(items.isLastPage == false){
+				  if(items.isLastPage == true){
 					$(".more-btn").hide();
 				  }
 			  });
