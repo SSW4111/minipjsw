@@ -60,7 +60,8 @@ public class ItemRestController {
 //		List<Integer>myLikeItems = itemDao.myItemLikeList(usersEmail);   //item좋아요 integer list
 		
 		List<ItemListViewDto> list = itemListViewDao.selectListMen(itemVO);
-	
+		int totalCount = itemDao.countM(itemVO);
+		itemVO.setCount(totalCount);
 		boolean isLastPage = itemVO.isLastPage();
 		Map<String,Object> result = new HashMap<>();
 		result.put("listM", list); //이름 헷갈리면 그냥 다바꿔도됌ㅠ미안할뿐;
@@ -72,6 +73,7 @@ public class ItemRestController {
 		result.put("attachmentList", li);
 //		System.out.println("attach list =    " +li);
 //		System.out.println("result list +========= " + result);
+		System.out.println("isLastPage: " + isLastPage);
 		//return list;
 		return result;
 	}
@@ -99,6 +101,8 @@ public class ItemRestController {
 //	@RequestMapping("/listW")
 //	public Map<String,Object> listW(ItemVO itemVO){
 //		List<ItemListViewDto> list = itemListViewDao.selectListF(itemVO);
+//		int totalCount = itemDao.countW(itemVO);
+//		itemVO.setCount(totalCount);
 //		boolean isLastPage = itemVO.isLastPage();
 //		Map<String,Object> result = new HashMap<>();
 //		result.put("listW", list); //이름 헷갈리면 그냥 다바꿔도됌ㅠ미안할뿐;

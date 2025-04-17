@@ -30,14 +30,17 @@ public class ItemVO extends PageVO{
 		return !isSearch() && !colorCheck() ;
 		//&& !sizeCheck()
 	}
-	
+	@Override
+	public int getPageCount() {
+	    return (count + size - 1) / size;  // 나누고 올림
+	}
 	
 	public int getNextPage() {
 		return page+1;
 	}
 	
 	public boolean isLastPage() { 
-		return page == getPageCount();
+		return page >= getPageCount();
 	}	
 	
 	public boolean hasNextPage() {
