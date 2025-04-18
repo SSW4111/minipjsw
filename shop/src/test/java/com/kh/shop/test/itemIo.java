@@ -35,7 +35,7 @@ public class itemIo {
 			log.debug("입고: {}, 출고: {}", itemIoDto.getItemIoIn(), itemIoDto.getItemIoOut());
 			log.debug("총토탈: {}", itemIoDto.getTotal());
 			try {
-			    itemIoDao.insert(itemIoDto, itemIoDto.getItemNo());
+			    itemIoDao.insert(itemIoDto);
 			log.debug("itemIoDto={}",itemIoDtoList);
 			} catch (Exception e) {
 				log.error("오류: {}", e.getMessage(), e);

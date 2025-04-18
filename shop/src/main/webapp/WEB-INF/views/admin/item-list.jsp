@@ -4,6 +4,7 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="/js/itemlist.js"></script>
 
+<script type="text/javascript"></script>
 
 <div class="container">
   <div class="row mt-2">
@@ -46,10 +47,10 @@
                 <th>관리</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="t-body">
             <c:forEach var="item" items="${list}">
-                <tr class="trtr">
-                    <td data-item-no="${item.itemNo}">${item.itemNo}</td>
+                <tr>
+                    <td>${item.itemNo}</td>
                     <td><a href="/admin/update?itemNo=${item.itemNo}">${item.itemTitle}</a></td>
                     <td>${item.itemColor}</td>
                     <td>${item.itemGender}</td>
@@ -60,9 +61,11 @@
                     <td>${item.itemLike}</td>
                     <td>${item.itemPrice}</td>
                     <td>
-                    	<i class="fa-solid fa-trash text-danger delete-btn"></i>
-                    	<i class="fas fa-box text-warning manage-btn" id="io"  data-bs-toggle="modal" data-bs-target="#itemIoModal"></i>
-                    	
+                    	 <i class="fa-solid fa-trash text-danger delete-btn" data-item-no="${item.itemNo}"></i>
+                    	<i class="fas fa-box text-warning manage-io-btn" 
+				               data-bs-toggle="modal" 
+				               data-bs-target="#itemIoModal"
+				               data-item-no="${item.itemNo}"></i>
                     </td>
                     
                 </tr>
@@ -93,7 +96,8 @@
       </div>
       <div class="modal-body">
 			
-				<div class="container" >
+				<div class="container"  >
+					<input type="hidden" value="${item.itemNo}" name="no">
 					
 								<table class="table">
 									<thead>
@@ -103,30 +107,30 @@
 										<th>현재 재고</th>
 										<th>재고 수정</th>
 										<th></th>
-										<th></th>
+										<th><button type="button" class="btn btn-primary btn-sm modify-io-btn" >재고수정하기</button></th>
 									</tr>
 									
 									</thead>
-										<tbody  id="ioList"> 
+										<tbody  id="ioList" style="min-height:500px;"> 
 											
 										</tbody>
 								
 								
 								</table>				
-							
+							<div style="min-height:300px;"></div>
 							<div class="container insert-box">
 							
 							<div class="row mt-4">
 								<label class="col-3 form-label " >크기</label>
 								<select class="form-select" name="sizeName">
 									<option value="">선택하세요</option>
-									<option>XS</option>
-									<option>S</option>
-									<option>M</option>
-									<option>L</option>
-									<option>XL</option>
-									<option>XXL</option>
-									<option>XXXL</option>
+									<option value="XS">XS</option>
+									<option value="S">S</option>
+									<option value="M">M</option>
+									<option value="L">L</option>
+									<option value="XL">XL</option>
+									<option value="XXl">XXL</option>
+									<option value="XXXL">XXXL</option>
 								</select>
 							</div>
 							<div class="row mt-4">
@@ -138,8 +142,8 @@
 							 </div>
 				<hr>
 				<div class="d-flex">
-				<button class="btn btn-secondary me-auto plus-btn"><i class="fa fa-plus"></i></button>	
-    			<button class="btn btn-success ms-auto">완료하기</button>
+				<button class="btn btn-secondary me-auto plus-btn"  data-item-no="${item.itemNo}"><i class="fa fa-plus"></i></button>	
+    			<button type="button" class="btn btn-success ms-auto finish-btn"  data-bs-dismiss="modal" aria-label="Close">완료하기</button>
 				</div>
        </div>
           
