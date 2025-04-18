@@ -46,6 +46,11 @@ public class DeliveryDao {
 		return jdbcTemplate.query(sql, deliveryMapper, data);
 	}
 
+	public int count(String usersEmail) {
+		String sql ="select count(*) from delivery where users_email=?";
+		Object[] data = {usersEmail};
+		return jdbcTemplate.queryForObject(sql, int.class,data);
+	}
 	public DeliveryDto selectOne(int deliveryNo) {
 		String sql="select * from delivery where delivery_no=?";
 		Object[] data = {deliveryNo};
