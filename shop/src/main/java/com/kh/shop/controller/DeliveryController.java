@@ -30,6 +30,8 @@ public class DeliveryController {
 	public String list(@ModelAttribute DeliveryDto deliveryDto, @RequestParam String usersEmail,
 							Model model, MorePageVO morePageVO){
 		List<DeliveryDto> list = deliveryDao.selectUserDelivery(usersEmail);
+		int total = deliveryDao.count(usersEmail);
+		morePageVO.setCount(total);
 		model.addAttribute(list);
 		System.out.println("list" + list);
 		return "/WEB-INF/views/delivery/list.jsp";
