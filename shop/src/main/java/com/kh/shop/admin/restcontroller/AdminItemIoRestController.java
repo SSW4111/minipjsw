@@ -5,15 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.shop.dao.ItemIoDao;
 import com.kh.shop.dto.ItemIoDto;
+import com.kh.shop.dto.UpdateRequestDto;
 import com.kh.shop.vo.MorePageVO;
+import com.kh.shop.vo.UpdateVO;
 
 @RestController
 @CrossOrigin
@@ -23,6 +28,47 @@ public class AdminItemIoRestController {
 	@Autowired
 	private ItemIoDao itemIoDao;
 	
+	
+	@PostMapping("/update")
+	public ResponseEntity<?> handleUpdate(@RequestBody UpdateRequestDto dto) {
+		ItemIoDto itemIoDto = new ItemIoDto();
+	    System.out.println("itemNo: " + dto.getItemNo());
+	    for (UpdateVO vo : dto.getItemIoDtoList()) {
+	    	itemIoDto.setItemNo(Integer.parseInt(dto.getItemNo()));
+	        System.out.println("size: " + vo.getSizeName() + ", ioIn: " + vo.getIoIn());
+			itemIoDto.setSizeName(vo.getSizeName());
+			int setIn =Integer.parseInt(vo.getIoIn());
+			itemIoDto.setItemIoIn(setIn);
+			//itemIoDto.setItemIoTotal(itemIoDto.getItemIoIn() + itemIoDto.getItemIoTotal());
+			boolean valid = itemIoDao.updateAsIn(itemIoDto);
+			System.out.println(itemIoDto);
+	    }
+	    return ResponseEntity.ok("받음");
+	}
+	
+	
+	
+	
+	
+	
+	//io수정
+//	@PostMapping("/update")
+//	public boolean update(@RequestBody List<UpdateVO> itemIoDtoList, @RequestParam int itemNo){
+//		ItemIoDto itemIoDto = new ItemIoDto();
+//		
+//		System.out.println(itemIoDtoList);
+//		if(itemIoDtoList == null) return false;
+//		System.out.println("digy");
+//		for(UpdateVO vo : itemIoDtoList) {
+//			System.out.println(vo.getSizeName());
+//			System.out.println(vo.getIoIn());
+//			//itemIoDto.setSizeName(vo.getSizeName());
+//			//itemIoDto.setItemIoIn(vo.getIoIn());
+//			//itemIoDto.setItemIoTotal(itemIoDto.getItemIoIn() + itemIoDto.getItemIoTotal());
+//			//itemIoDao.updateAsIn(itemIoDto);
+//		}
+//		    return true;
+//	}
 	
 	//io리스트임 얘까지만 테스트완 나머지는 내일..
 	//관리자관련 aop나중에함
@@ -67,18 +113,7 @@ public class AdminItemIoRestController {
 		return success;
 	}
 	
-	//io수정
-	@RequestMapping("/update")
-	public Map<String, Object>update(@ModelAttribute List<ItemIoDto> itemIoDtoList){
-		for(ItemIoDto itemIoDto : itemIoDtoList) {
-			int total= itemIoDto.getTotal();
-			itemIoDto.setItemIoTotal(total);
-			itemIoDao.update(itemIoDto);
-		}
-		 Map<String, Object> result = new HashMap<>();
-		    result.put("success", true);
-		    return result;
-	}
+
 	
 	@RequestMapping("/delete")
 	public Map<String,Object>delete(@RequestParam String sizeName, @RequestParam int itemNo){

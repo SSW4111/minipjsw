@@ -26,7 +26,7 @@ var choice = window.confirm("delete??");
 	
 		var non = $(this).data('item-no');	
 		dup = non;
-		console.log("modal no = " + non);
+		//console.log("modal no = " + non);
 		$.ajax({
 			url:"/rest/admin/item-io/list",
 			method:"get",
@@ -61,21 +61,68 @@ var choice = window.confirm("delete??");
 		//  const inputVal = tr.find('input[name="modify-input"]').val();
 		console.log(sizeName);
 		//console.log(inputVal);
+		$.ajax({
+					url:"/rest/admin/item-io/update",
+					method:"post",
+					contentType: "application/json",
+					//data:{ itemIoDtoList:JSON.stringify(modifiedInputList), itemNo:dup},
+					data: JSON.stringify({
+					    itemIoDtoList: modifiedInputList,
+					    itemNo: dup
+					  }),
+					success: function(success){
+						if(success){
+							$("#ioList").empty();
+								callPage();
+						}
+					},
+				});	
 		
 	})	;
 	
 	var modifiedInputList = [];
-//	$("[name=modify-input]").input(function(){
-	$(document).on('input', '[name=modify-input]', function(){
-	/*	$("#ioList").empty();
-		callPage();*/
-		//dup - itemNo
-		//$(document).on()
-		console.log("this val = " + $(this).val());
-		console.log($("[name=modify-input")).val();
-		
-	})
 	
+//	$("[name=modify-input]").input(function(){
+	$(document).on('blur', '[name=modify-input]', function(){
+		console.log("hwhwhwhwer");
+		  const $row = $(this).closest('tr');
+		  const sizeName = $row.find('td').eq(1).text().trim(); 
+		  const ioIn = $row.find('td').eq(3).find('input').val(); 
+		/* console.log("size");
+		 console.log(sizeName);		  
+		 console.log("입고");
+		 console.log(ioIn);		  */
+		 
+		 var isDuplicated = false;
+		 var index = 0;
+		 if(modifiedInputList.length > 0){
+			 for (var i = 0; i < modifiedInputList.length; i++){
+				if(modifiedInputList[i].sizeName == sizeName){
+					isDuplicated = true;
+					index = i;
+					break;
+				}
+			 }
+		 }
+		 if(isDuplicated){
+			modifiedInputList[index].ioIn = ioIn;
+		 }
+		 else{
+				modifiedInputList.push({
+		        sizeName: sizeName,
+		        ioIn: ioIn
+		    });
+		 }
+		 console.log("modifiedInputList");
+		 console.log(modifiedInputList);
+
+		
+	});
+		
+		
+		
+		
+		
 	function displayItems(items){
 		const container = $("#ioList");
 		
@@ -83,11 +130,10 @@ var choice = window.confirm("delete??");
 				const field = $(`
 					      <tr class="trtrtr">
 					        <td data-item-no="${item.itemNo}">${item.itemNo}</td>
-					        <td>${item.sizeName}</td>
+					        <td data-size-name="${item.sizeName}">${item.sizeName}</td>
 					        <td>${item.itemIoTotal}</td>
 					        <td>
 					          <input type="number" inputmode="numeric" class="form-control" name="modify-input" style="width: 80px;" value=0>
-							  
 					        </td>
 					        <td>
 					        </td>

@@ -48,9 +48,17 @@ public class ItemIoDao {
 	
 	//수정 (수정시각변경)
 	public boolean update(ItemIoDto itemIoDto) {
-		String sql = "update item_io set item_io_total, item_io_in = ?,item_io_in_time =systimestamp ,item_io_out = ?, "
+		String sql = "update item_io set item_io_total = ?, item_io_in = ?,item_io_in_time =systimestamp ,item_io_out = ?, "
 				+ "	size_name = ? where item_io_no = ?";
 		Object[] data = {itemIoDto.getTotal(),itemIoDto.getItemIoIn(),itemIoDto.getItemIoOut(),itemIoDto.getSizeName(),itemIoDto.getItemIoNo()};
+		return jdbcTemplate.update(sql,data)>0;
+	}
+	
+	//수정 입고시
+	public boolean updateAsIn(ItemIoDto itemIoDto) {
+		String sql = "update item_io set item_io_total = ?, item_io_in = ?, item_io_in_time =systimestamp "
+				+ " where	size_name = ? and item_no = ?";
+		Object[] data = {itemIoDto.getItemIoTotal(),itemIoDto.getItemIoIn(),itemIoDto.getSizeName(),itemIoDto.getItemNo()};
 		return jdbcTemplate.update(sql,data)>0;
 	}
 	//item지울때 전부삭제

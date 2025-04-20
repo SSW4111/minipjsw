@@ -4,7 +4,9 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="/js/itemlist.js"></script>
 
-<script type="text/javascript"></script>
+<script type="text/javascript">
+
+</script>
 
 <div class="container">
   <div class="row mt-2">
@@ -31,7 +33,7 @@
 
 
 <div class="container mt-4">
-    <table class="table">
+    <table class="table" >
         <thead>
             <tr>
                 <th>상품번호</th>
@@ -99,7 +101,7 @@
 				<div class="container"  >
 					<input type="hidden" value="${item.itemNo}" name="no">
 					
-								<table class="table">
+								<table class="table" id="myTable ">
 									<thead>
 									<tr>
 										<th>상품 번호</th>
