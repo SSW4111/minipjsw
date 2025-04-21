@@ -2,6 +2,7 @@ package com.kh.shop.admin.controller;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -82,18 +83,27 @@ public class AdminItemController {
 	//섬머노트는 rest
 	@PostMapping("/item-add")
 	public String addItem(@ModelAttribute ItemDto itemDto, 
-            @RequestParam List<MultipartFile> attach) throws IllegalStateException, IOException {
+			@RequestParam(value="attach")List<MultipartFile>attaches) throws IllegalStateException, IOException {
+		//System.out.println("attachList attactList = " + attaches);
+		//System.out.println("atsize = " + attaches.size());
 		int itemNo = itemDao.sequence();
 		//System.out.println(itemDao.findAttachments(18));
 		itemDto.setItemNo(itemNo);
 		itemDao.insert(itemDto);
 
-		if (!attach.isEmpty()) { //없는경우는 없겠지만 그냥..
-			// 리스트에서 하나씩빼서저장
-		   List<Integer> attachList = attachmentService.saveList(attach); 
-		   for (int attachmentNo : attachList) {
-		       itemDao.connect(itemNo, attachmentNo);
-		   }
+		if (!attaches.isEmpty()) { 
+			// save, connect 따로 saveList 안돌아감
+			List<Integer> attachmentList = new LinkedList<>();
+			for(MultipartFile m : attaches) {
+				Integer attachNo = attachmentService.save(m);
+				if(attachNo > 0) {
+					attachmentList.add(attachNo);
+				}
+			}
+			for(Integer i : attachmentList) {
+				itemDao.connect(itemNo, i);
+			}
+			
 		}
 		
 		return "redirect:addFinish"; 
@@ -112,7 +122,7 @@ public class AdminItemController {
 			throw new TargetNotFoundException("존재하지 않는 상품정보"); //404
 		}
 		model.addAttribute(itemDto);
-		return "/WEB-INF/views/item/update.jsp";
+		return "/WEB-INF/views/admin/item-edit.jsp";
 	}
 
 	@PostMapping("/update")

@@ -41,14 +41,23 @@ $(function(){
 	//$("[name=itemTitle").blur(function(){});
 	
 		
-		
+	
 	
 	$('.form-check-input').on('change', function () {
 	    // 자신 이외의 다른 체크박스는 모두 해제
 	    $('.form-check-input').not(this).prop('checked', false);
 	});
 	
-	
+	$(".save-btn").click(function(e){
+		e.preventDefault();
+		$(".input").each(function(index) {
+		    const file = this.files[0];
+		    if (file) {
+		        console.log("file #" + index + ":", file.name);
+		    }
+			$("#itemImageModal").modal('hide');
+		});
+	});
 	
 	
 	$(".image-btn").click(function() {

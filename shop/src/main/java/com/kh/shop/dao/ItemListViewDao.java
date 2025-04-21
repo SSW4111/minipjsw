@@ -36,6 +36,7 @@ public class ItemListViewDao {
 			        + ") "
 			        + "WHERE rn BETWEEN ? AND ?";
 			Object[] data = {itemVO.getStartRownum(), itemVO.getFinishRownum()};
+			
 			return jdbcTemplate.query(sql, itemListViewMapper, data);
 		}		
 		else {

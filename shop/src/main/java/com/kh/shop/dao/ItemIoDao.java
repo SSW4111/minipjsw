@@ -25,17 +25,41 @@ public class ItemIoDao {
 	}
 	
 	//인서트추가
-	public void insert(ItemIoDto itemIoDto) {
-		String sql = "insert into item_io(item_io_no, item_io_total, item_io_in, size_name, item_no) values(?, ?, ?, ?, ?)";
-		Object[] data = {itemIoDto.getItemIoNo(),itemIoDto.getItemIoTotal() ,itemIoDto.getItemIoIn(), itemIoDto.getSizeName()
-						,itemIoDto.getItemNo()};
-		jdbcTemplate.update(sql,data);
+
+//	public void insert(ItemIoDto itemIoDto, int itemNo) {
+//		String sql = "insert into item_io( item_io_total, item_io_in, size_name, item_no) values(?, ?, ?, ?, ?)";
+//		Object[] data = {itemIoDto.getItemIoTotal() ,itemIoDto.getItemIoIn(), itemIoDto.getSizeName()
+//									,itemNo};
+//		jdbcTemplate.update(sql,data);
+//	}
+	
+	public boolean insert(ItemIoDto itemIoDto) {
+		String sql = "insert into item_io(item_io_in, item_no, size_name, item_io_no, item_io_total) values(?,?,?,?,?)";
+		Object[] data = {itemIoDto.getItemIoIn(), itemIoDto.getItemNo(), itemIoDto.getSizeName(), itemIoDto.getItemIoNo(), itemIoDto.getItemIoTotal()};
+		return jdbcTemplate.update(sql,data) > 0;
 	}
+	
+	public int getTotal(ItemIoDto itemIoDto) {
+		String sql = "select item_io_total from item_io where item_no = ? and size_name = ?";
+		Object[] data = {itemIoDto.getItemNo(), itemIoDto.getSizeName()};
+		return jdbcTemplate.update(sql,data);
+
+	
+	
+	
 	//수정 (수정시각변경)
 	public boolean update(ItemIoDto itemIoDto) {
-		String sql = "update item_io set item_io_total, item_io_in = ?,item_io_in_time =systimestamp ,item_io_out = ?, "
+		String sql = "update item_io set item_io_total = ?, item_io_in = ?,item_io_in_time =systimestamp ,item_io_out = ?, "
 				+ "	size_name = ? where item_io_no = ?";
 		Object[] data = {itemIoDto.getTotal(),itemIoDto.getItemIoIn(),itemIoDto.getItemIoOut(),itemIoDto.getSizeName(),itemIoDto.getItemIoNo()};
+		return jdbcTemplate.update(sql,data)>0;
+	}
+	
+	//수정 입고시
+	public boolean updateAsIn(ItemIoDto itemIoDto) {
+		String sql = "update item_io set item_io_total = ?, item_io_in = ?, item_io_in_time =systimestamp "
+				+ " where	size_name = ? and item_no = ?";
+		Object[] data = {itemIoDto.getItemIoTotal(),itemIoDto.getItemIoIn(),itemIoDto.getSizeName(),itemIoDto.getItemNo()};
 		return jdbcTemplate.update(sql,data)>0;
 	}
 	//item지울때 전부삭제

@@ -17,7 +17,7 @@ public class ItemIoDto {
 	private Timestamp itemIoOutTime; //회원이 구매할 때 만 변경 
 	private String sizeName; //입고, 수정 
 	private int itemNo; //itemNo
-	public int getTotal() {
+	public int getTotal() { 
 	  return itemIoIn - itemIoOut;
 	    }
 	
