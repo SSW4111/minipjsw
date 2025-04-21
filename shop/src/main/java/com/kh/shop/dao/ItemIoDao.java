@@ -25,6 +25,7 @@ public class ItemIoDao {
 	}
 	
 	//인서트추가
+
 //	public void insert(ItemIoDto itemIoDto, int itemNo) {
 //		String sql = "insert into item_io( item_io_total, item_io_in, size_name, item_no) values(?, ?, ?, ?, ?)";
 //		Object[] data = {itemIoDto.getItemIoTotal() ,itemIoDto.getItemIoIn(), itemIoDto.getSizeName()
@@ -42,7 +43,7 @@ public class ItemIoDao {
 		String sql = "select item_io_total from item_io where item_no = ? and size_name = ?";
 		Object[] data = {itemIoDto.getItemNo(), itemIoDto.getSizeName()};
 		return jdbcTemplate.update(sql,data);
-	}
+
 	
 	
 	

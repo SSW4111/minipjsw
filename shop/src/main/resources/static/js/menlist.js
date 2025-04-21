@@ -86,6 +86,7 @@ $(function() {
 				 // attachContainer.append(putAttachList);
 	              container.append(itemCard);
 				  if(items.isLastPage){
+
 					$(".more-btn").hide();
 				  }
 				  else{

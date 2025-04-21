@@ -105,6 +105,7 @@ public class AdminItemIoRestController {
 	
 	
 	@RequestMapping("/add")
+
 	public boolean add(@ModelAttribute ItemIoDto dto) {
 		int seq = itemIoDao.sequence();
 		dto.setItemIoNo(seq);
@@ -113,6 +114,34 @@ public class AdminItemIoRestController {
 		return success;
 	}
 	
+
+// 	public Map<String,Object> add(ItemIoDto itemIoDto){
+
+		
+// 			int itemIoNo = itemIoDao.sequence();
+// 			itemIoDto.setItemIoNo(itemIoNo);	
+// 			int total = itemIoDto.getTotal();
+// 			itemIoDto.setItemIoTotal(total);
+// 			itemIoDao.insert(itemIoDto);
+			
+	
+// 		Map<String,Object>result = new HashMap<>();
+// 		result.put("success",true);
+// 		return result;
+// 	}
+	
+// 	//io수정 터질확률 90퍼센트 
+// 	@RequestMapping("/update")
+// 	public Map<String, Object>update(@ModelAttribute List<ItemIoDto> itemIoDtoList){
+// 		for(ItemIoDto itemIoDto : itemIoDtoList) {
+// 			int total= itemIoDto.getTotal();
+// 			itemIoDto.setItemIoTotal(total);
+// 			itemIoDao.update(itemIoDto);
+// 		}
+// 		 Map<String, Object> result = new HashMap<>();
+// 		    result.put("success", true);
+// 		    return result;
+// 	}
 
 	
 	@RequestMapping("/delete")
