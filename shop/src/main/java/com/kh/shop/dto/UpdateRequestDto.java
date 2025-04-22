@@ -13,5 +13,4 @@ public class UpdateRequestDto {
     private List<UpdateVO> itemIoDtoList;
     private String itemNo;
 
-    // getters & setters
 }

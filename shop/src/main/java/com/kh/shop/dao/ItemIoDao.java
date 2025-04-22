@@ -43,7 +43,7 @@ public class ItemIoDao {
 		String sql = "select item_io_total from item_io where item_no = ? and size_name = ?";
 		Object[] data = {itemIoDto.getItemNo(), itemIoDto.getSizeName()};
 		return jdbcTemplate.update(sql,data);
-
+	}
 	
 	
 	
