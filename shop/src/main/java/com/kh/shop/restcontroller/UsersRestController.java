@@ -40,8 +40,11 @@ public class UsersRestController {
 	@PostMapping("/login")
 	public boolean login(@ModelAttribute UsersDto usersDto, HttpSession session) {
 		String ema = usersDto.getUsersEmail();
+		
+		System.out.println(ema);
 		UsersDto findDto = usersDao.selectOne(ema);
-
+		System.out.println("CONTROLLER LOGIN");
+		
 		if (findDto ==null) {
 			return false;
 		}

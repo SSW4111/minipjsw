@@ -36,6 +36,7 @@ public class ItemDetailViewDao {
 
 	//상세
 	public ItemDetailViewDto selectOne(int itemNo) {
+		System.out.println(itemNo);
 		String sql="select * from item_detail_view where item_no=? ";
 		Object[] data = {itemNo};
 		List<ItemDetailViewDto> list = jdbcTemplate.query(sql, itemDetailViewMapper,data);

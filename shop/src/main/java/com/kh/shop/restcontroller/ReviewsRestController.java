@@ -76,7 +76,8 @@ public class ReviewsRestController {
 											) throws IllegalStateException, IOException {
 												
 		Map<String, Object> result = new HashMap<>();
-
+		System.out.println("itemNo");
+		System.out.println(itemNo);
 		String usersEmail = (String) session.getAttribute("usersEmail");
 		if (usersEmail == null) {
 			throw new TargetNotFoundException("로그인 해주세요");

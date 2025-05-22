@@ -29,6 +29,7 @@ public class ItemDao {
 	}
 	//등록
 	public void insert(ItemDto itemDto) {
+		System.out.println(itemDto);
 		String sql="insert into item(item_no, item_title, item_gender, item_category, "
 				+ " item_detail, item_color, item_price, item_content ) "
 				+ " values(?, ?, ?, ?, ?, ?, ?, ?)";
