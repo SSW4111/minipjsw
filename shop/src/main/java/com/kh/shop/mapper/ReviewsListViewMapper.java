@@ -17,7 +17,7 @@ public class ReviewsListViewMapper implements RowMapper<ReviewsListViewDto>{
 				.reviewsNo(rs.getInt("reviews_no"))
 				.reviewsTitle(rs.getString("reviews_title"))
 				.reviewsContent(rs.getString("reviews_content"))
-				.reviewsStar((Integer)rs.getObject("reviews_star" , Integer.class))
+				.reviewsStar(rs.getObject("reviews_star" , Integer.class))
 				.reviewsWtime(rs.getTimestamp("reviews_wtime"))
 				.itemNo(rs.getInt("item_no"))
 				.itemTitle(rs.getString("item_title"))

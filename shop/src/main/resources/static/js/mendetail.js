@@ -97,7 +97,6 @@ $(function() {
 		var reviewsT = $("[name=reviewsTitle]").val();
 		var reviewsS = $("[name=reviewsStar]").val();
 		var reviewsC = $("[name=reviewsContent").val();
-			
   		$.ajax({
 					url: "/rest/reviews/add",
 					method: "post",

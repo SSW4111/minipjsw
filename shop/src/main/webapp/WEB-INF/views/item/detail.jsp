@@ -6,6 +6,7 @@
 
 
 
+
 <div class="container">
 	<div class="row mt-4">
 		<div class="col-sm-6">
@@ -16,7 +17,7 @@
 
 		
 			<img id="" src="http://placehold.co/950" style="width: 600px;">
-			<!--  hover 이용하면 event 처리 가능 -->
+			  hover 이용하면 event 처리 가능 
 			<div class="d-flex mt-1 me-1" >
 			<img src="http://placehold.co/150" style="width: 80px; border:1px, solid, grey;"> 
 			<img src="http://placehold.co/250" style="width: 80px; border:1px, solid, grey;"> 
@@ -26,12 +27,12 @@
 			<img src="http://placehold.co/650" style="width: 80px; border:1px, solid, grey;"> 
 			<img src="http://placehold.co/750" style="width: 80px; border:1px, solid, grey;"> 
 			<img src="http://placehold.co/850" style="width: 80px; border:1px, solid, grey;"> 
-			<!-- 8개 부터 swipe 처리 -->
+			 8개 부터 swipe 처리 
 			</div>
 		</div>
 
 	
-
+	
 
 		<div class="col-sm-6 ">
 			<div class="row mt-4">
@@ -53,7 +54,7 @@
 			<div class="row mt-4">
 				<div class="col">
 
-					<!-- 색 -->
+					 색 
 					<c:forEach var="itemDto" items="${colorList}">
 						<c:if test="${itemDetailViewDto.itemNo != itemDto.itemNo}">
 							<a href="/item/detail?itemNo=${itemDto.itemNo}">${itemDto.itemColor }
@@ -76,8 +77,7 @@
 
 	</div>
 
-
-	<!-- 동적 사진 리스트 -->
+	 동적 사진 리스트 
 
 	<div class="row mt-4">
 		<div id="itemAttachList"></div>
@@ -96,7 +96,7 @@
 </div>
 
 
-<!-- 
+ 
 	<div class="row mt-4">
 		<img src="http://placehold.co/450" style="width: 150px;"> <img
 			src="http://placehold.co/450" style="width: 150px;"> <img
@@ -104,7 +104,7 @@
 			src="http://placehold.co/450" style="width: 150px;"> <img
 			src="http://placehold.co/450" style="width: 150px;">
 	</div>
- -->
+ 
 
 
 
@@ -113,6 +113,7 @@
 	</div>
 	<span>itemContent </span> <span>${itemDetailViewDto.itemContent }</span>
 </div>
+
 
 
 <hr>

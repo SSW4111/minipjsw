@@ -88,7 +88,8 @@ public class ItemController {
 	@GetMapping("/detail")
 	public String detail(@RequestParam int itemNo, Model model) {
 		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo); //dto찾음
-		
+		System.out.println(itemDetailViewDto);
+		System.out.println(itemNo);
 		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
 		model.addAttribute("colorList", colorList);
 		
