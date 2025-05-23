@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.shop.dto.CartDto;
 import com.kh.shop.mapper.CartMapper;
+import com.kh.shop.vo.PageVO;
 
 
 @Repository
@@ -28,6 +29,8 @@ public class CartDao {
 	public void addOrUpdateCart(CartDto cartDto) {
 	    CartDto findCart = findCart(cartDto.getUsersEmail(), cartDto.getItemNo());
 		    if(findCart == null) {
+		    	int sequence = sequence();
+		    	cartDto.setCartNo(sequence);
 		    	cartAdd(cartDto);
 		    	return;
 		    }
@@ -76,5 +79,22 @@ public class CartDao {
 		return jdbcTemplate.queryForObject(sql, int.class,data);
 	}
 	
-	//목록은좀따가
+	//목록 아이템 전체조인함
+	public List<CartDto> cartList(String usersEmail, PageVO pageVO) {
+	    String sql = "select * from ( "
+	               + "    select rownum rn, TMP.* "
+	               + "    from ( "
+	               + "        select c.*, i.* "
+	               + "        from cart c "
+	               + "        left outer join item i on c.item_no = i.item_no "
+	               + "        where c.users_email = ? "
+	               + "        order by c.cart_no desc "
+	               + "    ) TMP "
+	               + ") "
+	               + "where rn between ? and ?";
+
+	    Object[] params = {usersEmail, pageVO.getStartRownum(), pageVO.getFinishRownum()};
+	    return jdbcTemplate.query(sql, cartMapper, params);
+	}
+
 }
