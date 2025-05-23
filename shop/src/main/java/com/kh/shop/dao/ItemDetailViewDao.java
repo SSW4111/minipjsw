@@ -33,6 +33,7 @@ public class ItemDetailViewDao {
 	
 	@Autowired
 	private ItemIoMapper itemIoMapper;
+	
 
 	//상세
 	public ItemDetailViewDto selectOne(int itemNo) {
@@ -51,6 +52,22 @@ public class ItemDetailViewDao {
 		return colorList.isEmpty()? null : colorList;
 	}
 
+
+	public int selectColorNo(int itemNo) {
+	    String sql = 
+	        "SELECT attachment_no " +
+	        "FROM ( " +
+	        "    SELECT attachment_no " +
+	        "    FROM item_images " +
+	        "    WHERE item_no = ? " +
+	        "    ORDER BY attachment_no ASC " +
+	        ") " +
+	        "WHERE ROWNUM = 1";
+
+	    Object[] data = { itemNo };
+	    
+	    return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
 	
 //	//사이즈 리스트뽑아오기  size_name으로 item_in에서 무슨번호로? //디테일에쓸검ㅁㅊ
 	public List<ItemDetailViewDto> selectSize(int itemIoNo){

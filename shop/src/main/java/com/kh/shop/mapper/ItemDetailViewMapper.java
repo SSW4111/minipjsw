@@ -42,6 +42,8 @@ public ItemDetailViewDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 	}
 	}
 
+
+
 @Component
 public class ItemSizeMapper implements RowMapper<ItemDetailViewDto>{
 

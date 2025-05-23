@@ -13,14 +13,14 @@
 
 			<input type="hidden" value="${itemDetailViewDto.itemNo}" id="itemNO">
 
-			<%-- <img src = "/attachment/download?attachmentNo=${attachmentNo }" style="width:450px"> --%>
-
-			<img id="" src="http://placehold.co/950" style="width: 600px;">
-			<div class="d-flex mt-1 me-1" >
-			<c:forEach var="attach" items="${attachList}">
-						<img src="/attachment/download?attachmentNo=${attach }" style="width: 80px; height:80px; border:1px, solid, grey;">
-			</c:forEach>
-			
+			<img id="preview-image" src="/attachment/download?attachmentNo=${attachList[0]}"  style="width: 600px;">
+			<div class="d-flex mt-1 me-1">
+			    <c:forEach var="attach" items="${attachList}">
+			        <img class="thumbnail"
+			             src="/attachment/download?attachmentNo=${attach}"
+			             data-src="/attachment/download?attachmentNo=${attach}"
+			             style="width: 80px; height:80px; border: 1px solid grey; margin-right: 5px; cursor: pointer;">
+			    </c:forEach>
 			</div>
 		</div>
 
@@ -37,30 +37,45 @@
 					<span>${itemDetailViewDto.itemCategory }</span> <br>
 					<span>${itemDetailViewDto.itemDetail }</span>
 					<span>${itemDetailViewDto.itemAveStar }점</span>
-					<span>${itemDetailViewDto.itemContent }</span>
 					<h2>${itemDetailViewDto.itemPrice }원</h2>
 				</div>
 			</div>
 
 			<div class="row mt-4">
 				<div class="col">
-
-					<c:forEach var="itemDto" items="${colorList}">
-						<c:if test="${itemDetailViewDto.itemNo != itemDto.itemNo}">
-							<a href="/item/detail?itemNo=${itemDto.itemNo}">${itemDto.itemColor }
-								<a href="/item/detail?itemNo=${itemDto.itemNo}"><img src="/attachment/download?attachmentNo="></a> 
-								 <c:forEach var="attach" items="${colorListAtta }">
 					
-						<c:if test="${itemDto.itemNo == attach.key }">
-							<a src="/attachment/download?attachmentNo=${attach.value}" style="width:450px;"></a>
-							<span>${attach.value}</span>
-							<a href="#"><img src="http://placehold.co/450" style="width: 50px;"></a>
-
-						</c:if>
-					</c:forEach> 
-							</a>
-						</c:if>
+					<c:forEach var="itemDto" items="${colorList}" varStatus="status">
+					    <a href="/item/detail?itemNo=${itemDto.itemNo}">
+					        <img src="/attachment/download?attachmentNo=${colorNoList[status.index]}"
+					             alt="${itemDto.itemColor}"
+					             title="${itemDto.itemColor}"
+					             style="width: 80px; height: 80px; border: 1px solid grey; margin: 5px;">
+					    </a>
 					</c:forEach>
+					
+					<!--<c:forEach var="attach" items="${colorNoList}">
+						<a href="/item/detail/itemNo={itemNo}">
+					    <img src="/attachment/download?attachmentNo=${attach}" 
+					         style="width: 80px; height: 80px; border: 1px solid grey; margin: 5px;">
+						</a>
+					</c:forEach>-->
+								
+					
+					<!--<c:forEach var="itemDto" items="${colorList}">
+					    <c:if test="${itemDetailViewDto.itemNo != itemDto.itemNo}">
+					        <a href="/item/detail?itemNo=${itemDto.itemNo}">
+					            ${itemDto.itemColor} ${itemDto.itemNo}
+					        </a>
+
+					        <c:forEach var="attach" items="${colorListAtta}">
+					            <c:if test="${itemDto.itemNo == attach.key}">
+					                <a href="/item/detail?itemNo=${itemDto.itemNo}">
+					                    <img src="/attachment/download?attachmentNo=${attach.value}" style="width:50px;">
+					                </a>
+					            </c:if>
+					        </c:forEach>
+					    </c:if>
+					</c:forEach>-->
 				</div>
 			</div>
 			
@@ -75,6 +90,8 @@
 				</c:forEach>
 				</select>
 			</div>
+			
+			
 		<div class = "row mt-4">
 			<div class="col d-flex ">
 				<div class="ms-auto">
@@ -92,22 +109,17 @@
 
 
  
-	<!--<div class="row mt-4">
-		<img src="http://placehold.co/450" style="width: 150px;"> <img
-			src="http://placehold.co/450" style="width: 150px;"> <img
-			src="http://placehold.co/450" style="width: 150px;"> <img
-			src="http://placehold.co/450" style="width: 150px;"> <img
-			src="http://placehold.co/450" style="width: 150px;">
-	</div>
- -->
 
 
 
+<div class="row mt-4">
+				<div class="col">
+					<span>${itemDetailViewDto.itemContent }</span>
+										
+				</div> 
+			</div>
 </div>
 
-
-
-<hr>
 <div class="container">
 	<div class="row mt-4">
 		<div class="col" id="reviewsList">

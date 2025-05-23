@@ -51,32 +51,66 @@ $(function() {
 	                              .addClass(response.done ? "fa-solid" : "fa-regular");    
 	                      }
 	                  });
-				
-	              const itemCard = $(`
-					<div class="col me-auto" style="text-decoration:none">
-					                <div class="card " style="width: 18rem;">
-					                    <div class="card-header d-flex">
-					                       <a  href="/item/detail?itemNo=${item.itemNo}"> <span>${item.itemTitle}</span> </a>
-					
-										   <i class="fa-regular fa-heart  ms-auto like-heart" data-item-no="${item.itemNo}"></i>
-											
-					                    </div>
-										<a class="card-body" href="/item/detail?itemNo=${item.itemNo}">
-											<div id="attachList"></div>
-											<img src= "https://placehold.co/300" class="card-img-top" >
-										</a>
-					                    <div class="card-footer">
-					                        <ul class="list-group">
-					                            <li class="list-group-item">${item.itemCategory}</li>
-					                            <li class="list-group-item">${item.itemDetail}</li>
-					                            <li class="list-group-item">${item.itemColor}</li>
-					                            <li class="list-group-item">${item.itemNo}</li>
-												
-					                        </ul>
-					                    </div>
-					                </div>
-					            </div>
-	              `);
+					  const itemCard = $(`
+					    <div class="col mb-4">
+					      <div class="card h-100 shadow-sm border-0" style="width: 18rem;">
+					        
+					        <!-- 이미지 -->
+					        <a href="/item/detail?itemNo=${item.itemNo}">
+					          <img src="/attachment/download/item?itemNo=${item.itemNo}" 
+					               class="card-img-top" 
+					               alt="${item.itemTitle}" 
+					               style="object-fit: cover; height: 400px;">
+					        </a>
+
+					        <div class="card-body d-flex flex-column">
+					          
+					          <div class="d-flex align-items-center mb-2">
+					            <h5 class="card-title mb-0 text-truncate" style="max-width: 85%;">
+					              <a href="/item/detail?itemNo=${item.itemNo}" class="text-dark text-decoration-none">${item.itemTitle}</a>
+					            </h5>
+					            <i class="fa-regular fa-heart ms-auto like-heart text-danger" style="cursor: pointer;" data-item-no="${item.itemNo}"></i>
+					          </div>
+
+							  <div class="text-muted small d-flex justify-content-between align-items-center flex-wrap" style="font-size: 0.85rem;">
+							    <span>${item.itemCategory}</span>
+							    <span class="text-truncate" style="max-width: 50%;">${item.itemDetail}</span>
+							    <span class="text-warning ms-auto">
+							      <i class="fa-solid fa-star"></i> ${item.itemAveStar || '0.0'}
+							    </span>
+							  </div>
+
+					        </div>
+					      </div>
+					    </div>
+					  `);
+
+					  			
+/*					  const itemCard = $(`
+					    <div class="col me-auto text-decoration-none">
+					      <div class="card" style="width: 18rem;">
+					        <div class="card-header d-flex">
+					          <a href="/item/detail?itemNo=${item.itemNo}" class="text-decoration-none"> <span>${item.itemTitle}</span> </a>
+					          <i class="fa-regular fa-heart ms-auto like-heart" data-item-no="${item.itemNo}"></i>
+					        </div>
+
+					        <a class="card-body" href="/item/detail?itemNo=${item.itemNo}">
+					          <img src="/attachment/download/item?itemNo=${item.itemNo}" 
+					               class="card-img-top" 
+					               style="object-fit: cover; weight:200px; height: 200px;">
+					        </a>
+
+					        <div class="card-footer">
+					          <ul class="list-group">
+					            <li class="list-group-item">${item.itemCategory}</li>
+					            <li class="list-group-item">${item.itemDetail}</li>
+					            <li class="list-group-item">${item.itemColor}</li>
+					            <li class="list-group-item">${item.itemNo}</li>
+					          </ul>
+					        </div>
+					      </div>
+					    </div>
+					  `);*/
 				  const attachContainer = $('#attachList');
 				//  const putAttachList = $(`
 					//<img src= "/attachment/download?attachmentNo=${items.attachmentList[item.itemNo]}" class="card-img-top" >

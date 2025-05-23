@@ -61,12 +61,12 @@ public class AdminItemController {
 
 //		System.out.println("isHighStar(): " + adminItemVO.isHighStar());
 //		System.out.println("recent :" + adminItemVO.isRecent());
-		   System.out.println("page: " + adminItemVO.getPage()); 
-		   System.out.println("page       : " + adminItemVO.getPage());
-		    System.out.println("size       : " + adminItemVO.getSize());
-		    System.out.println("recent     : " + adminItemVO.getRecent());
-		    System.out.println("highStar   : " + adminItemVO.getHighStar());
-		    System.out.println("parameters : " + adminItemVO.getParameters());
+//		   System.out.println("page: " + adminItemVO.getPage()); 
+//		   System.out.println("page       : " + adminItemVO.getPage());
+//		    System.out.println("size       : " + adminItemVO.getSize());
+//		    System.out.println("recent     : " + adminItemVO.getRecent());
+//		    System.out.println("highStar   : " + adminItemVO.getHighStar());
+//		    System.out.println("parameters : " + adminItemVO.getParameters());
 		return "/WEB-INF/views/admin/item-list.jsp";
 	}
 	
@@ -121,7 +121,10 @@ public class AdminItemController {
 		if(itemDto == null) {
 			throw new TargetNotFoundException("존재하지 않는 상품정보"); //404
 		}
-		model.addAttribute(itemDto);
+		model.addAttribute("itemDto",itemDto);
+		List<Integer> attachList = itemDao.selectAttachmentList(itemNo);
+		model.addAttribute("attachList",attachList);
+		System.out.println(attachList);
 		return "/WEB-INF/views/admin/item-edit.jsp";
 	}
 
@@ -129,7 +132,8 @@ public class AdminItemController {
 	public String update(@ModelAttribute ItemDto itemDto) {
 		int itemNo = itemDto.getItemNo();
 		ItemDto originDto = itemDao.selectOne(itemNo);
-		
+		System.out.println("POSTUPDTE");
+		System.out.println(itemDto);
 		if(originDto == null) {
 			throw new TargetNotFoundException("존재하지 않는 상품정보"); //db에 데이터없음
 		}
@@ -157,8 +161,8 @@ public class AdminItemController {
 		}
 		
 		itemDao.update(itemDto);
-		return "redirect:detail?itemNo="+itemDto.getItemNo();
-		
+		//return "redirect:item/detail?itemNo="+itemDto.getItemNo();
+		return "redirect:item-list";
 	}
 
 	//삭제
