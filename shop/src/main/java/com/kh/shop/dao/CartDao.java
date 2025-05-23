@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.shop.dto.ItemDetailViewDto;
-import com.kh.shop.mapper.ItemDetailViewMapper.CartMapper;
-import com.kh.shop.vo.MorePageVO;
+import com.kh.shop.dto.CartDto;
+import com.kh.shop.mapper.CartMapper;
+
 
 @Repository
 public class CartDao {
@@ -16,47 +16,65 @@ public class CartDao {
 	@Autowired
 	private CartMapper cartMapper;
 	@Autowired
-	JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 	
+	//시퀀스
+	public int sequence() {
+		String sql="select cart_seq.nextval from dual";
+		return jdbcTemplate.queryForObject(sql, int.class);
+	}
 	
+	//장바구니에 있는지 확인하고 이미있으면 qty수량 Up 없다면 그냥 추가
+	public void addOrUpdateCart(CartDto cartDto) {
+	    CartDto findCart = findCart(cartDto.getUsersEmail(), cartDto.getItemNo());
+		    if(findCart == null) {
+		    	cartAdd(cartDto);
+		    	return;
+		    }
+	    int qty = cartDto.getCartQty(); //추가할수량
+	    int findqty = findCart.getCartQty(); //기존장바구니수량
+	    int plus = qty + findqty;
+	    changeQty(plus,findCart.getCartNo());
+	    return;
+	}
+
+	//장바구니추가
+	public void cartAdd(CartDto cartDto) {
+		String sql = "insert into cart(cart_no, users_email, item_no, cart_qty) values (?, ?, ?, ? )";
+		Object[] data = {cartDto.getCartNo(), cartDto.getUsersEmail(), cartDto.getItemNo(), cartDto.getCartQty()};
+		jdbcTemplate.update(sql,data);	
+	}
 	
-	//장바구니 넣기((좋아요)) //장바구니 버튼 클릭시 들어가는것만됨 삭제는 리스트에서만
-	public void cartInsert(int itemNo, String usersEmail) {
-		String sql = "insert into cart(item_no, users_email) values(?, ?)";
-		Object[] data = {itemNo, usersEmail};
+	//이미 장바구니에 있는지 확인 ((((Exception 방지))))
+	public CartDto findCart(String usersEmail, int itemNo) {
+	    String sql = "select * from cart where users_email = ? and item_no = ?";
+	    Object[] data = {usersEmail, itemNo};
+
+	    List<CartDto> result = jdbcTemplate.query(sql, cartMapper, data);
+	    return result.isEmpty() ? null : result.get(0);
+	}
+
+	
+	//있다면 QTY만 변경 (없으면 장바구니추가) 필요시 오버로드가능 / 장바구니내에서 qty변경가능
+	public void changeQty(int cartQty, int cartNo) {
+		String sql = "update cart set cart_qty = ? where cart_no = ?";
+		Object[] data = {cartQty, cartNo};
 		jdbcTemplate.update(sql,data);
 	}
-	//이미 장바구니에 가지고있는지 확인하기
-	public boolean cartCheck(String usersEmail, int itemNo) {
-		String sql= "select count(*) from cart where users_email= ? and item_no =?";
-		Object[] data = {usersEmail, itemNo};
-		return jdbcTemplate.queryForObject(sql, int.class,data) >0;
-	}
 	
-	//장바구니 no리스트조회
-	public List<ItemDetailViewDto> myCartList(String usersEmail, MorePageVO morePageVO){
-		String sql= "select * from( "
-				+ "   select rownum rn, TMP.* from( "
-				+ "         select * from cart where users_email = ?  "
-				+ "	order by item_no asc "
-				+ "   )TMP "
-				+ ") where rn between ? and ? "
-				+ "";
-		Object[] data = {usersEmail, morePageVO.getStartRownum(), morePageVO.getFinishRownum()};
-		return jdbcTemplate.query(sql, cartMapper,data);
-	}
-	
-	//장바구니 아이템 삭제((좋아요해제))
+	//장바구니 아이템 삭제
 	public boolean deleteCart(int itemNo, String usersEmail) {
 		String sql = "delete from cart where item_no=? and users_email=?";
 		Object[] data = {itemNo, usersEmail};
 		return jdbcTemplate.update(sql,data)>0;
 		}
 	
-	//개수
+	//카트개수
 	public int countCart(String usersEmail) {
 		String sql = "select count(*) from cart where users_email=?";
 		Object[] data = {usersEmail};
 		return jdbcTemplate.queryForObject(sql, int.class,data);
 	}
+	
+	//목록은좀따가
 }

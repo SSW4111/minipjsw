@@ -32,7 +32,7 @@ public class AdminItemIoRestController {
 	@PostMapping("/update")
 	public ResponseEntity<?> handleUpdate(@RequestBody UpdateRequestDto dto) {
 		ItemIoDto itemIoDto = new ItemIoDto();
-	    System.out.println("itemNo: " + dto.getItemNo());
+//	    System.out.println("itemNo: " + dto.getItemNo());
 	    for (UpdateVO vo : dto.getItemIoDtoList()) {
 	    	itemIoDto.setItemNo(Integer.parseInt(dto.getItemNo()));
 	        System.out.println("size: " + vo.getSizeName() + ", ioIn: " + vo.getIoIn());
@@ -43,6 +43,7 @@ public class AdminItemIoRestController {
 			boolean valid = itemIoDao.updateAsIn(itemIoDto);
 			System.out.println(itemIoDto);
 	    }
+	  
 	    return ResponseEntity.ok("받음");
 	}
 	
