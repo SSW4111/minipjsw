@@ -107,27 +107,55 @@
 	</div>
 </div>
 
-
 <div class="container ">
 	<div class="row justify-content-start mt-4" id="itemListContainer"></div>
 </div>
+<!--
+            <img src="/attachment/download?attachmentNo=${attachmentNo}" 
+                 style="object-fit: cover; height: 200px;" class="card-img-top">
 
 
+<c:forEach var="itemDto" items="${listM}" varStatus="status">
+    <c:set var="attachmentNo" value="${attachList[status.index]}" />
+
+	<div class="col-sm-3 mb-4"> 
+	                    <div class="card" style="width: 18rem;">
+	                        <div class="card-header d-flex">
+	                            <span>${itemDto.itemTitle}</span> 
+	                            <i class="fa-solid fa-heart ms-auto"></i>  
+	                            <i class="fa-regular fa-heart ms-auto like-heart"></i>
+	                        </div>
+							<img src="/attachment/download/item?itemNo=${itemDto.itemNo}">
+							<img src="/attachment/download?attachmentNo=${attachList[status.index]}">
+												        
+							<div class="card-footer">
+	                            <ul class="list-group">
+	                                <li class="list-group-item">${itemDto.itemCategory}</li>
+	                                <li class="list-group-item">${itemDto.itemDetail}</li>
+	                                <li class="list-group-item">${itemDto.itemAveStar}</li>
+	                            </ul>
+	                        </div>
+	                    </div>
+	                </div>
+</c:forEach>
+-->
 
 
-<%--  <div class="row mt-4">
+<!--<%--  <div class="row mt-4">
      <div class="col-sm-8 ">
         <div class="row">
-            <c:forEach var="itemDto" items="${listM}">
+            <c:forEach var="itemDto" items="${listM}"  varStatus="status">
                 <div class="col-sm-3 mb-4"> 
                     <div class="card" style="width: 18rem;">
                         <div class="card-header d-flex">
                             <span>${itemDto.itemTitle}</span> 
-                           <!-- <i class="fa-solid fa-heart ms-auto"></i>  -->
+                            <i class="fa-solid fa-heart ms-auto"></i>  
                             <i class="fa-regular fa-heart ms-auto like-heart"></i>
                         </div>
-                        <img src="https://placehold.co/150" class="card-img-top" alt="Item Image">
-                        <div class="card-footer">
+						<img src="/attachment/download/item?itemNo=${itemDto.itemNo}">
+						<img src="/attachment/download?attachmentNo=${attachList[status.index]}">
+											        
+						<div class="card-footer">
                             <ul class="list-group">
                                 <li class="list-group-item">${itemDto.itemCategory}</li>
                                 <li class="list-group-item">${itemDto.itemDetail}</li>
@@ -141,7 +169,7 @@
         </div>
     </div>
 </div>
- --%>
+ --%>-->
 
 
 

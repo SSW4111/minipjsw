@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -68,8 +69,13 @@ public class ItemController {
 	@RequestMapping("/men")
 	public String listMen(@ModelAttribute ("itemVO") ItemVO itemVO, Model model) {
 		List<ItemListViewDto> listM = itemListViewDao.selectListMen(itemVO);
+		List<Integer> attachList = new LinkedList<>();
+		for(ItemListViewDto dto: listM) {
+			attachList.add(itemDao.findAttachmentByItem(dto.getItemNo()));
+		}
 		model.addAttribute("listM",listM); //이름....
 		int count = itemListViewDao.count(itemVO);
+		model.addAttribute("attachList", attachList);
 		itemVO.setCount(count);
 		return "/WEB-INF/views/item/men.jsp";
 	}
@@ -89,20 +95,20 @@ public class ItemController {
 	public String detail(@RequestParam int itemNo, Model model) {
 		ItemDetailViewDto itemDetailViewDto = itemDetailviewDao.selectOne(itemNo); //dto찾음
 		List<ItemDetailViewDto> colorList =  itemDetailviewDao.selectColor(itemDetailViewDto);
+		
 		model.addAttribute("colorList", colorList);
+		//System.out.println(colorList);
+		
+		List<Integer> colorNoList = new LinkedList<>();
+		for(ItemDetailViewDto dto : colorList) {	
+			colorNoList.add(itemDetailviewDao.selectColorNo(dto.getItemNo()));
+		}
+		model.addAttribute("colorNoList",colorNoList);
 		
 		List<Integer> attachList = itemDao.findAttachments(itemNo);
 		model.addAttribute("attachList",attachList);
 		
-//		List<ItemIoDto>iolist = itemDetailviewDao.selectIoList(itemNo);
-//		List<ItemIoDto>iolist999 = new ArrayList<ItemIoDto>();
-//		for(ItemIoDto io : iolist) { //리스트 쪼개서 gettotal 불러서 in - out 하고
-//			io.setItemIoTotal(io.getTotal()); 
-//			for(int i=0; i<iolist.size(); i++) {  //다시합침... 
-//				iolist999.add(io); 
-//			}
-//		}
-//		model.addAttribute("iolist",iolist999); //최종...
+
 
 		//itemIo list부르고
 		List<ItemIoDto> iolist = itemDetailviewDao.selectIoList(itemNo);

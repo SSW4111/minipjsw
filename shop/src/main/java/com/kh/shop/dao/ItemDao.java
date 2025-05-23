@@ -8,9 +8,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.shop.dto.ItemDto;
+import com.kh.shop.mapper.ItemImagesMapper;
 import com.kh.shop.mapper.ItemMapper;
 import com.kh.shop.mapper.LikeListMapper;
-import com.kh.shop.vo.AdminItemVO;
 import com.kh.shop.vo.ItemVO;
 
 @Repository
@@ -22,6 +22,9 @@ public class ItemDao {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 
+	@Autowired
+	private ItemImagesMapper itemImagesMapper;
+	
 	//시퀀스
 	public int sequence() {
 		String sql="select item_seq.nextval from dual";
@@ -123,7 +126,29 @@ public class ItemDao {
 	    return jdbcTemplate.queryForList(sql, Integer.class, itemNo);
 	}
 
+	public int findAttachmentByItem(int itemNo) {
+	    String sql = 
+	        "SELECT attachment_no " +
+	        "FROM ( " +
+	        "    SELECT attachment_no " +
+	        "    FROM item_images " +
+	        "    WHERE item_no = ? " +
+	        "    ORDER BY attachment_no ASC " +
+	        ") " +
+	        "WHERE ROWNUM = 1";
 
+	    Object[] data = { itemNo };
+	    
+	    return jdbcTemplate.queryForObject(sql, int.class, data);
+	}
+
+	public List<Integer> selectAttachmentList(int itemNo){
+		String sql = "select attachment_no from item_images "
+				+ "where item_no = ? "
+				+ "order by attachment_no asc";
+		Object[] data = {itemNo};
+		return jdbcTemplate.query(sql,itemImagesMapper,data);
+	}
 	
 	public List<ItemDto>selectListF(ItemVO itemVO){
 	//여자 리스트 ...... F...

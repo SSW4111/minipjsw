@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
-<script src="/js/itemadd.js"></script>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<script src="/js/itemedit.js"></script>
 
  <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-lite.min.js"></script>
@@ -17,13 +18,13 @@
 <div class="container">
 	<div class="p-5 mb-4 bg-light rounded-3">
 		<div class="container-fluid py-5">
-			<h1 class="display-5 ">상품 항목 등록</h1>
+			<h1 class="display-5 ">상품 항목 수정</h1>
 		</div>
 	</div>
 </div>
 
 <div class="container">
-	<form action="item-add" method="post" enctype="multipart/form-data" autocomplete="off">
+	<form action="update" method="post" enctype="multipart/form-data" autocomplete="off">
 		<div class="row mt-2">
 			<label class="col-sm-3 form-label">제목</label>
 			<div class="col-sm-9">
@@ -31,7 +32,7 @@
 					placeholder="제목을 입력하세요">
 			</div>
 		</div>
-
+		<input type="hidden" name="itemNo" value="${itemDto.itemNo}">
 		<div class="row mt-2">
 			<label class="col-sm-3 form-label">분류</label>
 			<div class="col-sm-9">
@@ -62,6 +63,22 @@
 		</div>
 
 	
+		<div class="row mt-2">
+					<label class="col-sm-3 form-label">성별</label>
+					<div class="col-sm-9 d-flex">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="M" name="itemGender"
+								id="maleCheck"> <label class="form-check-label"
+								for="maleCheck">남</label>
+						</div>
+						<div class="form-check ms-2">
+							<input class="form-check-input" type="checkbox" value="F" name="itemGender"
+								id="femaleCheck"> <label class="form-check-label"
+								for="femaleCheck">여</label>
+						</div>
+
+					</div>
+				</div>
 
 
 
@@ -70,7 +87,7 @@
 		<div class="row mt-2">
 			<label class="col-sm-3 form-label">내용</label>
 			<div class="col-sm-9">
-			<textarea id="summernote"  name="itemContent" class="form-control" value="${itemDto.itemContent}"></textarea>
+			<textarea id="summernote" name="itemContent" class="form-control">${itemDto.itemContent}</textarea>
 			</div>
 		</div>
 
@@ -97,7 +114,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="profileModalLabel">상품 이미지 등록</h5>
+        <h5 class="modal-title" id="profileModalLabel">상품 이미지 수정</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -107,42 +124,42 @@
         <div class="photo-card">
           <div class="row mt-4">
           
-            <div class="col d-flex flex-column ">
-            	<div class="col-3">
-		              <img src="/images/basic.png"  id="firstImage" class="image-btn" style="width: 60px; margin-bottom: 8px; margin-top:8px;">
-		               <input type="file" name="attach" style="display:none;" class="input" > 
-            	</div>
-            	<div class="col-3">
-		              <img src="/images/basic.png"  id="secondImage" class="image-btn" style="width: 60px; margin-bottom: 8px; margin-top:8px;">
-		               <input type="file" name="attach" style="display:none;" class="input" > 
-            	</div>
-            	<div class="col-3">
-		              <img src="/images/basic.png"  id="thirdImage" class="image-btn" style="width: 60px; margin-bottom: 8px; margin-top:8px;">
-		               <input type="file" name="attach" style="display:none;" class="input" > 
-            	</div>
+			<div class="col d-flex flex-column">
+			    <c:forEach var="i" begin="0" end="5">
+			        <div class="col-3">
+			            <c:choose>
+			                <c:when test="${i < fn:length(attachList)}">
+			                    <img src="/attachment/download?attachmentNo=${attachList[i]}" 
+			                         class="image-btn" 
+			                         style="width: 60px; margin: 8px 0; cursor:pointer;" />
+			                </c:when>
+			                <c:otherwise>
+			                    <img src="/images/basic.png" 
+			                         class="image-btn" 
+			                         style="width: 60px; margin: 8px 0;" />
+			                </c:otherwise>
+			            </c:choose>
+						
+			            <input type="file" name="attach" style="display:none;" class="input">
+			        </div>
+			    </c:forEach>
+			</div>
             
-            	<div class="col-3">
-		              <img src="/images/basic.png"  id="fourthImage" class="image-btn" style="width: 60px; margin-bottom: 8px; margin-top:8px;">
-		               <input type="file" name="attach" style="display:none;" class="input" > 
-            	</div>
-            	<div class="col-3">
-		              <img src="/images/basic.png"  id="fifthImage" class="image-btn" style="width: 60px; margin-bottom: 8px; margin-top:8px;">
-		               <input type="file" name="attach" style="display:none;" class="input" > 
-            	</div>
-            	<div class="col-3">
-		              <img src="/images/basic.png"  id="sixthImage" class="image-btn" style="width: 60px; margin-bottom: 8px; margin-top:8px;">
-		               <input type="file" name="attach" style="display:none;" class="input" > 
-            	</div>
-             
-             
-            </div>
-            
-            <div class="col-7 me-auto">
-              <img id="photoView" src="/images/basic.png" id="main" name="attach" style="width: 300px;">
-               <label for="photoView" class="fs-6 d-block mt-2 text-secondary">(대표 화면)</label>
-            </div>
+			<div class="col-7 me-auto">
+			    <img id="photoView" 
+			         src="<c:choose>
+			                <c:when test="${not empty attachmentList}">
+			                    ${attachmentList[0]}
+			                </c:when>
+			                <c:otherwise>
+			                    /images/basic.png
+			                </c:otherwise>
+			              </c:choose>" 
+			         style="width: 300px;" />
+			    <label for="photoView" class="fs-6 d-block mt-2 text-secondary">(대표 화면)</label>
+			</div>
                 	<div class="col-2 mt-auto ">
-            		<button type="button" class="btn btn-success save-btn">등록하기</button>
+            		<button type="button" class="btn btn-success save-btn">수정하기</button>
             	</div>
             
             

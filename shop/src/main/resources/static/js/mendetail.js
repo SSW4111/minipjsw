@@ -19,7 +19,12 @@ $(function() {
 			}
 		});
 	}
-	
+	$(document).ready(function() {
+	    $('.thumbnail').click(function() {
+	        const fullImageUrl = $(this).data('src');
+	        $('#preview-image').attr('src', fullImageUrl);
+	    });
+	});	
 	
 
 	
