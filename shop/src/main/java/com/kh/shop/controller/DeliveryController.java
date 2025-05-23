@@ -39,7 +39,7 @@ public class DeliveryController {
 	
 	@GetMapping("/add")
 	public String add(@RequestParam String usersEmail) {
-		return "/WEB-INF/views/delivery/list.sjp";
+		return "/WEB-INF/views/delivery/list.jp";
 	}
 	
 	@PostMapping("/add")
