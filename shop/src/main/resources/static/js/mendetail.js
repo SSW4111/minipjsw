@@ -19,6 +19,8 @@ $(function() {
 			}
 		});
 	}
+	
+	
 
 	
 	function displayItems(items) {

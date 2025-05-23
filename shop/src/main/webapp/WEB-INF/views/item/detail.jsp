@@ -15,19 +15,12 @@
 
 			<%-- <img src = "/attachment/download?attachmentNo=${attachmentNo }" style="width:450px"> --%>
 
-		
 			<img id="" src="http://placehold.co/950" style="width: 600px;">
-			  hover 이용하면 event 처리 가능 
 			<div class="d-flex mt-1 me-1" >
-			<img src="http://placehold.co/150" style="width: 80px; border:1px, solid, grey;"> 
-			<img src="http://placehold.co/250" style="width: 80px; border:1px, solid, grey;"> 
-			<img src="http://placehold.co/350" style="width: 80px; border:1px, solid, grey;"> 
-			<img src="http://placehold.co/450" style="width: 80px; border:1px, solid, grey;"> 
-			<img src="http://placehold.co/550" style="width: 80px; border:1px, solid, grey;"> 
-			<img src="http://placehold.co/650" style="width: 80px; border:1px, solid, grey;"> 
-			<img src="http://placehold.co/750" style="width: 80px; border:1px, solid, grey;"> 
-			<img src="http://placehold.co/850" style="width: 80px; border:1px, solid, grey;"> 
-			 8개 부터 swipe 처리 
+			<c:forEach var="attach" items="${attachList}">
+						<img src="/attachment/download?attachmentNo=${attach }" style="width: 80px; height:80px; border:1px, solid, grey;">
+			</c:forEach>
+			
 			</div>
 		</div>
 
@@ -35,31 +28,28 @@
 	
 
 		<div class="col-sm-6 ">
+			
+
 			<div class="row mt-4">
 				<div class="col">
-					<div style="min-height: 180px; background-color: aqua;"></div>
+
+					<h2 class="">${itemDetailViewDto.itemTitle}</h2>
+					<span>${itemDetailViewDto.itemCategory }</span> <br>
+					<span>${itemDetailViewDto.itemDetail }</span>
+					<span>${itemDetailViewDto.itemAveStar }점</span>
+					<span>${itemDetailViewDto.itemContent }</span>
+					<h2>${itemDetailViewDto.itemPrice }원</h2>
 				</div>
 			</div>
 
 			<div class="row mt-4">
 				<div class="col">
 
-					<h2 class="text-danger">"${itemDetailViewDto.itemTitle}"</h2>
-					<span>${itemDetailViewDto.itemCategory }</span> <span>${itemDetailViewDto.itemDetail }</span>
-					<span>${itemDetailViewDto.itemAveStar }</span>
-					<h2>${itemDetailViewDto.itemPrice }</h2>
-				</div>
-			</div>
-
-			<div class="row mt-4">
-				<div class="col">
-
-					 색 
 					<c:forEach var="itemDto" items="${colorList}">
 						<c:if test="${itemDetailViewDto.itemNo != itemDto.itemNo}">
 							<a href="/item/detail?itemNo=${itemDto.itemNo}">${itemDto.itemColor }
-								<%-- <a href="/item/detail?itemNo=${itemDto.itemNo}"><img src="/attachment/download?attachmentNo="></a> --%>
-								<%-- <c:forEach var="attach" items="${colorListAtta }">
+								<a href="/item/detail?itemNo=${itemDto.itemNo}"><img src="/attachment/download?attachmentNo="></a> 
+								 <c:forEach var="attach" items="${colorListAtta }">
 					
 						<c:if test="${itemDto.itemNo == attach.key }">
 							<a src="/attachment/download?attachmentNo=${attach.value}" style="width:450px;"></a>
@@ -67,51 +57,52 @@
 							<a href="#"><img src="http://placehold.co/450" style="width: 50px;"></a>
 
 						</c:if>
-					</c:forEach> --%>
+					</c:forEach> 
 							</a>
 						</c:if>
 					</c:forEach>
 				</div>
 			</div>
+			
+			
+			<div class="row mt-4">
+		
+				<!--<%-- "${iolist.item_io_total}" --%>-->
+				<select class="form-select">
+				<c:forEach var="ioDto" items="${iolist}">
+					<option>${ioDto.sizeName}, ${ioDto.itemIoTotal}</option>	 	
+					 
+				</c:forEach>
+				</select>
+			</div>
+		<div class = "row mt-4">
+			<div class="col d-flex ">
+				<div class="ms-auto">
+					
+				<button class="btn btn-outline-secondary">주문하러가기	</button>
+				<button class="btn btn-outline-secondary">장바구니	</button>
+				</div>
+			</div>
 		</div>
-
+		</div>
 	</div>
 
-	 동적 사진 리스트 
+	
 
-	<div class="row mt-4">
-		<div id="itemAttachList"></div>
-	</div>
-
-<div class="row mt-4">
-
-	사이즈, 재고	
-	<%-- "${iolist.item_io_total}" --%>
-	<select>
-	<c:forEach var="ioDto" items="${iolist}">
-		<option>${ioDto.sizeName}, ${ioDto.itemIoTotal}</option>	 	
-		 
-	</c:forEach>
-	</select>
-</div>
 
 
  
-	<div class="row mt-4">
+	<!--<div class="row mt-4">
 		<img src="http://placehold.co/450" style="width: 150px;"> <img
 			src="http://placehold.co/450" style="width: 150px;"> <img
 			src="http://placehold.co/450" style="width: 150px;"> <img
 			src="http://placehold.co/450" style="width: 150px;"> <img
 			src="http://placehold.co/450" style="width: 150px;">
 	</div>
- 
+ -->
 
 
 
-	<div>
-		<hr>
-	</div>
-	<span>itemContent </span> <span>${itemDetailViewDto.itemContent }</span>
 </div>
 
 
@@ -119,10 +110,9 @@
 <hr>
 <div class="container">
 	<div class="row mt-4">
-		<h1>reviewsList 시작</h1>
 		<div class="col" id="reviewsList">
 
-			<%-- 	<c:forEach var="reviewsDto" items="${list}">
+			<c:forEach var="reviewsDto" items="${list}">
 				<span>${list.reviewsNo }</span>
 				<span>${list.reviewsTitle }</span>
 				<span>${list.reviewsContent }</span>
@@ -131,7 +121,7 @@
 				<span>${list.usersNickname }</span>
 				<span>${list.usersEmail }</span>
 				
-			</c:forEach> --%>
+			</c:forEach> 
 
 		</div>
 	</div>
@@ -182,7 +172,6 @@ String usersLevel = (String) session.getAttribute("usersLevel");
 	<%=usersLevel%></p>
 <hr>
 "${itemDetailViewDto}"
-<h2>칼라리스트</h2>
 
 
 
