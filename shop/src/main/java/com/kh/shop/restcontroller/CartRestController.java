@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.shop.dao.CartDao;
 import com.kh.shop.dto.CartDto;
+import com.kh.shop.vo.CartJoinVO;
 import com.kh.shop.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -28,8 +29,13 @@ public class CartRestController {
 	private CartDao cartDao;
 	//등록
 	@PostMapping("/add")
-	public ResponseEntity<String> add (@RequestBody CartDto cartDto){
+	public ResponseEntity<String> add (@RequestBody CartDto cartDto, HttpSession session){
 		try {
+		String usersEmail = (String)session.getAttribute("usersEmail");
+		 if (usersEmail == null) {	//401
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인안함");
+	        }
+		cartDto.setUsersEmail(usersEmail);
 		cartDao.addOrUpdateCart(cartDto);
 		return ResponseEntity.ok("ok");
 		}
@@ -40,8 +46,12 @@ public class CartRestController {
 	//삭제
 	@PostMapping("/delete")
 	public ResponseEntity<String> delete(@RequestParam int cartNo, 
-													@RequestParam String usersEmail){
+													HttpSession session){
 		try {
+			String usersEmail = (String)session.getAttribute("usersEmail");
+			 if (usersEmail == null) {	//401
+		            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인안함");
+		        }
 			cartDao.deleteCart(cartNo, usersEmail);
 			return ResponseEntity.ok("ok");
 		}
@@ -71,9 +81,10 @@ public class CartRestController {
 	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인안함");
 	        }
 
-	        List<CartDto> cartList = cartDao.cartList(usersEmail, pageVO);
+	        List<CartJoinVO> cartList = cartDao.cartList(usersEmail, pageVO);
 	        return ResponseEntity.ok(cartList);
 	    } catch (Exception e) {
+//	    	 e.printStackTrace();
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버에러");
 	    }
 	}

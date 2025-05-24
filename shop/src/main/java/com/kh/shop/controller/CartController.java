@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.shop.dao.CartDao;
-import com.kh.shop.dto.CartDto;
+import com.kh.shop.vo.CartJoinVO;
 import com.kh.shop.vo.PageVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,7 +24,7 @@ public class CartController {
 	public String cart(@ModelAttribute ("pageVO") PageVO pageVO, HttpSession session,
 							Model model) {
 		String usersEmail = (String)session.getAttribute("usersEmail");
-		List<CartDto> list = cartDao.cartList(usersEmail, pageVO);
+		List<CartJoinVO> list = cartDao.cartList(usersEmail, pageVO);
 		model.addAttribute("list", list);
 		return "/WEB-INF/views/cart/main.jsp";
 	}

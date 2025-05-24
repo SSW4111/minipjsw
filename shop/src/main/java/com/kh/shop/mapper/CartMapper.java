@@ -17,6 +17,7 @@ public class CartMapper implements RowMapper <CartDto> {
 				.cartNo(rs.getInt("cart_no"))
 				.usersEmail(rs.getString("users_email"))
 				.itemNo(rs.getInt("item_no"))
+				.itemIoNo(rs.getInt("item_io_no"))
 				.cartQty(rs.getInt("cart_qty"))
 				.build();
 	}
