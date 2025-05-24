@@ -1,5 +1,10 @@
 $(function() {
-	
+	var status={
+	  itemIoNo : $("#itemIo").val(), itemQty : $("#itemQty").val(),
+	  ok:function(){
+	      return this.itemIoNo > 0 && this.itemQty > 0;
+	  }
+	};
 		function callPage() {
 		var itemNum = $("#itemNO").val();
 
@@ -29,49 +34,67 @@ $(function() {
 
 	
 	function displayItems(items) {
-		          const container = $('#reviewsList' 	);
-				 const currentUserEmail = items.userEmailValid; //받아온거
-		          items.list.forEach(item => {
-	//					                    <img src= "/attachment/download?attachmentNo=${att}" class="card-img-top" >
-	
-				const isOwner = item.usersEmail === currentUserEmail; // 적혀는거랑 비교
-				
-				
-		              const reviews = $(`
-						<div class="row mt-4">
-							<div class="col d-flex">
-								<span>닉네임:${item.usersNickname }</span>
-								<span>${item.reviewsWtime }</span>				
-								<span class="ms-1">만족도 ${item.reviewsStar}</span>	
-								<div class="ms-auto">
-								<span>${item.itemTitle }</span>
-								</div>
-							</div>	
-						</div>
-						<div class="row mt-2">
-							<div class="col">
-							<h2>${item.reviewsTitle }</h2>
-							<span>${item.reviewsContent }</span>
-							
-							</div>
-						</div>
-						<div class="d-flex">
-							<input type="hidden" class="reviewNo" value="${item.reviewsNo}">
-							<button class="btn btn-danger ms-auto btn-sm d-none delete-button"><i class="fa-solid fa-trash"></i></button>					
-							 
-						</div>				
-						<hr>
-		              `);
-					//  console.log(isOwner);
-					  if (isOwner) {
-					             reviews.find('.delete-button').removeClass('d-none');
-					         }
-							 else{
-								 reviews.find('.delete-button').addClass('d-none');
-							 }
-		              container.append(reviews);
-				  });
-		      }
+	  const container = $('#reviewsList');
+	  const currentUserEmail = items.userEmailValid; // 받아온 현재 로그인 유저 이메일
+
+	  // 날짜 포맷 함수 (yyyy-MM-dd HH:mm)
+	  function formatDate(dateString) {
+	    const date = new Date(dateString);
+	    if (isNaN(date)) return dateString; // 날짜 변환 실패 시 원본 리턴
+
+	    const pad = (n) => n.toString().padStart(2, '0');
+	    const year = date.getFullYear();
+	    const month = pad(date.getMonth() + 1);
+	    const day = pad(date.getDate());
+	    /*const hours = pad(date.getHours());
+	    const minutes = pad(date.getMinutes());
+	    return `${year}-${month}-${day} ${hours}:${minutes}`;
+*/	  
+		return `${year}-${month}-${day}`;
+		}
+
+	  items.list.forEach(item => {
+	    const isOwner = item.usersEmail === currentUserEmail; // 적힌거랑 비교
+	    const formattedDate = formatDate(item.reviewsWtime);
+
+	    const reviews = $(`
+	      <div class="row mt-4">
+	        <div class="col d-flex">
+	          <span>${formattedDate}</span>				
+	          <span class="ms-3 text-muted" >만족도 ${item.reviewsStar}</span>	
+	          <div class="ms-auto">
+	            	
+	          </div>
+	        </div>	
+	      </div>
+	      <div class="row mt-2">
+	        <div class="col">
+			  <div class="d-flex">
+	          <h2>${item.reviewsTitle}</h2>
+			  <span class="ms-auto">${item.usersNickname}</span>
+			  </div>
+	          <span class="ms-1">${item.reviewsContent}</span>
+	        </div>
+	      </div>
+	      <div class="d-flex">
+	        <input type="hidden" class="reviewNo" value="${item.reviewsNo}">
+	        <button class="btn btn-danger ms-auto btn-sm d-none delete-button">
+	          <i class="fa-solid fa-trash"></i>
+	        </button>					
+	      </div>				
+	      <hr>
+	    `);
+
+	    if (isOwner) {
+	      reviews.find('.delete-button').removeClass('d-none');
+	    } else {
+	      reviews.find('.delete-button').addClass('d-none');
+	    }
+
+	    container.append(reviews);
+	  });
+	}
+
 			  //<input type="text" name="reviewsTitle" placeholder="제목을 작성해주세요">${item.reviewsTitle }</input>
 /*										<button class="btn btn-danger ms-auto deleteButton">삭제</button>*/
 
@@ -95,12 +118,37 @@ $(function() {
 	});
 	
 	});
+
 	
 		$(".cart-button").click(function(){
+			if (!usersEmail || usersEmail === "null") {
+				return;
+			}
+			
+			
 			var itemNum = $("#itemNO").val();
 			var cartQty = $("#itemQty").val();
-			
+			var itemIo = $("#itemIo").val();
+			$.ajax({
+				url:"/rest/cart/add",
+				method:"post",
+				data:{itemNo:itemNum, itemIoNo:itemIo, cartQty:cartQty},
+				success:function(response){
+					console.log(response);
+				}
+			})
 		})
+		
+		$(".order-button").click(function(){
+			//console.log("hwhwhw");
+			var itemNum = $("#itemNO").val();
+			var cartQty = $("#itemQty").val();
+			var itemIo = $("#itemIo").val();
+			/*console.log(itemNum);
+			console.log(cartQty);
+			console.log(itemIo);*/
+		})
+		
 		
 		//$(document).on("click",".write-button",function(){
 		$(".write-button").click(function(){
@@ -131,8 +179,13 @@ $(function() {
 			 $("#reviewsList").empty();
 		}
 		
+	
 		
+		
+			
 	callPage();
+	
+	
 });
 
 

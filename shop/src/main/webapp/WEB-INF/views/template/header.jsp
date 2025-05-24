@@ -40,7 +40,7 @@
 <body>
     <!-- navigation bar, menu bar-->
     <div class="container">
-        <div style="min-height: 300px;" class="bg-success">
+        <div style="min-height: 100px;" >
             <h2></h2>
         </div>
     </div>
@@ -48,7 +48,7 @@
     <nav class="navbar navbar-expand-lg bg-light text-dark fixed-top" data-bs-theme="light">
   <div class="container-fluid">
     <!-- 왼쪽 네비게이션 메뉴 -->
-    <a class="navbar-brand" href="#">KH</a> <!-- 브랜드 로고나 이름 -->
+    <a class="navbar-brand" href="/">KH</a> <!-- 브랜드 로고나 이름 -->
     
     <!-- 토글 버튼 (모바일에서 메뉴를 토글) -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,9 +58,7 @@
     <!-- 네비게이션 항목을 collapse 안에 넣어줘야 모바일에서만 숨겨지고 토글 가능해짐 -->
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Home</a>
-        </li>
+        
         <li class="nav-item">
           <a class="nav-link" href="#">New</a>
         </li>
@@ -76,10 +74,21 @@
       </ul>
 
       <!-- 오른쪽 메뉴 (간편로그인, 사용자 메뉴 등) -->
-      <ul class="navbar-nav ms-auto">
-        <li><a href="#" class="nav-link">간편로그인</a></li>
-      </ul>
+	  <ul class="navbar-nav ms-auto">
+		
+		<c:if test="${sessionScope.usersLevel == '관리자'}">
 
+		  <li class="nav-item dropdown">
+	        <a class="nav-link dropdown-toggle" href="#" id="adminMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+	          관리자 메뉴
+	        </a>
+	        <ul class="dropdown-menu" aria-labelledby="adminMenuLink">
+	          <li><a class="dropdown-item custom-dropdown" href="/admin/item-list">아이템 목록</a></li>
+	          <li><a class="dropdown-item custom-dropdown" href="/admin/item-add">아이템 등록</a></li>
+	        </ul>
+	      </li>
+	    </c:if>
+	  </ul>
       <!-- 사용자 메뉴 -->
       <ul class="navbar-nav dropdown">
         <li class="nav-item">
@@ -99,7 +108,7 @@
 
       <!-- 장바구니, 찜목록 -->
       <ul class="navbar-nav">
-        <li><a href="#" class="nav-link"><i class="fa-solid fa-shopping-cart me-1"></i></a></li>
+        <li><a href="/cart/list" class="nav-link"><i class="fa-solid fa-shopping-cart me-1"></i></a></li>
         <li><a href="/users/wish" class="nav-link"><i class="fa-solid fa-heart me-1"></i></a></li>
       </ul>
     </div>
@@ -176,8 +185,5 @@
 
 <div style="min-height:80px;"></div>
   <!-- aside -->
-
-            <!-- contents -->
-
-                  
+                
                

@@ -5,7 +5,11 @@
 <script src="/js/mendetail.js"></script>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script>
+  const usersEmail = "${sessionScope.usersEmail}";
+  const usersLevel = "${sessionScope.usersLevel}";
+</script>
 
 <div class="container">
 	<div class="row">
@@ -34,10 +38,15 @@
 	     </div>
 	     <div class="mt-2" style="font-size: 0.9em;">
 	       <span style="color: gold;">⭐</span>
-	       <!--<span class="text-muted">${itemDetailViewDto.itemAveStar}</span>-->
-		   <span>
-		     <fmt:formatNumber value="${itemDetailViewDto.itemAveStar || '0.0'}" maxFractionDigits="2" />
-		   </span>
+	      <!-- <span class="text-muted">${itemDetailViewDto.itemAveStar}</span>-->
+		  <c:choose>
+		    <c:when test="${itemDetailViewDto.itemAveStar != null}">
+		      <fmt:formatNumber value="${itemDetailViewDto.itemAveStar}" maxFractionDigits="2" />
+		    </c:when>
+		    <c:otherwise>
+		      0.00
+		    </c:otherwise>
+		  </c:choose>
 	   		</div>
 	     <h2 class="mt-3">${itemDetailViewDto.itemPrice}원</h2>
 
@@ -53,10 +62,10 @@
 
 	     <!-- 사이즈 선택 -->
 	     <div class="mt-4" style="max-width: 200px;">
-	       <select class="form-select" >
+	       <select class="form-select"  id="itemIo" name="itemIo">
 	         <option value="">사이즈 선택</option>
 	         <c:forEach var="ioDto" items="${iolist}">
-	           <option value="${ioDto.sizeName}">${ioDto.sizeName}, ${ioDto.itemIoTotal}개 재고</option>	 
+	           <option value="${ioDto.itemIoNo}">${ioDto.sizeName}, ${ioDto.itemIoTotal}개 재고</option>	 
 	         </c:forEach>
 	       </select>
 	     </div>
@@ -73,7 +82,7 @@
 
 	     <!-- 버튼 -->
 	     <div class="mt-4 d-flex gap-2">
-	       <button class="btn btn-outline-secondary">주문하러가기</button>
+	       <button class="btn btn-outline-secondary order-button">주문하러가기</button>
 	       <button class="btn btn-outline-secondary cart-button">장바구니</button>
 	     </div>
 	   </div>
@@ -99,16 +108,18 @@
 	<div class="row mt-4">
 		<div class="col" id="reviewsList">
 
-			<c:forEach var="reviewsDto" items="${list}">
+			<!--<c:forEach var="reviewsDto" items="${list}">
 				<span>${list.reviewsNo }</span>
 				<span>${list.reviewsTitle }</span>
 				<span>${list.reviewsContent }</span>
-				<span>${list.reviewsWtime }</span>
+				<span>
+				  <fmt:formatDate value="${list.reviewsWtime}" pattern="yyyy-MM-dd HH:mm" />
+				</span>
 				<span>${list.ItemTitle }</span>
 				<span>${list.usersNickname }</span>
 				<span>${list.usersEmail }</span>
 				
-			</c:forEach> 
+			</c:forEach> -->
 
 		</div>
 	</div>
@@ -144,7 +155,7 @@
 	</div>
 </div>
 
-
+<!--
 <%@ page session="true"%>
 <%
 String usersEmail = (String) session.getAttribute("usersEmail");
@@ -159,7 +170,7 @@ String usersLevel = (String) session.getAttribute("usersLevel");
 	<%=usersLevel%></p>
 <hr>
 "${itemDetailViewDto}"
-
+-->
 
 
 

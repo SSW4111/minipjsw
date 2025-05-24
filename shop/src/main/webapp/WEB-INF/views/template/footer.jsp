@@ -2,8 +2,9 @@
     pageEncoding="UTF-8"%>
 
 <div style="min-height:150px;"></div>
-
-<footer class="bg-dark text-light py-4 mt-5">
+<hr>
+<footer class=" py-4 mt-5">
+<!--<footer class="bg-secondary text-light py-4 mt-5">-->
   <div class="container">
     <div class="row">
       <!-- 회사 정보 -->
@@ -22,10 +23,10 @@
       <div class="col-md-4 mb-3">
         <h5>고객 센터</h5>
         <ul class="list-unstyled small">
-          <li><a href="#" class="text-light text-decoration-none">자주 묻는 질문</a></li>
-          <li><a href="#" class="text-light text-decoration-none">1:1 문의</a></li>
-          <li><a href="#" class="text-light text-decoration-none">배송 조회</a></li>
-          <li><a href="#" class="text-light text-decoration-none">반품/교환 안내</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">자주 묻는 질문</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">1:1 문의</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">배송 조회</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">반품/교환 안내</a></li>
         </ul>
       </div>
 
@@ -33,9 +34,9 @@
       <div class="col-md-4 mb-3">
         <h5>이용 안내</h5>
         <ul class="list-unstyled small">
-          <li><a href="#" class="text-light text-decoration-none">이용약관</a></li>
-          <li><a href="#" class="text-light text-decoration-none">개인정보처리방침</a></li>
-          <li><a href="#" class="text-light text-decoration-none">전자상거래법 안내</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">이용약관</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">개인정보처리방침</a></li>
+          <li><a href="#" class="text-dark text-decoration-none">전자상거래법 안내</a></li>
         </ul>
       </div>
     </div>
