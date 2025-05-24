@@ -25,6 +25,9 @@ public class CartController {
 	private CartDao cartDao;
 	
 
+	@RequestMapping("/main")
+
+
 	@Autowired
 	private CartItemService cartItemService;
 	
@@ -36,13 +39,5 @@ public class CartController {
 		model.addAttribute("list", list);
 		return "/WEB-INF/views/users/cartList.jsp";
 	}
-	//결제 목록 리스트
-	@GetMapping("/selectList")
-	public String selectItemList(HttpSession session, @RequestParam List<Integer>cartNoList,
-										Model model) {
-		String usersEmail = (String)session.getAttribute("usersEmail");
-		SelectedItemVO selectedItemVO= cartItemService.cartItemList(cartNoList, usersEmail);
-		model.addAttribute(selectedItemVO);
-		return "/WEB-INF/views/cart/selectList.jsp";
-	}
+	
 }

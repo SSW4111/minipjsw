@@ -115,6 +115,13 @@ public class ItemDetailViewDao {
 //		}
 //		return itemList;
 //	}
+	
+	//단건결제요청
+	public ItemDetailViewDto selectList(int itemNo){
+		ItemDetailViewDto dto = selectOne(itemNo);
+		return dto;
+	
+	}
 }
 
 
