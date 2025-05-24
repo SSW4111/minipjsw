@@ -4,105 +4,80 @@
 <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
 <script src="/js/mendetail.js"></script>
 
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 
 <div class="container">
-	<div class="row mt-4">
-		<div class="col-sm-6">
+	<div class="row">
+	   <!-- 왼쪽 이미지 영역 -->
+	   <div class="col-md-6">
+	     <input type="hidden" value="${itemDetailViewDto.itemNo}" id="itemNO">
 
-			<input type="hidden" value="${itemDetailViewDto.itemNo}" id="itemNO">
+	     <img id="preview-image" src="/attachment/download?attachmentNo=${attachList[0]}" style="width: 100%; max-width: 600px;">
+	     <div class="d-flex mt-2">
+	       <c:forEach var="attach" items="${attachList}">
+	         <img class="thumbnail"
+	              src="/attachment/download?attachmentNo=${attach}"
+	              data-src="/attachment/download?attachmentNo=${attach}"
+	              style="width: 80px; height: 80px; border: 1px solid grey; margin-right: 5px; cursor: pointer;">
+	       </c:forEach>
+	     </div>
+	   </div>
 
-			<img id="preview-image" src="/attachment/download?attachmentNo=${attachList[0]}"  style="width: 600px;">
-			<div class="d-flex mt-1 me-1">
-			    <c:forEach var="attach" items="${attachList}">
-			        <img class="thumbnail"
-			             src="/attachment/download?attachmentNo=${attach}"
-			             data-src="/attachment/download?attachmentNo=${attach}"
-			             style="width: 80px; height:80px; border: 1px solid grey; margin-right: 5px; cursor: pointer;">
-			    </c:forEach>
-			</div>
-		</div>
+	   <!-- 오른쪽 상품정보 영역 -->
+	   <div class="col-md-6">
+	     <h2>${itemDetailViewDto.itemTitle}</h2>
+	     <div>
+	       <span>${itemDetailViewDto.itemCategory}</span> |
+	       <span>${itemDetailViewDto.itemDetail}</span> |
+	       <span>${itemDetailViewDto.itemColor}</span>
+	     </div>
+	     <div class="mt-2" style="font-size: 0.9em;">
+	       <span style="color: gold;">⭐</span>
+	       <!--<span class="text-muted">${itemDetailViewDto.itemAveStar}</span>-->
+		   <span>
+		     <fmt:formatNumber value="${itemDetailViewDto.itemAveStar || '0.0'}" maxFractionDigits="2" />
+		   </span>
+	   		</div>
+	     <h2 class="mt-3">${itemDetailViewDto.itemPrice}원</h2>
 
-	
-	
+	     <!-- 색상 선택 -->
+	     <div class="mt-4 d-flex">
+	       <c:forEach var="itemDto" items="${colorList}" varStatus="status">
+	         <a class="text-decoration-none me-2" href="/item/detail?itemNo=${itemDto.itemNo}">
+	           <img src="/attachment/download?attachmentNo=${colorNoList[status.index]}"
+	                style="width: 80px; height: 80px; border: 1px solid grey;">
+	         </a>
+	       </c:forEach>
+	     </div>
 
-		<div class="col-sm-6 ">
-			
+	     <!-- 사이즈 선택 -->
+	     <div class="mt-4" style="max-width: 200px;">
+	       <select class="form-select" >
+	         <option value="">사이즈 선택</option>
+	         <c:forEach var="ioDto" items="${iolist}">
+	           <option value="${ioDto.sizeName}">${ioDto.sizeName}, ${ioDto.itemIoTotal}개 재고</option>	 
+	         </c:forEach>
+	       </select>
+	     </div>
 
-			<div class="row mt-4">
-				<div class="col">
+	     <!-- 수량 선택 -->
+	     <div class="mt-3" style="max-width: 150px;">
+	       <select class="form-select" id="itemQty" name="itemQty">
+	         <option value="">수량 선택</option>
+	         <c:forEach var="i" begin="1" end="10">
+	           <option value="${i}">${i}</option>
+	         </c:forEach>
+	       </select>
+	     </div>
 
-					<h2 class="">${itemDetailViewDto.itemTitle}</h2>
-					<span>${itemDetailViewDto.itemCategory }</span> <br>
-					<span>${itemDetailViewDto.itemDetail }</span>
-					<span>${itemDetailViewDto.itemAveStar }점</span>
-					<h2>${itemDetailViewDto.itemPrice }원</h2>
-				</div>
-			</div>
-
-			<div class="row mt-4">
-				<div class="col">
-					
-					<c:forEach var="itemDto" items="${colorList}" varStatus="status">
-					    <a href="/item/detail?itemNo=${itemDto.itemNo}">
-					        <img src="/attachment/download?attachmentNo=${colorNoList[status.index]}"
-					             alt="${itemDto.itemColor}"
-					             title="${itemDto.itemColor}"
-					             style="width: 80px; height: 80px; border: 1px solid grey; margin: 5px;">
-					    </a>
-					</c:forEach>
-					
-					<!--<c:forEach var="attach" items="${colorNoList}">
-						<a href="/item/detail/itemNo={itemNo}">
-					    <img src="/attachment/download?attachmentNo=${attach}" 
-					         style="width: 80px; height: 80px; border: 1px solid grey; margin: 5px;">
-						</a>
-					</c:forEach>-->
-								
-					
-					<!--<c:forEach var="itemDto" items="${colorList}">
-					    <c:if test="${itemDetailViewDto.itemNo != itemDto.itemNo}">
-					        <a href="/item/detail?itemNo=${itemDto.itemNo}">
-					            ${itemDto.itemColor} ${itemDto.itemNo}
-					        </a>
-
-					        <c:forEach var="attach" items="${colorListAtta}">
-					            <c:if test="${itemDto.itemNo == attach.key}">
-					                <a href="/item/detail?itemNo=${itemDto.itemNo}">
-					                    <img src="/attachment/download?attachmentNo=${attach.value}" style="width:50px;">
-					                </a>
-					            </c:if>
-					        </c:forEach>
-					    </c:if>
-					</c:forEach>-->
-				</div>
-			</div>
-			
-			
-			<div class="row mt-4">
-		
-				<!--<%-- "${iolist.item_io_total}" --%>-->
-				<select class="form-select">
-				<c:forEach var="ioDto" items="${iolist}">
-					<option>${ioDto.sizeName}, ${ioDto.itemIoTotal}</option>	 	
-					 
-				</c:forEach>
-				</select>
-			</div>
-			
-			
-		<div class = "row mt-4">
-			<div class="col d-flex ">
-				<div class="ms-auto">
-					
-				<button class="btn btn-outline-secondary">주문하러가기	</button>
-				<button class="btn btn-outline-secondary">장바구니	</button>
-				</div>
-			</div>
-		</div>
-		</div>
-	</div>
+	     <!-- 버튼 -->
+	     <div class="mt-4 d-flex gap-2">
+	       <button class="btn btn-outline-secondary">주문하러가기</button>
+	       <button class="btn btn-outline-secondary cart-button">장바구니</button>
+	     </div>
+	   </div>
+	 </div>
 
 	
 
@@ -111,7 +86,7 @@
  
 
 
-
+<!--         내용              -->
 <div class="row mt-4">
 				<div class="col">
 					<span>${itemDetailViewDto.itemContent }</span>

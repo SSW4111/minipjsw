@@ -51,6 +51,7 @@ $(function() {
 	                              .addClass(response.done ? "fa-solid" : "fa-regular");    
 	                      }
 	                  });
+					  const aveStar = item.itemAveStar ? Number(item.itemAveStar).toFixed(2) : '0.00';
 					  const itemCard = $(`
 					    <div class="col mb-4">
 					      <div class="card h-100 shadow-sm border-0" style="width: 18rem;">
@@ -76,9 +77,10 @@ $(function() {
 							    <span>${item.itemCategory}</span>
 							    <span class="text-truncate" style="max-width: 50%;">${item.itemDetail}</span>
 							    <span class="text-warning ms-auto">
-							      <i class="fa-solid fa-star"></i> ${item.itemAveStar || '0.0'}
+							      <i class="fa-solid fa-star"></i> ${aveStar}
 							    </span>
-							  </div>
+								
+								</div>
 
 					        </div>
 					      </div>
