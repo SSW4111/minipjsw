@@ -109,14 +109,13 @@ public class ItemController {
 		model.addAttribute("attachList",attachList);
 		
 
-
+//		System.out.println(itemDetailViewDto);
 		//itemIo list부르고
 		List<ItemIoDto> iolist = itemDetailviewDao.selectIoList(itemNo);
 		for (ItemIoDto io : iolist) {
 		    io.setItemIoTotal(io.getTotal());
 		}
 		model.addAttribute("iolist",iolist);
-		
 		//SizeList 
 		List<ItemDetailViewDto> sizeList =  itemDetailviewDao.selectSize(itemNo);
 		model.addAttribute("sizeList",sizeList);   //사이즈리스트
