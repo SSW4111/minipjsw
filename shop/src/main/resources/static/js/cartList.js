@@ -1,7 +1,7 @@
 $(function(){
         
 	var currentPage = 1;
-	var pageSize = 3;
+	var pageSize = 10;
 	
 	$(".more-btn").click(function(){
 		currentPage += 1;
@@ -10,12 +10,17 @@ $(function(){
 	
 	function callPage(currentPage){
 		$.ajax({
-			url:"/rest/wish/list",
+			url:"/rest/cart/list",
 			method:"post",
 			data:{page: currentPage, size:pageSize},
 			success:function(list){
+				if(!list){
+					console.log("nothing");
+					return;
+				}
 				displayItems(list);
-				$(".wishCount").text(list.totalCount);
+				//$(".wishCount").text(list.totalCount);
+				console.log(list);
 			}
 		
 		})
@@ -28,13 +33,21 @@ $(function(){
 	
 	
 	function displayItems(items) {
-	    const container = $("#wishListContainer");
-
-	    items.list.forEach(item => {
+	    const container = $("#cartListContainer");
+		    container.empty(); 
+		if (!items || items.length === 0) {
+		      container.append(`
+		          <div class="text-center text-muted py-5">
+		              <h5>장바구니가 비어 있습니다 </h5>
+		          </div>
+		      `);
+		      return; // 더 이상 진행하지 않음
+		  }
+	    items.forEach(item => {
 			const gender = item.itemGender === 'M' ? '남자' : '여자';
 	        const table = $(`
 	            <div class="cart-item d-flex align-items-center p-3 border border-muted"  position: relative;">
-	                <a style="text-decoration:none;"><i class="fa-solid fa-heart  ms-auto like-heart text-danger" data-item-no="${item.itemNo}"></i></i></a>
+					<input type="checkbox" class="form-check events" value=${item.cartNo}>
 	                 <a  href="/item/detail?itemNo=${item.itemNo}">
 					 <img src="/attachment/download/item?itemNo=${item.itemNo}" class="ms-5" style="width: 80px; height: 80px;">
 	                </a>
@@ -44,8 +57,8 @@ $(function(){
 	                  
 	                    <span class="card-text">${item.itemDetail}</span>
 	                    <div class="d-flex justify-content-between align-items-center">
-	                    <p>${gender} </p>   
-						<p>${item.itemPrice}원</p>
+	                    <p>${gender} ${item.cartQty}개</p>   
+						<p>${item.itemPrice * item.cartQty}원</p>
 	                    </div>
 	                </a>
 	            </div>
@@ -62,23 +75,27 @@ $(function(){
 	callPage(currentPage);
 	
 	
-		$(document).on("click", ".like-heart", function(e){
-		var itemNo = $(this).data("item-no");
-
-			$.ajax({
-			  url:"/rest/item/action",
-			  method:"post",
-			  data: {itemNo: itemNo},
-			 	success:function(response){
-			  		 $(e.target).removeClass("fa-solid fa-regular")
-			  			.addClass(response.done ? "fa-solid" : "fa-regular");
-						$('#wishListContainer').empty();
-						callPage();
-			  	}
-			  })
-		 });
 		
+	$(".delete-btn").	on("click", function() {
+	    const selectedValues = $(".events:checked").map(function() {
+	      return $(this).val();
+	    }).get();
 
+	    console.log( selectedValues);
+	   $.ajax({
+		url:"/rest/cart/delete",
+		method:"post",
+		data:{cartNo:selectedValues},
+		success:function(response){
+			if(response = "ok"){
+				currentPage(1);
+				callPage(currentPage);
+			}
+		}
+	   })
+	})
+	
+	
 });
 
 

@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +29,7 @@ public class CartRestController {
 	private CartDao cartDao;
 	//등록
 	@PostMapping("/add")
-	public ResponseEntity<String> add (@RequestBody CartDto cartDto, HttpSession session){
+	public ResponseEntity<String> add (@ModelAttribute CartDto cartDto, HttpSession session){
 		try {
 		String usersEmail = (String)session.getAttribute("usersEmail");
 		 if (usersEmail == null) {	//401
@@ -45,14 +45,18 @@ public class CartRestController {
 	}
 	//삭제
 	@PostMapping("/delete")
-	public ResponseEntity<String> delete(@RequestParam int cartNo, 
+	public ResponseEntity<String> delete(@RequestParam List<Integer> cartNo, 
 													HttpSession session){
+		//System.out.println(cartNo);
 		try {
 			String usersEmail = (String)session.getAttribute("usersEmail");
 			 if (usersEmail == null) {	//401
 		            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인안함");
 		        }
-			cartDao.deleteCart(cartNo, usersEmail);
+//			cartDao.deleteCart(cartNo, usersEmail);
+			 for(int no : cartNo) {
+				 cartDao.deleteCart(no, usersEmail);
+			 }
 			return ResponseEntity.ok("ok");
 		}
 		catch(Exception e) {
@@ -73,8 +77,8 @@ public class CartRestController {
 		}
 	}
 	
-	@GetMapping("/list")
-	public ResponseEntity<?> list(PageVO pageVO, HttpSession session) {
+	@PostMapping("/list")
+	public ResponseEntity<?> list(@ModelAttribute ("pageVO") PageVO pageVO, HttpSession session) {
 	    try {
 	        String usersEmail = (String) session.getAttribute("usersEmail");
 	        if (usersEmail == null) {	//401

@@ -20,12 +20,12 @@ public class CartController {
 	@Autowired
 	private CartDao cartDao;
 	
-	@RequestMapping("/main")
+	@RequestMapping("/list")
 	public String cart(@ModelAttribute ("pageVO") PageVO pageVO, HttpSession session,
 							Model model) {
 		String usersEmail = (String)session.getAttribute("usersEmail");
 		List<CartJoinVO> list = cartDao.cartList(usersEmail, pageVO);
 		model.addAttribute("list", list);
-		return "/WEB-INF/views/cart/main.jsp";
+		return "/WEB-INF/views/users/cartList.jsp";
 	}
 }

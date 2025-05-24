@@ -7,15 +7,27 @@
  <div class="container">
  	<div class="row mt-4">
  		<div class="col d-flex">
+			<h2>🛒장바구니</h2>
  			<div class="ms-auto">
  				<span >총 갯수:</span>
  			<span class="wishCount ms-auto"></span>
  			</div>
  		</div>
  	</div>
+	<div class="row mt-4">
+		<div class="col d-flex ">
+			<button class="btn btn-outline-secondary ms-auto order-btn">주문하기</button>
+		</div>
+	</div>
+	<div class="row mt-4">
+		<div class="col d-flex ">
+			<button class="btn btn-danger ms-auto delete-btn"><i class="fa fa-trash"></i></button>
+		</div>
+	</div>
+		
  	<div class="row justify-content-start mt-4" >
  		<div class="col">
- 			<div  id="wishListContainer"></div>
+ 			<div  id="cartListContainer"></div>
  		</div>
  	</div>
  </div>

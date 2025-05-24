@@ -5,7 +5,11 @@
 <script src="/js/mendetail.js"></script>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<script>
+  const usersEmail = "${sessionScope.usersEmail}";
+  const usersLevel = "${sessionScope.usersLevel}";
+</script>
 
 <div class="container">
 	<div class="row">
@@ -104,16 +108,18 @@
 	<div class="row mt-4">
 		<div class="col" id="reviewsList">
 
-			<c:forEach var="reviewsDto" items="${list}">
+			<!--<c:forEach var="reviewsDto" items="${list}">
 				<span>${list.reviewsNo }</span>
 				<span>${list.reviewsTitle }</span>
 				<span>${list.reviewsContent }</span>
-				<span>${list.reviewsWtime }</span>
+				<span>
+				  <fmt:formatDate value="${list.reviewsWtime}" pattern="yyyy-MM-dd HH:mm" />
+				</span>
 				<span>${list.ItemTitle }</span>
 				<span>${list.usersNickname }</span>
 				<span>${list.usersEmail }</span>
 				
-			</c:forEach> 
+			</c:forEach> -->
 
 		</div>
 	</div>
@@ -149,7 +155,7 @@
 	</div>
 </div>
 
-
+<!--
 <%@ page session="true"%>
 <%
 String usersEmail = (String) session.getAttribute("usersEmail");
@@ -164,7 +170,7 @@ String usersLevel = (String) session.getAttribute("usersLevel");
 	<%=usersLevel%></p>
 <hr>
 "${itemDetailViewDto}"
-
+-->
 
 
 
