@@ -51,13 +51,14 @@ public class DeliveryDao {
 		Object[] data = {usersEmail};
 		return jdbcTemplate.queryForObject(sql, int.class,data);
 	}
+	//주소한개의 정보
 	public DeliveryDto selectOne(int deliveryNo) {
 		String sql="select * from delivery where delivery_no=?";
 		Object[] data = {deliveryNo};
 		List<DeliveryDto> list = jdbcTemplate.query(sql,deliveryMapper,data);
 		return list.isEmpty()? null : list.get(0);
 	} 
-	
+	//수정
 	public boolean update(DeliveryDto deliveryDto) {
 		String sql = "update delivery set delivery_post=?, delivery_address1=?, "
 				+ " delivery_address2=?, delivery_type=? "

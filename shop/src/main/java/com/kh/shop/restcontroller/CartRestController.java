@@ -77,8 +77,9 @@ public class CartRestController {
 		}
 	}
 	
-	@PostMapping("/list")
-	public ResponseEntity<?> list(@ModelAttribute ("pageVO") PageVO pageVO, HttpSession session) {
+
+	@GetMapping("/list")
+	public ResponseEntity<?> list(@ModelAttribute PageVO pageVO, HttpSession session) {
 	    try {
 	        String usersEmail = (String) session.getAttribute("usersEmail");
 	        if (usersEmail == null) {	//401
