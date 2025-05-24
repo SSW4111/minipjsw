@@ -96,7 +96,11 @@ $(function() {
 	
 	});
 	
-		
+		$(".cart-button").click(function(){
+			var itemNum = $("#itemNO").val();
+			var cartQty = $("#itemQty").val();
+			
+		})
 		
 		//$(document).on("click",".write-button",function(){
 		$(".write-button").click(function(){
