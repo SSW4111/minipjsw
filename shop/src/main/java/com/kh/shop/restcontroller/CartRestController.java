@@ -45,14 +45,18 @@ public class CartRestController {
 	}
 	//삭제
 	@PostMapping("/delete")
-	public ResponseEntity<String> delete(@RequestParam int cartNo, 
+	public ResponseEntity<String> delete(@RequestParam List<Integer> cartNo, 
 													HttpSession session){
+		//System.out.println(cartNo);
 		try {
 			String usersEmail = (String)session.getAttribute("usersEmail");
 			 if (usersEmail == null) {	//401
 		            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인안함");
 		        }
-			cartDao.deleteCart(cartNo, usersEmail);
+//			cartDao.deleteCart(cartNo, usersEmail);
+			 for(int no : cartNo) {
+				 cartDao.deleteCart(no, usersEmail);
+			 }
 			return ResponseEntity.ok("ok");
 		}
 		catch(Exception e) {
@@ -73,6 +77,7 @@ public class CartRestController {
 		}
 	}
 	
+
 	@GetMapping("/list")
 	public ResponseEntity<?> list(@ModelAttribute PageVO pageVO, HttpSession session) {
 	    try {
