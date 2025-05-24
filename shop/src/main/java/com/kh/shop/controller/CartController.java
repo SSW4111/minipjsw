@@ -23,14 +23,7 @@ import jakarta.servlet.http.HttpSession;
 public class CartController {
 	@Autowired
 	private CartDao cartDao;
-	
 
-	@RequestMapping("/main")
-
-
-	@Autowired
-	private CartItemService cartItemService;
-	
 	@RequestMapping("/list")
 	public String cart(@ModelAttribute ("pageVO") PageVO pageVO, HttpSession session,
 							Model model) {
