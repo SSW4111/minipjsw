@@ -107,14 +107,14 @@ public class ItemDetailViewDao {
 
 	//---결제 요청전 아이템정보---
 	//item no list받아서 하나하나 매핑해서 저장하기...
-	public List<ItemDetailViewDto> selectList(List<Integer>itemNoList){
-		List<ItemDetailViewDto>itemList = new ArrayList<>();
-		for(int item : itemNoList) {
-			ItemDetailViewDto itemDetail =selectOne(item);
-			itemList.add(itemDetail);
-		}
-		return itemList;
-	}
+//	public List<ItemDetailViewDto> selectList(List<Integer>itemNoList){
+//		List<ItemDetailViewDto>itemList = new ArrayList<>();
+//		for(int item : itemNoList) {
+//			ItemDetailViewDto itemDetail =selectOne(item);
+//			itemList.add(itemDetail);
+//		}
+//		return itemList;
+//	}
 }
 
 

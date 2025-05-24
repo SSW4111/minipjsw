@@ -1,5 +1,6 @@
 package com.kh.shop.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +106,30 @@ public class CartDao {
 	    		+ ") where rn between ? and ?";
 	    Object[] params = {usersEmail, pageVO.getStartRownum(), pageVO.getFinishRownum()};
 	    return jdbcTemplate.query(sql, cartJoinMapper, params);
+	}
+	//단일찾기
+	public CartJoinVO cartItem(int cartNo) {
+	    String sql = "select "
+	    		+ "	c.cart_no, c.users_email, c.item_no, c.item_io_no, c.cart_qty,"
+	    		+ "	i.item_title, i.item_gender, i.item_category, i.item_detail,"
+	    		+ "	i.item_like, i.item_color, i.item_price, i.item_content,"
+	    		+ "	o.size_name"
+	    		+ " from cart c"
+	    		+ " left outer join item i on c.item_no = i.item_no"
+	    		+ " left outer join item_io o on c.item_io_no = o.item_io_no"
+	    		+ " where c.cart_no = ?";
+	    Object[] data = {cartNo};
+	    List<CartJoinVO> list = jdbcTemplate.query(sql, cartJoinMapper, data);
+	    return list.isEmpty() ? null : list.get(0);
+	}
+	//vo에추가 
+	public List<CartJoinVO> cartItemList(List<Integer>cartNoList){
+		List<CartJoinVO>cartItemList = new ArrayList<>();
+		for(int cartNo : cartNoList) {
+			CartJoinVO cartVO = cartItem(cartNo);
+			cartItemList.add(cartVO);
+		}
+		return cartItemList;
 	}
 
 }
