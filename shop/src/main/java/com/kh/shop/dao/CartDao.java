@@ -7,7 +7,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.shop.dto.CartDto;
+import com.kh.shop.mapper.CartJoinMapper;
 import com.kh.shop.mapper.CartMapper;
+import com.kh.shop.vo.CartJoinVO;
 import com.kh.shop.vo.PageVO;
 
 
@@ -18,14 +20,15 @@ public class CartDao {
 	private CartMapper cartMapper;
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
+	@Autowired
+	private CartJoinMapper cartJoinMapper;
 	//시퀀스
 	public int sequence() {
 		String sql="select cart_seq.nextval from dual";
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 	
-	//장바구니에 있는지 확인하고 이미있으면 qty수량 Up 없다면 그냥 추가
+	//장바구니에 없을경우 그냥추가 io번호다를경우 그냥추가 둘다아닐시 qty만추가
 	public void addOrUpdateCart(CartDto cartDto) {
 	    CartDto findCart = findCart(cartDto.getUsersEmail(), cartDto.getItemNo());
 		    if(findCart == null) {
@@ -34,17 +37,22 @@ public class CartDao {
 		    	cartAdd(cartDto);
 		    	return;
 		    }
-	    int qty = cartDto.getCartQty(); //추가할수량
-	    int findqty = findCart.getCartQty(); //기존장바구니수량
-	    int plus = qty + findqty;
-	    changeQty(plus,findCart.getCartNo());
-	    return;
+		  if( cartDto.getItemIoNo() == findCart.getItemIoNo()) { // 사이즈 같을경우만 qty
+			    int qty = cartDto.getCartQty(); //추가할수량
+			    int findqty = findCart.getCartQty(); //기존장바구니수량
+			    int plus = qty + findqty;
+			    changeQty(plus,findCart.getCartNo());
+			    return;
+		  }
+		  int sequence = sequence();		//사이즈다른경우 
+		    cartDto.setCartNo(sequence);
+		    cartAdd(cartDto);
 	}
 
 	//장바구니추가
 	public void cartAdd(CartDto cartDto) {
-		String sql = "insert into cart(cart_no, users_email, item_no, cart_qty) values (?, ?, ?, ? )";
-		Object[] data = {cartDto.getCartNo(), cartDto.getUsersEmail(), cartDto.getItemNo(), cartDto.getCartQty()};
+		String sql = "insert into cart(cart_no, users_email, item_no, item_io_no, cart_qty) values (?, ?, ?, ? ,?)";
+		Object[] data = {cartDto.getCartNo(), cartDto.getUsersEmail(), cartDto.getItemNo(), cartDto.getItemIoNo(),cartDto.getCartQty()};
 		jdbcTemplate.update(sql,data);	
 	}
 	
@@ -67,7 +75,7 @@ public class CartDao {
 	
 	//장바구니 아이템 삭제
 	public boolean deleteCart(int itemNo, String usersEmail) {
-		String sql = "delete from cart where item_no=? and users_email=?";
+		String sql = "delete from cart where cart_no=? and users_email=?";
 		Object[] data = {itemNo, usersEmail};
 		return jdbcTemplate.update(sql,data)>0;
 		}
@@ -79,22 +87,24 @@ public class CartDao {
 		return jdbcTemplate.queryForObject(sql, int.class,data);
 	}
 	
-	//목록 아이템 전체조인함
-	public List<CartDto> cartList(String usersEmail, PageVO pageVO) {
-	    String sql = "select * from ( "
-	               + "    select rownum rn, TMP.* "
-	               + "    from ( "
-	               + "        select c.*, i.* "
-	               + "        from cart c "
-	               + "        left outer join item i on c.item_no = i.item_no "
-	               + "        where c.users_email = ? "
-	               + "        order by c.cart_no desc "
-	               + "    ) TMP "
-	               + ") "
-	               + "where rn between ? and ?";
-
+	//목록 
+	public List<CartJoinVO> cartList(String usersEmail, PageVO pageVO) {
+	    String sql = "select * from("
+	    		+ "   select rownum rn, TMP.* from("
+	    		+ "         select "
+	    		+ "	c.cart_no, c.users_email, c.item_no, c.item_io_no ,c.cart_qty,"
+	    		+ "	i.item_title, i.item_gender, i.item_category, i.item_detail,"
+	    		+ "	i.item_like, i.item_color, i.item_price, i.item_content,"
+	    		+ "	o.size_name"
+	    		+ "	from cart c"
+	    		+ "	left outer join item i on c.item_no = i.item_no"
+	    		+ "	left outer join item_io o on c.item_io_no = o.item_io_no"
+	    		+ "	where c.users_email = ? "
+	    		+ "	order by c.cart_no desc"
+	    		+ "   )TMP"
+	    		+ ") where rn between ? and ?";
 	    Object[] params = {usersEmail, pageVO.getStartRownum(), pageVO.getFinishRownum()};
-	    return jdbcTemplate.query(sql, cartMapper, params);
+	    return jdbcTemplate.query(sql, cartJoinMapper, params);
 	}
 
 }

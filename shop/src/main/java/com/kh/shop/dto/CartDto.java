@@ -10,6 +10,7 @@ public class CartDto {
 	private int cartNo;
 	private String usersEmail;
 	private int itemNo;
+	private int itemIoNo;
 	private int cartQty;
 
 	
