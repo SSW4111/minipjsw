@@ -1,5 +1,10 @@
 $(function() {
-	
+	var status={
+	  itemIoNo : $("#itemIo").val(), itemQty : $("#itemQty").val(),
+	  ok:function(){
+	      return this.itemIoNo > 0 && this.itemQty > 0;
+	  }
+	};
 		function callPage() {
 		var itemNum = $("#itemNO").val();
 
@@ -97,10 +102,25 @@ $(function() {
 	});
 	
 		$(".cart-button").click(function(){
+			//console.log("hwhwhw");
 			var itemNum = $("#itemNO").val();
 			var cartQty = $("#itemQty").val();
-			
+			var itemIo = $("#itemIo").val();
+			/*console.log(itemNum);
+			console.log(cartQty);
+			console.log(itemIo);*/
 		})
+		
+		$(".order-button").click(function(){
+			//console.log("hwhwhw");
+			var itemNum = $("#itemNO").val();
+			var cartQty = $("#itemQty").val();
+			var itemIo = $("#itemIo").val();
+			/*console.log(itemNum);
+			console.log(cartQty);
+			console.log(itemIo);*/
+		})
+		
 		
 		//$(document).on("click",".write-button",function(){
 		$(".write-button").click(function(){
@@ -131,8 +151,13 @@ $(function() {
 			 $("#reviewsList").empty();
 		}
 		
+	
 		
+		
+			
 	callPage();
+	
+	
 });
 
 
