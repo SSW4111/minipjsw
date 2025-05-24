@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +29,7 @@ public class CartRestController {
 	private CartDao cartDao;
 	//등록
 	@PostMapping("/add")
-	public ResponseEntity<String> add (@RequestBody CartDto cartDto, HttpSession session){
+	public ResponseEntity<String> add (@ModelAttribute CartDto cartDto, HttpSession session){
 		try {
 		String usersEmail = (String)session.getAttribute("usersEmail");
 		 if (usersEmail == null) {	//401
@@ -74,7 +74,7 @@ public class CartRestController {
 	}
 	
 	@GetMapping("/list")
-	public ResponseEntity<?> list(PageVO pageVO, HttpSession session) {
+	public ResponseEntity<?> list(@ModelAttribute PageVO pageVO, HttpSession session) {
 	    try {
 	        String usersEmail = (String) session.getAttribute("usersEmail");
 	        if (usersEmail == null) {	//401

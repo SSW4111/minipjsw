@@ -16,6 +16,7 @@ import com.kh.shop.dto.DeliveryDto;
 import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.vo.MorePageVO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
@@ -27,8 +28,9 @@ public class DeliveryController {
 	
 	//유저 한명 자기 주소 리스트보는거 잘나옴
 	@GetMapping("/list")
-	public String list(@ModelAttribute DeliveryDto deliveryDto, @RequestParam String usersEmail,
+	public String list(@ModelAttribute DeliveryDto deliveryDto, HttpSession session,
 							Model model, MorePageVO morePageVO){
+		String usersEmail = (String)session.getAttribute("usersEmail");
 		List<DeliveryDto> list = deliveryDao.selectUserDelivery(usersEmail);
 		int total = deliveryDao.count(usersEmail);
 		morePageVO.setCount(total);
@@ -38,12 +40,14 @@ public class DeliveryController {
 	}
 	
 	@GetMapping("/add")
-	public String add(@RequestParam String usersEmail) {
+	public String add(HttpSession session) {
+		String usersEmail = (String)session.getAttribute("usersEmail");
 		return "/WEB-INF/views/delivery/list.jp";
 	}
 	
 	@PostMapping("/add")
-	public String add(@ModelAttribute DeliveryDto deliveryDto, @RequestParam String usersEmail) {
+	public String add(@ModelAttribute DeliveryDto deliveryDto, HttpSession session) {
+		String usersEmail = (String)session.getAttribute("usersEmail");
 		int deliveryNo = deliveryDao.sequence();
 		deliveryDto.setDeliveryNo(deliveryNo);
 		deliveryDto.setUsersEmail(usersEmail);
