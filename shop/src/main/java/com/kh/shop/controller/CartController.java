@@ -5,12 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.shop.dao.CartDao;
+import com.kh.shop.service.CartItemService;
 import com.kh.shop.vo.CartJoinVO;
 import com.kh.shop.vo.PageVO;
+import com.kh.shop.vo.SelectedItemVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -20,6 +24,9 @@ public class CartController {
 	@Autowired
 	private CartDao cartDao;
 	
+	@Autowired
+	private CartItemService cartItemService;
+	
 	@RequestMapping("/main")
 	public String cart(@ModelAttribute ("pageVO") PageVO pageVO, HttpSession session,
 							Model model) {
@@ -27,5 +34,14 @@ public class CartController {
 		List<CartJoinVO> list = cartDao.cartList(usersEmail, pageVO);
 		model.addAttribute("list", list);
 		return "/WEB-INF/views/cart/main.jsp";
+	}
+	//결제 목록 리스트
+	@GetMapping("/selectList")
+	public String selectItemList(HttpSession session, @RequestParam List<Integer>cartNoList,
+										Model model) {
+		String usersEmail = (String)session.getAttribute("usersEmail");
+		SelectedItemVO selectedItemVO= cartItemService.cartItemList(cartNoList, usersEmail);
+		model.addAttribute(selectedItemVO);
+		return "/WEB-INF/views/cart/selectList.jsp";
 	}
 }
