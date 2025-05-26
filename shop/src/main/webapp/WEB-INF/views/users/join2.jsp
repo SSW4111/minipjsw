@@ -6,10 +6,15 @@
 
 <div class="row mt-4">
 	<div class="col-4 offset-4">
-		<h2 class="text-center">이메일로 가입하기</h2>
+		<h2 class="text-center">비밀번호 입력</h2>
+	<div style="min-height: 60px;"></div>
+			<%
+	    request.setAttribute("step", 2);  // 현재 단계
+	%>
+	<jsp:include page="../template/progressbar.jsp" />
 
 		<form action="join2" method="post" class="form-check" autocomplete="off">
-			<label class="form-label me-1" for="pwCheck">비밀번호</label>
+			<label class="form-label me-1 mt-4" for="pwCheck">비밀번호</label>
 			<div class="mb-3 input-group">
 				<input type="password" id="pwCheck" name="usersPw" class="form-control">
 			</div>
