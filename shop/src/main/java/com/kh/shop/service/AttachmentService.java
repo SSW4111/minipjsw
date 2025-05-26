@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.shop.dao.AttachmentDao;
+import com.kh.shop.dao.ItemDao;
 import com.kh.shop.dto.AttachmentDto;
 import com.kh.shop.error.TargetNotFoundException;
 
@@ -19,6 +20,9 @@ public class AttachmentService {
 
 	@Autowired
 	private AttachmentDao attachmentDao;
+	
+	@Autowired
+	private ItemDao itemDao;
 	
 	//여기 바꾼거 C드라이브뿐 난 집에 D가없음 :`(
 	//저장
@@ -102,4 +106,41 @@ public class AttachmentService {
 			
 			return attachList;
 		}
+		
+		
+		//아이템 수정 처리
+		public void attachUpdate(int itemNo, List<MultipartFile>files,  List<Integer>attachNoList) throws IllegalStateException, IOException {
+			// 1.원래 어태치리스트
+	    List<AttachmentDto> originAttachList = new ArrayList<>();
+	    for(int attchNo : attachNoList) {
+	    	originAttachList.add(attachmentDao.selectOne(attchNo)); 
+	    }
+	    
+	    for (MultipartFile newFile : files) {
+	        boolean isSame = false;
+	        for (AttachmentDto origin : originAttachList) {
+	            if (origin.getAttachmentName().equals(newFile.getOriginalFilename())) {
+	                isSame = true;  // 같은 이름 파일 존재
+	                break;
+	            }
+	        }
+	        if (!isSame) {
+	            //2. 새로 추가하는 파일 저장
+	            Integer attachNo = save(newFile);
+	            itemDao.connect(itemNo, attachNo);
+	        }
+	    }
+	    //3. 이름으로 비교해서 삭제
+	    List<String> newFileNames = new ArrayList<>();
+	    for (MultipartFile file : files) {
+	        newFileNames.add(file.getOriginalFilename());
+	    }
+
+	    for (AttachmentDto origin : originAttachList) {
+	        if (!newFileNames.contains(origin.getAttachmentName())) {
+	            attachmentDao.delete(origin.getAttachmentNo());
+	        }
+	    }
+		}
+
 }

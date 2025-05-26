@@ -70,6 +70,8 @@ public class AttachmentDao {
 		
 	}
 	
+
+	
 	public List<ItemImagesDto> findList(int itemNo){
 		String sql = "select * from item_images where item_no = ?";
 		Object[] data = {itemNo};
