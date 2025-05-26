@@ -1,6 +1,8 @@
 package com.kh.shop.admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.shop.dao.AttachmentDao;
 import com.kh.shop.dao.ItemDao;
 import com.kh.shop.dao.ItemIoDao;
 import com.kh.shop.dao.ItemListViewDao;
@@ -27,7 +31,6 @@ import com.kh.shop.dto.ItemListViewDto;
 import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.service.AttachmentService;
 import com.kh.shop.vo.AdminItemVO;
-import com.kh.shop.vo.ItemVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -46,6 +49,9 @@ public class AdminItemController {
 	
 	@Autowired
 	private ItemIoDao itemIoDao;
+	
+	@Autowired
+	private AttachmentDao attachmentDao;
 
 	@RequestMapping("/item-list")
 	public String itemList (@ModelAttribute("adminItemVO")AdminItemVO adminItemVO,
@@ -180,5 +186,7 @@ public class AdminItemController {
 		return "redirect:list"; //바꼬주샘
 	}
 	
-	
+
+
+
 }

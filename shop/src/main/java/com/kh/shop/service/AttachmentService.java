@@ -65,7 +65,21 @@ public class AttachmentService {
 			byte[] data = FileUtils.readFileToByteArray(target);
 			return data;
 		}
-		
+
+//		public byte[] loadAndSave(List<Integer>attachmentList) {
+//			try {
+//				for(int attachmentNo : attachmentList) {
+//					AttachmentDto attachmentDto = attachmentDao.selectOne(attachmentNo);
+//					if(attachmentDto == null) {
+//						AttachmentDto newAttach = save(attchmentNo);ㅅㅂ폼데이터
+//					}
+//				}
+//			}
+//			catch(Exception e) {
+//				
+//			}
+//		}
+//		
 		//여러장ㅡ_ㅡ
 		public List<Integer> saveList(List<MultipartFile> attach) throws IllegalStateException, IOException {
 			List<Integer> attachList = new ArrayList<>();
