@@ -171,26 +171,8 @@ public class AdminItemController {
 		}
 		
 		//파일처리
+		attachmentService.attachUpdate(itemDto.getItemNo(), files, attachNoList);
 
-			    // 1. 새 파일 저장
-			    for (MultipartFile file : files) {
-			        if (!file.isEmpty()) {
-			           Integer attachNo = attachmentService.save(file); 
-			           itemDao.connect(itemNo, attachNo);
-			        }
-			    }
-
-			    // 2. 새 어태치리스트
-			    List<ItemImagesDto> findAttachList = attachmentDao.findList(itemNo);
-			    
-			    // 3. 삭제
-			    if (attachNoList != null) {
-				    for (ItemImagesDto dto : findAttachList) {
-				        if (!attachNoList.contains(dto.getAttachmentNo())) {
-				        	attachmentDao.delete(dto.getAttachmentNo());
-				        }
-				    }
-			    }
 //			        List<String> base64List = new ArrayList<>();
 //			        for (int i = 0; i< findAttachList.size() ; i++) {
 //			            byte[] data = attachmentService.load(findAttachList.get(i).getAttachmentNo());
