@@ -53,4 +53,14 @@ public class AttachmentDao {
 		List<AttachmentDto> list = jdbcTemplate.query(sql, attachmentMapper,data);
 		return list.isEmpty()? null : list.get(0);
 	}
+	
+	//업데이트
+	public boolean update(AttachmentDto attachmentDto) {
+		String sql = "update attachment set attachment_name =?, attachment_type=?, attachment_size =? "
+				+ 	" where attachment_no = ? " ;
+		Object[] data = {attachmentDto.getAttachmentName(), attachmentDto.getAttachmentType(), 
+								attachmentDto.getAttachmentSizeString(), attachmentDto.getAttachmentNo()};
+		return jdbcTemplate.update(sql,data) >0;
+		
+	}
 }
