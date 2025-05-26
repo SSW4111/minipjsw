@@ -19,5 +19,6 @@ public class ItemDetailSelectVO {
 	private int qty;
 	//배송지
 	private List<DeliveryDto> deliveryList;
-
+	//size
+	private String sizeName;
 }

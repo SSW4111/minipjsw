@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.shop.dao.CartDao;
 import com.kh.shop.dao.DeliveryDao;
 import com.kh.shop.dao.ItemDetailViewDao;
+import com.kh.shop.dao.ItemIoDao;
 import com.kh.shop.dto.DeliveryDto;
 import com.kh.shop.dto.ItemDetailViewDto;
 import com.kh.shop.vo.CartJoinVO;
@@ -25,6 +26,9 @@ public class CartItemService {
 	
 	@Autowired
 	private ItemDetailViewDao itemDetailViewDao;
+	
+	@Autowired
+	private ItemIoDao itemIoDao;
 	//VO매핑
 	public SelectedItemVO cartItemList(List<Integer>cartNoList, String usersEmail) {
 		List<CartJoinVO>cartJoinVoList = cartDao.cartItemList(cartNoList);
@@ -41,13 +45,15 @@ public class CartItemService {
 	}
 	
 	//아이템디테일에서 단건으로 오는거 매핑
-	public ItemDetailSelectVO itemList(int itemNo, int itemQty, String usersEmail) {
+	public ItemDetailSelectVO itemList(int itemNo, int itemQty, String usersEmail, int itemIoNo) {
 		List<DeliveryDto> deliveryList = deliveryDao.selectUserDelivery(usersEmail);
 		ItemDetailViewDto itemDetail = itemDetailViewDao.selectList(itemNo);
+		String sizeName = itemIoDao.selectOne(itemIoNo).getSizeName();
 		ItemDetailSelectVO selectItem = ItemDetailSelectVO.builder()
 					.item(itemDetail)
 					.qty(itemQty)
 					.deliveryList(deliveryList)
+					.sizeName(sizeName)
 					.build();
 		return selectItem;
 	}
