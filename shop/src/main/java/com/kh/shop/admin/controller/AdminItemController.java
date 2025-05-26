@@ -26,7 +26,9 @@ import com.kh.shop.dao.AttachmentDao;
 import com.kh.shop.dao.ItemDao;
 import com.kh.shop.dao.ItemIoDao;
 import com.kh.shop.dao.ItemListViewDao;
+import com.kh.shop.dto.AttachmentDto;
 import com.kh.shop.dto.ItemDto;
+import com.kh.shop.dto.ItemImagesDto;
 import com.kh.shop.dto.ItemListViewDto;
 import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.service.AttachmentService;
@@ -135,7 +137,9 @@ public class AdminItemController {
 	}
 
 	@PostMapping("/update")
-	public String update(@ModelAttribute ItemDto itemDto) {
+	public String update(@ModelAttribute ItemDto itemDto,
+			@ModelAttribute List<MultipartFile>files,
+			@ModelAttribute List<Integer>attachNoList) throws IllegalStateException, IOException {
 		int itemNo = itemDto.getItemNo();
 		ItemDto originDto = itemDao.selectOne(itemNo);
 		System.out.println("POSTUPDTE");
@@ -166,11 +170,42 @@ public class AdminItemController {
 			attachmentService.delete(attachmentNo);
 		}
 		
+		//파일처리
+
+			    // 1. 새 파일 저장
+			    for (MultipartFile file : files) {
+			        if (!file.isEmpty()) {
+			           Integer attachNo = attachmentService.save(file); 
+			           itemDao.connect(itemNo, attachNo);
+			        }
+			    }
+
+			    // 2. 새 어태치리스트
+			    List<ItemImagesDto> findAttachList = attachmentDao.findList(itemNo);
+			    
+			    // 3. 삭제
+			    if (attachNoList != null) {
+				    for (ItemImagesDto dto : findAttachList) {
+				        if (!attachNoList.contains(dto.getAttachmentNo())) {
+				        	attachmentDao.delete(dto.getAttachmentNo());
+				        }
+				    }
+			    }
+//			        List<String> base64List = new ArrayList<>();
+//			        for (int i = 0; i< findAttachList.size() ; i++) {
+//			            byte[] data = attachmentService.load(findAttachList.get(i).getAttachmentNo());
+//			            String base64Encoded = Base64.getEncoder().encodeToString(data); // 인코딩
+//			            base64List.add(base64Encoded);
+//			        }
+			       
+
 		itemDao.update(itemDto);
 		//return "redirect:item/detail?itemNo="+itemDto.getItemNo();
 		return "redirect:item-list";
 	}
-
+	
+	
+	
 	//삭제
 	@PostMapping("/delete")
 	public String delete(@RequestParam int itemNo) {

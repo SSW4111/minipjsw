@@ -59,7 +59,7 @@ public class AttachmentService {
 			File dir = new File("C:/uploadDir");
 			File target = new File(dir, String.valueOf(attachmentNo));
 			if(!target.isFile()) {
-				throw new TargetNotFoundException("파일이 존재하지 않습니다");
+//				throw new TargetNotFoundException("파일이 존재하지 않습니다");
 			}
 			
 			byte[] data = FileUtils.readFileToByteArray(target);

@@ -6,13 +6,17 @@ import java.sql.SQLException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import com.kh.shop.dto.ItemImagesDto;
+
 @Component
-public class ItemImagesMapper implements RowMapper<Integer>{
+public class ItemImagesMapper implements RowMapper<ItemImagesDto>{
 
 	@Override
-	public Integer mapRow(ResultSet rs, int rowNum) throws SQLException {
-		 return rs.getInt("attachment_no");
+	public ItemImagesDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+		return ItemImagesDto.builder()
+				.itemNo(rs.getInt("item_no"))
+				.attachmentNo(rs.getInt("attachment_no"))
+				.build();
 	}
 
-	
 }

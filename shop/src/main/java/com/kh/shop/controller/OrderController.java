@@ -36,9 +36,10 @@ public class OrderController {
 		public String selectItemList(HttpSession session, 
 											@RequestParam int itemNo,
 											@RequestParam int itemQty,
+											@RequestParam int itemIoNo,
 												Model model) {
 			String usersEmail = (String)session.getAttribute("usersEmail");
-			ItemDetailSelectVO itemDetail = cartItemService.itemList(itemNo, itemQty, usersEmail);
+			ItemDetailSelectVO itemDetail = cartItemService.itemList(itemNo, itemQty, usersEmail,itemIoNo);
 			model.addAttribute(itemDetail);
 			return "/WEB-INF/views/cart/selectList.jsp";
 		}

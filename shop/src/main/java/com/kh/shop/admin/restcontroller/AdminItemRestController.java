@@ -9,14 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.shop.dao.AttachmentDao;
 import com.kh.shop.dao.ItemDao;
-import com.kh.shop.dto.ItemDto;
+import com.kh.shop.dto.AttachmentDto;
 import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.service.AttachmentService;
 
@@ -29,6 +31,9 @@ public class AdminItemRestController {
 	private AttachmentService attachmentService;
 	@Autowired
 	private ItemDao itemDao;
+	
+	@Autowired
+	private AttachmentDao attachmentDao;
 	//썸머노트파일1
 	@PostMapping("/upoad")
 	public int upload(@RequestParam MultipartFile attach) throws IllegalStateException, IOException {
@@ -72,7 +77,7 @@ public class AdminItemRestController {
 //			throw new TargetNotFoundException("몰라");
 //		}
 //	}
-	
+//	
 	//파일관련2 인코딩
 	@PostMapping("/item/attach")
 	public ResponseEntity<?> attach2(@RequestParam List<Integer> attachmentList) {
@@ -89,4 +94,7 @@ public class AdminItemRestController {
 	        throw new TargetNotFoundException("에러");
 	    }
 	}
+	
+
+
 }

@@ -34,6 +34,7 @@ public class SelectedItemTest {
         mockMvc.perform(get("/order/selectList") 
                 .param("itemNo", "1")    
                 .param("itemQty", "2")
+                .param("itemIoNo", "21")
                 .sessionAttr("usersEmail", "oo54941@gmail.com"))
             .andDo(print())
             .andExpect(status().isOk())
