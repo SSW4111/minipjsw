@@ -14,14 +14,18 @@
  			</div>
  		</div>
  	</div>
+	
 	<div class="row mt-4">
 		<div class="col d-flex ">
-			<button class="btn btn-outline-secondary ms-auto order-btn">주문하기</button>
+			<button class="btn btn-danger ms-auto delete-btn" type="button"><i class="fa fa-trash"></i></button>
 		</div>
 	</div>
+	
+	<form method="get" action="/order/selectList-cart" id="cartForm">
+		
 	<div class="row mt-4">
 		<div class="col d-flex ">
-			<button class="btn btn-danger ms-auto delete-btn"><i class="fa fa-trash"></i></button>
+			<button type="button" class="btn btn-outline-secondary ms-auto order-btn">주문하기</button>
 		</div>
 	</div>
 		
@@ -32,6 +36,7 @@
  	</div>
  </div>
 
+	
 
 
 <div class="row mt-4">
@@ -39,13 +44,6 @@
 		<button class="btn more-btn">더보기</button>
 	</div>
 </div>
-
-<div class="container">
-<div class="row mt-4">
-	<div class="col d-flex">
-		<!--  <a class="btn btn-success ms-auto"></a>-->
-	</div>
-</div>
- </div>
+</form>
 
  <jsp:include page="/WEB-INF/views/template/footer.jsp"></jsp:include>

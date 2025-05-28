@@ -11,9 +11,14 @@
 
 		<form action="join1" method="post" class="form-check" autocomplete="off">
 			<label class="me-1 form-label" for="joinEmail">이메일 입력</label>
-			<div class="mb-3 input-group">
-				<input type="email" inputmode="email" class="form-control"
-					id="joinEmail" name="usersEmail">
+			<input type="email" inputmode="email" class="form-control w-100"
+								id="joinEmail" name="usersEmail">
+			<div class="mt-3 mb-3 input-group ">
+				
+					<button type="button"
+											class="btn btn-secondary checkDupEmail rounded ">
+											<span>중복확인</span>
+										</button>
 				<button type="button" class="btn btn-secondary cert rounded ms-1"
 					disabled>
 					인증번호<i class="fa-solid fa-paper-plane"></i>

@@ -25,6 +25,7 @@ public class OrderController {
 		@GetMapping("/selectList-cart")
 		public String selectItemListCart(HttpSession session, @RequestParam List<Integer>cartNoList,
 											Model model) {
+			System.out.println(cartNoList);
 			String usersEmail = (String)session.getAttribute("usersEmail");
 			SelectedItemVO selectedItemVO= cartItemService.cartItemList(cartNoList, usersEmail);
 			model.addAttribute(selectedItemVO);
