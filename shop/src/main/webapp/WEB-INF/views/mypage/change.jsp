@@ -12,7 +12,7 @@
 		<h2 class="text-center">개인정보변경</h2>
 
 			<input type="hidden" name="changeProfile" class="changeProfile" value="false">
-<input type="file" class="form-control d-none" id="fileInput" name="usersProfile" required>
+<input type="file" class="form-control d-none" id="fileInput" name="usersProfile">
 			<%-- 
 
 			<label class="me-1 form-label" for="joinEmail">이메일 입력</label>
@@ -64,7 +64,7 @@
 	<div class="modal-dialog modal-xl">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="profileModalLabel">프로필 등록</h5>
+				<h5 class="modal-title" id="profileModalLabel">프로필 수정</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal"
 					data-bs-target="#fileUploadModal" aria-label="Close"></button>
 			</div>

@@ -4,6 +4,23 @@ $(function(){
 		
 	};
 	
+    $('input[name="itemGender"]').on('change', function () {
+        $('input[name="itemGender"]').not(this).prop('checked', false);
+    });
+	
+	$(document).ready(function() {
+	   
+		var existingGender = $("#gender").val();
+		console.log("existingGender:", existingGender);
+		console.log($("#gender").val());
+	    if (existingGender.includes("M")) {
+	        $('#maleCheck').prop('checked', true);
+	    }
+	    if (existingGender.includes("F")) {
+	        $('#femaleCheck').prop('checked', true);
+	    }
+	});
+	
 	$(document).ready(function() {
 	    var fileList = new Array(6).fill(null);
 

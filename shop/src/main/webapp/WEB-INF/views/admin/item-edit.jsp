@@ -60,9 +60,10 @@
 				<input class="form-control" type="text" inputMode="numeric" value="${itemDto.itemPrice}"
 					name="itemPrice" placeholder="가격을 입력하세요">
 			</div>
-		</div>
-
-	
+		</div>		
+		
+		<input type="hidden" id="gender" value="${itemDto.itemGender}">
+			
 		<div class="row mt-2">
 					<label class="col-sm-3 form-label">성별</label>
 					<div class="col-sm-9 d-flex">

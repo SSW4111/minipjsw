@@ -2,19 +2,35 @@ $(function(){
             var status={
                 usersEmail : false,
                 certNumber : false,
+				emailDup : false,
                 ok:function(){
                     return this.usersEamil && this.certNumber;
                 }
             };
-
+			
+			$(".checkDupEmail").click(function(){
+				$.ajax({
+					url:"/rest/users/checkUsersEmail",
+					method:"get",
+					data:{usersEmail:$("#joinEmail").val()},
+					success:function(response){
+						emailDup = response;
+						if(response == false ){
+							window.alert("이미 사용중인 아이디 입니다");
+						}
+						if(status.usersEmail && status.emailDup){
+							$(".cert").prop("disabled",false);
+						}
+					}
+				})				
+			});
+			
             $("#joinEmail").blur(function(){ // 형식 검사
                 var regex = /^[A-Za-z0-9]+@[A-Za-z0-9.]+$/;
                 var isValid = regex.test($(this).val());
                 $(this).removeClass("is-valid is-invalid").addClass(isValid ? "is-valid" : "is-invalid");
                 status.usersEmail = isValid;
-				if(status.usersEmail){
-					$(".cert").prop("disabled",false);
-				}
+				
             });
 
             $(".cert").click(function(){ // 인증 번호 생성

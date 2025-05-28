@@ -10,6 +10,16 @@
 </script>
 
 <div class="container">
+	<div class="row mt-2">
+		<div class="col">
+			<a href="/admin/item-add" class="btn btn-primary"><i class="fa fa-plus"></i></a>
+		</div>
+	</div>
+
+
+</div>
+
+<div class="container">
   <div class="row mt-2">
     <div class="col">
       <form action="item-list" method="get">
@@ -54,7 +64,7 @@
             <c:forEach var="item" items="${list}">
                 <tr>
                     <td>${item.itemNo}</td>
-                    <td><a href="/admin/update?itemNo=${item.itemNo}">${item.itemTitle}</a></td>
+                    <td><a href="/admin/update?itemNo=${item.itemNo}" class="text-decoration-none text-dark">${item.itemTitle}</a></td>
                     <td>${item.itemColor}</td>
                     <td>${item.itemGender}</td>
                     <td>${item.itemCategory}</td>

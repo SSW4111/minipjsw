@@ -78,7 +78,7 @@ public class CartRestController {
 	}
 	
 
-	@GetMapping("/list")
+	@PostMapping("/list")
 	public ResponseEntity<?> list(@ModelAttribute PageVO pageVO, HttpSession session) {
 	    try {
 	        String usersEmail = (String) session.getAttribute("usersEmail");

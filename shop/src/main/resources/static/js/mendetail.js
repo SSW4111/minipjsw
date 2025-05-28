@@ -32,6 +32,10 @@ $(function() {
 	});	
 	
 
+	$("order-button").click(function(){
+		console.log($())
+		console.log($("#itemQty").val());
+	})
 	
 	function displayItems(items) {
 	  const container = $('#reviewsList');

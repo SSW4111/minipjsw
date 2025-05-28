@@ -63,7 +63,7 @@
 								</div>
 								<div class="mb-3">
 
-									<input type="file" class="form-control d-none" id="fileInput" name="usersProfile" accept=".png, .jpg" required>
+									<input type="file" class="form-control d-none" id="fileInput" name="usersProfile" accept=".png, .jpg" >
 								</div>
 
 							</div>

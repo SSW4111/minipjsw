@@ -120,7 +120,7 @@ public class AdminItemController {
 	//얘빼고 그냥 바로 다른곳 이동해도됌 
 	@RequestMapping("/addFinish")
 	public String addFinish() {
-		return "/WEB-INF/views/admin/addFinish.jsp";
+		return "/WEB-INF/views/admin/item-list.jsp";
 	}
 	
 	@GetMapping("/update")
@@ -132,7 +132,7 @@ public class AdminItemController {
 		model.addAttribute("itemDto",itemDto);
 		List<Integer> attachList = itemDao.selectAttachmentList(itemNo);
 		model.addAttribute("attachList",attachList);
-		System.out.println(attachList);
+		System.out.println(itemDto);
 		return "/WEB-INF/views/admin/item-edit.jsp";
 	}
 
@@ -142,8 +142,6 @@ public class AdminItemController {
 			@ModelAttribute List<Integer>attachNoList) throws IllegalStateException, IOException {
 		int itemNo = itemDto.getItemNo();
 		ItemDto originDto = itemDao.selectOne(itemNo);
-		System.out.println("POSTUPDTE");
-		System.out.println(itemDto);
 		if(originDto == null) {
 			throw new TargetNotFoundException("존재하지 않는 상품정보"); //db에 데이터없음
 		}
