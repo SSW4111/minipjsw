@@ -8,7 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.shop.dto.ItemDto;
-import com.kh.shop.mapper.ItemImagesMapper;
+import com.kh.shop.dto.ItemImagesDto;
+import com.kh.shop.mapper.ImagesMapper;
 import com.kh.shop.mapper.ItemMapper;
 import com.kh.shop.mapper.LikeListMapper;
 import com.kh.shop.vo.ItemVO;
@@ -23,7 +24,7 @@ public class ItemDao {
 	JdbcTemplate jdbcTemplate;
 
 	@Autowired
-	private ItemImagesMapper itemImagesMapper;
+	private ImagesMapper itemImagesMapper;
 	
 	//시퀀스
 	public int sequence() {

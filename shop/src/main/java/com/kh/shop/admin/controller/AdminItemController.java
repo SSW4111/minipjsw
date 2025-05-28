@@ -1,6 +1,8 @@
 package com.kh.shop.admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +12,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,15 +22,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.shop.dao.AttachmentDao;
 import com.kh.shop.dao.ItemDao;
 import com.kh.shop.dao.ItemIoDao;
 import com.kh.shop.dao.ItemListViewDao;
+import com.kh.shop.dto.AttachmentDto;
 import com.kh.shop.dto.ItemDto;
+import com.kh.shop.dto.ItemImagesDto;
 import com.kh.shop.dto.ItemListViewDto;
 import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.service.AttachmentService;
 import com.kh.shop.vo.AdminItemVO;
-import com.kh.shop.vo.ItemVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -46,6 +51,9 @@ public class AdminItemController {
 	
 	@Autowired
 	private ItemIoDao itemIoDao;
+	
+	@Autowired
+	private AttachmentDao attachmentDao;
 
 	@RequestMapping("/item-list")
 	public String itemList (@ModelAttribute("adminItemVO")AdminItemVO adminItemVO,
@@ -129,8 +137,9 @@ public class AdminItemController {
 	}
 
 	@PostMapping("/update")
-	public String update(@ModelAttribute ItemDto itemDto) {
-		System.out.println(itemDto);
+	public String update(@ModelAttribute ItemDto itemDto,
+			@ModelAttribute List<MultipartFile>files,
+			@ModelAttribute List<Integer>attachNoList) throws IllegalStateException, IOException {
 		int itemNo = itemDto.getItemNo();
 		ItemDto originDto = itemDao.selectOne(itemNo);
 		if(originDto == null) {
@@ -159,11 +168,24 @@ public class AdminItemController {
 			attachmentService.delete(attachmentNo);
 		}
 		
+		//파일처리
+		attachmentService.attachUpdate(itemDto.getItemNo(), files, attachNoList);
+
+//			        List<String> base64List = new ArrayList<>();
+//			        for (int i = 0; i< findAttachList.size() ; i++) {
+//			            byte[] data = attachmentService.load(findAttachList.get(i).getAttachmentNo());
+//			            String base64Encoded = Base64.getEncoder().encodeToString(data); // 인코딩
+//			            base64List.add(base64Encoded);
+//			        }
+			       
+
 		itemDao.update(itemDto);
 		//return "redirect:item/detail?itemNo="+itemDto.getItemNo();
 		return "redirect:item-list";
 	}
-
+	
+	
+	
 	//삭제
 	@PostMapping("/delete")
 	public String delete(@RequestParam int itemNo) {
@@ -179,5 +201,7 @@ public class AdminItemController {
 		return "redirect:list"; //바꼬주샘
 	}
 	
-	
+
+
+
 }

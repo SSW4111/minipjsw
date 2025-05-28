@@ -6,8 +6,12 @@
 <div class="row mt-4">
 	<div class="col-4 offset-4">
 
-		<h2 class="text-center">이메일로 가입하기</h2>
-		<div style="min-height: 80px;"></div>
+		<h2 class="text-center">이메일 인증</h2>
+		<div style="min-height: 60px;"></div>
+		<%
+    request.setAttribute("step", 1);  // 현재 단계
+%>
+<jsp:include page="../template/progressbar.jsp" />
 
 		<form action="join1" method="post" class="form-check" autocomplete="off">
 			<label class="me-1 form-label" for="joinEmail">이메일 입력</label>

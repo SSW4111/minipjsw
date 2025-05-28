@@ -7,7 +7,12 @@
 <div class="container-fluid">
 	<div class="row mt-4">
 		<div class="col-4 offset-4">
-			<h1 class="text-center">이메일로 가입하기</h1>
+			<h2 class="text-center">기본 정보 입력</h2>
+			<div style="min-height: 60px;"></div>
+			<%
+	    request.setAttribute("step", 3);  // 현재 단계
+	%>
+	<jsp:include page="../template/progressbar.jsp" />
 		</div>
 	</div>
 
