@@ -25,23 +25,7 @@ public class itemIo {
 	@Test
 	public void test(){
 		Timestamp systime = new Timestamp(System.currentTimeMillis());
-		List<ItemIoDto> itemIoDtoList = new ArrayList<>(Arrays.asList(
-			    new ItemIoDto(51, 0, 100,systime,0, null, "S", 118),
-			    new ItemIoDto(52, 0, 90, systime, 0, null, "L", 118),
-			    new ItemIoDto(53, 0, 80, systime, 10, null, "L", 118)
-			));
-		for(ItemIoDto itemIoDto : itemIoDtoList) {
-			int total = itemIoDto.getTotal();
-			itemIoDto.setItemIoTotal(total);
-			log.debug("입고: {}, 출고: {}", itemIoDto.getItemIoIn(), itemIoDto.getItemIoOut());
-			log.debug("총토탈: {}", itemIoDto.getTotal());
-			try {
-			    itemIoDao.insert(itemIoDto);
-			log.debug("itemIoDto={}",itemIoDtoList);
-			} catch (Exception e) {
-				log.error("오류: {}", e.getMessage(), e);
-			}
-		}
+	
 	
 	}
 }

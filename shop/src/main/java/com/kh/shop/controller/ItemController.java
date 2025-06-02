@@ -113,7 +113,7 @@ public class ItemController {
 		//itemIo list부르고
 		List<ItemIoDto> iolist = itemDetailviewDao.selectIoList(itemNo);
 		for (ItemIoDto io : iolist) {
-		    io.setItemIoTotal(io.getTotal());
+		    io.setItemIoTotal(io.getItemIoTotal());
 		}
 		model.addAttribute("iolist",iolist);
 		//SizeList 
