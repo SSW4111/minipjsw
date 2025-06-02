@@ -77,4 +77,10 @@ public class AttachmentDao {
 		Object[] data = {itemNo};
 		return jdbcTemplate.query(sql,itemImagesMapper,data);
 	}
+	
+	public boolean deleteImage(int attachmentNo) {
+		String sql = "delete from item_images where attachment_no = ?";
+		Object[] data = {attachmentNo};
+		return jdbcTemplate.update(sql,data)>0;
+	}
 }
