@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kh.shop.dao.ItemIoDao;
+import com.kh.shop.dao.ItemIoLogDao;
 import com.kh.shop.dto.ItemIoDto;
+import com.kh.shop.dto.ItemIoLogDto;
 import com.kh.shop.dto.UpdateRequestDto;
 import com.kh.shop.vo.MorePageVO;
 import com.kh.shop.vo.UpdateVO;
@@ -28,6 +30,8 @@ public class AdminItemIoRestController {
 	@Autowired
 	private ItemIoDao itemIoDao;
 	
+	@Autowired
+	private ItemIoLogDao itemIoLogDao;
 	
 	@PostMapping("/update")
 	public ResponseEntity<?> handleUpdate(@RequestBody UpdateRequestDto dto) {
@@ -37,8 +41,8 @@ public class AdminItemIoRestController {
 	    	itemIoDto.setItemNo(Integer.parseInt(dto.getItemNo()));
 			itemIoDto.setSizeName(vo.getSizeName());
 			System.out.println(itemIoDto);
+			
 	    }
-	  
 	    return ResponseEntity.ok("받음");
 	}
 	
