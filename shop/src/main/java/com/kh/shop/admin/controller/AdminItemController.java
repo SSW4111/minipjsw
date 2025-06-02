@@ -144,7 +144,9 @@ public class AdminItemController {
 		}
 		//content섬머노트 퍼옴 근데 상품설명이미지1개만쓸거면 반복문제거가능
 		Set<Integer> before = new HashSet<>();
-		Document beforeDocument = Jsoup.parse(originDto.getItemContent());
+		String beforeContent = originDto.getItemContent();
+		Document beforeDocument = Jsoup.parse(beforeContent != null ? beforeContent : "");
+
 		//HTML 태그 하나를 다룰 수 있는 객체 element  
 		for(Element element : beforeDocument.select(".summernote-img")) {
 			int attachmentNo = Integer.parseInt(element.attr("data-attachment-no"));

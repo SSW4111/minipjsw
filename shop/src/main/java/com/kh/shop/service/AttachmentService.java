@@ -13,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.kh.shop.dao.AttachmentDao;
 import com.kh.shop.dao.ItemDao;
 import com.kh.shop.dto.AttachmentDto;
+import com.kh.shop.dto.ItemImagesDto;
 import com.kh.shop.error.TargetNotFoundException;
+import com.kh.shop.vo.ItemUpdateVO;
 
 @Service
 public class AttachmentService {
@@ -143,4 +145,43 @@ public class AttachmentService {
 	    }
 		}
 
+		
+		public void changeAttach(ItemUpdateVO vo) throws IllegalStateException, IOException {
+			//기존 데이터 //여기는 아이템no랑 어태치 no만있음
+			List<ItemImagesDto> noList = attachmentDao.findList(vo.getItemNo());
+			//name뽑아낸 오리진리스트
+			List<AttachmentDto> originList = new ArrayList<>();
+			for(int i=0; i<noList.size() ; i++) {
+				AttachmentDto origin = attachmentDao.selectOne(noList.get(i).getAttachmentNo());
+				originList.add(origin);
+			}
+			
+			//새로운파일네임저장리스트
+			List<String> newFileNames = new ArrayList<>();
+			for(MultipartFile file : vo.getFileList()) {
+				//이름저장
+				newFileNames.add(file.getOriginalFilename());
+				 boolean isSame = false;
+				  for (AttachmentDto origin : originList) {
+			            if (origin.getAttachmentName().equals(file.getOriginalFilename())) {
+			                isSame = true;  // 같은 이름 파일 존재
+			                break;
+			            }
+			        }
+			        if (!isSame) {
+			            //2. 새로 추가하는 파일 저장
+			            Integer attachNo = save(file);
+			            itemDao.connect(vo.getItemNo(), attachNo);
+			        }
+			}
+			
+			//이름 안맞는거 삭제
+			for(AttachmentDto origin : originList) {
+				  if (!newFileNames.contains(origin.getAttachmentName())) {
+					  attachmentDao.deleteImage(origin.getAttachmentNo());
+			            attachmentDao.delete(origin.getAttachmentNo());
+			        }
+			}
+
+		}
 }

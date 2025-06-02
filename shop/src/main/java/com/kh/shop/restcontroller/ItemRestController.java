@@ -1,4 +1,5 @@
 package com.kh.shop.restcontroller;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -21,6 +22,7 @@ import com.kh.shop.dao.ItemDao;
 import com.kh.shop.dao.ItemListViewDao;
 import com.kh.shop.dto.ItemDto;
 import com.kh.shop.dto.ItemListViewDto;
+import com.kh.shop.service.AttachmentService;
 import com.kh.shop.vo.ItemUpdateVO;
 import com.kh.shop.vo.ItemVO;
 
@@ -37,6 +39,9 @@ public class ItemRestController {
 	
 	@Autowired
 	private ItemListViewDao itemListViewDao;
+	
+	@Autowired
+	private AttachmentService service;
 
 	//시간남으면 최적화해서 한번에 보낼수있나 생각해봄..
 //	@RequestMapping("/list")
@@ -174,7 +179,7 @@ public class ItemRestController {
 	}
 	
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadFiles(@ModelAttribute ItemUpdateVO vo, @RequestParam int itemNo) {
+    public ResponseEntity<?> uploadFiles(@ModelAttribute ItemUpdateVO vo, @RequestParam int itemNo) throws IllegalStateException, IOException {
     	
     	System.out.println("nono : " + itemNo);
     	int cnt = 0;
@@ -183,6 +188,7 @@ public class ItemRestController {
 		    System.out.println("nama : " + file.getOriginalFilename());
 		    cnt++;
     	}
+    	service.changeAttach(vo);
         return ResponseEntity.ok(Map.of("message", "파일 업로드 성공"));
     }
 	
