@@ -3,6 +3,111 @@ $(function(){
 		
 		
 	};
+	 var fileList = [];
+	$("#profile").click(async function(){
+		const atta = JSON.parse($(".at").val());
+		  fileList = await Promise.all(
+		          atta.map(attachmentNo => transfer(attachmentNo))
+		      );
+
+		console.log(fileList);
+		
+	})
+	
+	let fileSet = new Set();
+
+	$("input[type='file']").each(function(index) {
+	    $(this).change(function () {
+	        const file = this.files[0];
+	        if (!file) return;
+
+	        const key = `${file.name}-${file.size}-${file.lastModified}`;
+
+	        if (fileList[index]) {
+	            const prevFile = fileList[index];
+	            const prevKey = `${prevFile.name}-${prevFile.size}-${prevFile.lastModified}`;
+	            fileSet.delete(prevKey); // 중복방지용
+	        }
+
+	        fileList[index] = file;
+	        fileSet.add(key);
+
+	        fileList.forEach((f, i) => {
+	            console.log(i, "파일 이름:", f.name, "크기:", f.size);
+	        });
+
+	    });
+	});
+	
+	/*$("input[type='file']").change(function () {
+	     const files = Array.from(this.files);
+	     fileList = fileList.concat(files);
+	 	 console.log(fileList);
+	 });*/
+
+	 $(".che").click(function(){
+		const formData = new FormData();
+		fileList.forEach((file, i) => formData.append(`fileList`, file));
+		
+		const itemNo = $("input[name='itemNo']").val(); // input에서 가져오거나
+		formData.append("itemNo", itemNo);
+		
+		console.log(formData);
+		$.ajax({
+		    url: '/rest/item/upload',
+		    method: 'POST',
+		    data: formData,
+		    processData: false,
+		    contentType: false,
+		    success: res => console.log(res.message),
+		    error: err => console.error(err)
+		});
+		
+	 })		
+	const transfer = function(attachmentNo) {
+	    return new Promise((resolve, reject) => {
+	        $.ajax({
+	            url: "/attachment/item",
+	            method: "get",
+	            data: { attachmentNo },
+	            xhrFields: { responseType: "blob" },
+	            success: function (blob, status, xhr) {
+	                const disposition = xhr.getResponseHeader("Content-Disposition");
+	                let fileName = "unknown";
+
+					if (disposition) {
+					  // filename* (UTF-8 URL 인코딩) 우선 처리
+					  const fileNameStarMatch = disposition.match(/filename\*\=([^;]+)/);
+					  if (fileNameStarMatch) {
+					    const encodedFileName = fileNameStarMatch[1].split("''")[1];
+					    fileName = decodeURIComponent(encodedFileName);
+					  } else {
+					    // 없으면 ASCII filename 사용
+					    const fileNameMatch = disposition.match(/filename=([^;]+)/);
+					    if (fileNameMatch) {
+					      fileName = fileNameMatch[1].replace(/['"]/g, "");
+					    }
+					  }
+					}
+
+	                const file = new File([blob], fileName, { type: blob.type });
+	                resolve(file);
+	            },
+	            error: function (xhr, status, error) {
+	                reject(error);
+	            }
+	        });
+	    });
+	};
+	
+	
+	
+	$(".save-btn").click(function(){
+		
+		
+		
+		$("#itemUpdate").submit();
+	});
 	
     $('input[name="itemGender"]').on('change', function () {
         $('input[name="itemGender"]').not(this).prop('checked', false);
@@ -11,8 +116,8 @@ $(function(){
 	$(document).ready(function() {
 	   
 		var existingGender = $("#gender").val();
-		console.log("existingGender:", existingGender);
-		console.log($("#gender").val());
+		//console.log("existingGender:", existingGender);
+		//console.log($("#gender").val());
 	    if (existingGender.includes("M")) {
 	        $('#maleCheck').prop('checked', true);
 	    }
@@ -21,8 +126,7 @@ $(function(){
 	    }
 	});
 	
-	$(document).ready(function() {
-	    var fileList = new Array(6).fill(null);
+	   
 
 	    $('.image-btn').each(function(index) {
 	        $(this).on('click', function() {
@@ -35,14 +139,11 @@ $(function(){
 	            var file = e.target.files[0];
 	            if (file) {
 	                fileList[index] = file;
-	                console.log(`파일 ${index}번에 추가됨:`, file);
 	            } else {
 	                fileList[index] = null;
 	            }
-	            console.log("현재 파일 리스트:", fileList);
 	        });
 	    });
-	});
      	   
 	   $("#summernote").summernote({
 	           height:500,//높이(px)

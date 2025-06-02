@@ -1,8 +1,6 @@
 package com.kh.shop.admin.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,7 +10,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +23,12 @@ import com.kh.shop.dao.AttachmentDao;
 import com.kh.shop.dao.ItemDao;
 import com.kh.shop.dao.ItemIoDao;
 import com.kh.shop.dao.ItemListViewDao;
-import com.kh.shop.dto.AttachmentDto;
 import com.kh.shop.dto.ItemDto;
-import com.kh.shop.dto.ItemImagesDto;
 import com.kh.shop.dto.ItemListViewDto;
 import com.kh.shop.error.TargetNotFoundException;
 import com.kh.shop.service.AttachmentService;
 import com.kh.shop.vo.AdminItemVO;
+import com.kh.shop.vo.ItemUpdateVO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -132,15 +128,16 @@ public class AdminItemController {
 		model.addAttribute("itemDto",itemDto);
 		List<Integer> attachList = itemDao.selectAttachmentList(itemNo);
 		model.addAttribute("attachList",attachList);
-		System.out.println(itemDto);
+		//System.out.println(itemDto);
 		return "/WEB-INF/views/admin/item-edit.jsp";
 	}
 
 	@PostMapping("/update")
-	public String update(@ModelAttribute ItemDto itemDto,
-			@ModelAttribute List<MultipartFile>files,
-			@ModelAttribute List<Integer>attachNoList) throws IllegalStateException, IOException {
+	public String update(@ModelAttribute ItemDto itemDto) throws IllegalStateException, IOException {
+		//System.out.println(vo.getItemDto());
+		//System.out.println(vo.getFileList());
 		int itemNo = itemDto.getItemNo();
+		List<Integer> attachNoList = itemDao.selectAttachmentList(itemNo);
 		ItemDto originDto = itemDao.selectOne(itemNo);
 		if(originDto == null) {
 			throw new TargetNotFoundException("존재하지 않는 상품정보"); //db에 데이터없음
@@ -168,8 +165,9 @@ public class AdminItemController {
 			attachmentService.delete(attachmentNo);
 		}
 		
+		
 		//파일처리
-		attachmentService.attachUpdate(itemDto.getItemNo(), files, attachNoList);
+		//attachmentService.attachUpdate(itemNo, vo.getFiles(), attachNoList);
 
 //			        List<String> base64List = new ArrayList<>();
 //			        for (int i = 0; i< findAttachList.size() ; i++) {
