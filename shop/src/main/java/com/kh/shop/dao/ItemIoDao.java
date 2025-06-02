@@ -24,18 +24,10 @@ public class ItemIoDao {
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 	
-	//인서트추가
-
-//	public void insert(ItemIoDto itemIoDto, int itemNo) {
-//		String sql = "insert into item_io( item_io_total, item_io_in, size_name, item_no) values(?, ?, ?, ?, ?)";
-//		Object[] data = {itemIoDto.getItemIoTotal() ,itemIoDto.getItemIoIn(), itemIoDto.getSizeName()
-//									,itemNo};
-//		jdbcTemplate.update(sql,data);
-//	}
 	
 	public boolean insert(ItemIoDto itemIoDto) {
-		String sql = "insert into item_io(item_io_in, item_no, size_name, item_io_no, item_io_total) values(?,?,?,?,?)";
-		Object[] data = {itemIoDto.getItemIoIn(), itemIoDto.getItemNo(), itemIoDto.getSizeName(), itemIoDto.getItemIoNo(), itemIoDto.getItemIoTotal()};
+		String sql = "insert into item_io( item_no, size_name, item_io_no, item_io_total) values(?,?,?,?)";
+		Object[] data = { itemIoDto.getItemNo(), itemIoDto.getSizeName(), itemIoDto.getItemIoNo(), itemIoDto.getItemIoTotal()};
 		return jdbcTemplate.update(sql,data) > 0;
 	}
 	
@@ -49,19 +41,12 @@ public class ItemIoDao {
 	
 	//수정 (수정시각변경)
 	public boolean update(ItemIoDto itemIoDto) {
-		String sql = "update item_io set item_io_total = ?, item_io_in = ?,item_io_in_time =systimestamp ,item_io_out = ?, "
+		String sql = "update item_io set item_io_total = ?,  "
 				+ "	size_name = ? where item_io_no = ?";
-		Object[] data = {itemIoDto.getTotal(),itemIoDto.getItemIoIn(),itemIoDto.getItemIoOut(),itemIoDto.getSizeName(),itemIoDto.getItemIoNo()};
+		Object[] data = {itemIoDto.getItemIoTotal(),itemIoDto.getSizeName(),itemIoDto.getItemIoNo()};
 		return jdbcTemplate.update(sql,data)>0;
 	}
 	
-	//수정 입고시
-	public boolean updateAsIn(ItemIoDto itemIoDto) {
-		String sql = "update item_io set item_io_total = ?, item_io_in = ?, item_io_in_time =systimestamp "
-				+ " where	size_name = ? and item_no = ?";
-		Object[] data = {itemIoDto.getItemIoTotal(),itemIoDto.getItemIoIn(),itemIoDto.getSizeName(),itemIoDto.getItemNo()};
-		return jdbcTemplate.update(sql,data)>0;
-	}
 	//item지울때 전부삭제
 	public boolean delete(int itemNo) {
 		String sql = "delete from item_io where item_no = ?";
