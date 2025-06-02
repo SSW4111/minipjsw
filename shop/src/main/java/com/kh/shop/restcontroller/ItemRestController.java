@@ -1,6 +1,4 @@
 package com.kh.shop.restcontroller;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -9,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,8 +21,7 @@ import com.kh.shop.dao.ItemDao;
 import com.kh.shop.dao.ItemListViewDao;
 import com.kh.shop.dto.ItemDto;
 import com.kh.shop.dto.ItemListViewDto;
-import com.kh.shop.error.TargetNotFoundException;
-import com.kh.shop.service.AttachmentService;
+import com.kh.shop.vo.ItemUpdateVO;
 import com.kh.shop.vo.ItemVO;
 
 import jakarta.servlet.http.HttpSession;
@@ -175,6 +173,18 @@ public class ItemRestController {
 		return null;
 	}
 	
+    @PostMapping("/upload")
+    public ResponseEntity<?> uploadFiles(@ModelAttribute ItemUpdateVO vo, @RequestParam int itemNo) {
+    	
+    	System.out.println("nono : " + itemNo);
+    	int cnt = 0;
+    	for (MultipartFile file : vo.getFileList()) {
+    		System.out.println(cnt);
+		    System.out.println("nama : " + file.getOriginalFilename());
+		    cnt++;
+    	}
+        return ResponseEntity.ok(Map.of("message", "파일 업로드 성공"));
+    }
 	
 	
 	

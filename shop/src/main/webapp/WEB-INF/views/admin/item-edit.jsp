@@ -23,8 +23,9 @@
 	</div>
 </div>
 
+<input type="hidden" value="${attachList}" class="at">
 <div class="container">
-	<form action="update" method="post" enctype="multipart/form-data" autocomplete="off">
+	<form action="update" method="post" enctype="multipart/form-data" autocomplete="off" id="itemUpdate">
 		<div class="row mt-2">
 			<label class="col-sm-3 form-label">제목</label>
 			<div class="col-sm-9">
@@ -104,7 +105,7 @@
 
 		<div class="row mt-2">
 			<div class="d-flex">
-				<button class="btn btn-success btn-lg w-100" type="submit">수정</button>
+				<button class="btn btn-success btn-lg w-100 save-btn" type="button">수정</button>
 			</div>
 		</div>
 
@@ -137,11 +138,11 @@
 			                <c:otherwise>
 			                    <img src="/images/basic.png" 
 			                         class="image-btn" 
-			                         style="width: 60px; margin: 8px 0;" />
+			                         style="width: 60px; margin: 8px 0; cursor:pointer" />
 			                </c:otherwise>
 			            </c:choose>
 						
-			            <input type="file" name="attach" style="display:none;" class="input">
+			            <input type="file" name="files" style="display:none;" class="input">
 			        </div>
 			    </c:forEach>
 			</div>
@@ -160,7 +161,7 @@
 			    <label for="photoView" class="fs-6 d-block mt-2 text-secondary">(대표 화면)</label>
 			</div>
                 	<div class="col-2 mt-auto ">
-            		<button type="button" class="btn btn-success save-btn">수정하기</button>
+            		<button type="button" class="btn btn-success che" data-bs-dismiss="modal">저장하기</button>
             	</div>
             
             
