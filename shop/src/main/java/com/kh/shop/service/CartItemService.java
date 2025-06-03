@@ -9,8 +9,10 @@ import com.kh.shop.dao.CartDao;
 import com.kh.shop.dao.DeliveryDao;
 import com.kh.shop.dao.ItemDetailViewDao;
 import com.kh.shop.dao.ItemIoDao;
+import com.kh.shop.dao.UsersDao;
 import com.kh.shop.dto.DeliveryDto;
 import com.kh.shop.dto.ItemDetailViewDto;
+import com.kh.shop.dto.UsersDto;
 import com.kh.shop.vo.CartJoinVO;
 import com.kh.shop.vo.ItemDetailSelectVO;
 import com.kh.shop.vo.SelectedItemVO;
@@ -28,15 +30,19 @@ public class CartItemService {
 	private ItemDetailViewDao itemDetailViewDao;
 	
 	@Autowired
+	private UsersDao usersDao;	
+	
+	@Autowired
 	private ItemIoDao itemIoDao;
 	//VO매핑
 	public SelectedItemVO cartItemList(List<Integer>cartNoList, String usersEmail) {
 		List<CartJoinVO>cartJoinVoList = cartDao.cartItemList(cartNoList);
 		int count = deliveryDao.count(usersEmail);
 		List<DeliveryDto> deliveryList = deliveryDao.selectUserDelivery(usersEmail);
-		
+		UsersDto dto = usersDao.selectOne(usersEmail);
 		SelectedItemVO selectedItemVO = SelectedItemVO.builder()
 				.deliveryCount(count)
+				.usersDto(dto)
 				.itemList(cartJoinVoList)
 				.deliveryList(deliveryList)
 				.build();

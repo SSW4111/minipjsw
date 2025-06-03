@@ -28,7 +28,7 @@ public class OrderController {
 			System.out.println(cartNoList);
 			String usersEmail = (String)session.getAttribute("usersEmail");
 			SelectedItemVO selectedItemVO= cartItemService.cartItemList(cartNoList, usersEmail);
-			model.addAttribute(selectedItemVO);
+			model.addAttribute("selectedItemVO",selectedItemVO);
 			return "/WEB-INF/views/cart/selectList.jsp";
 		}
 		
@@ -41,7 +41,7 @@ public class OrderController {
 												Model model) {
 			String usersEmail = (String)session.getAttribute("usersEmail");
 			ItemDetailSelectVO itemDetail = cartItemService.itemList(itemNo, itemQty, usersEmail,itemIoNo);
-			model.addAttribute(itemDetail);
+			model.addAttribute("itemDetail",itemDetail);
 			return "/WEB-INF/views/cart/selectList.jsp";
 		}
 		
