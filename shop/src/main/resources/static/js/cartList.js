@@ -20,7 +20,7 @@ $(function(){
 				}
 				displayItems(list);
 				//$(".wishCount").text(list.totalCount);
-				console.log(list);
+				//console.log(list);
 			}
 		
 		})
@@ -111,7 +111,7 @@ $(function(){
 	      return $(this).val();
 	    }).get();
 
-	    console.log( selectedValues);
+	   // console.log( selectedValues);
 	   $.ajax({
 		url:"/rest/cart/delete",
 		method:"post",
