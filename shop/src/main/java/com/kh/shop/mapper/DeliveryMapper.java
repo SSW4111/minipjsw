@@ -21,6 +21,7 @@ public class DeliveryMapper implements RowMapper <DeliveryDto>{
 				.deliveryAddress1(rs.getString("delivery_address1"))
 				.deliveryAddress2(rs.getString("delivery_address2"))
 				.deliveryType(rs.getString("delivery_type"))
+				.deliveryMain(rs.getString("delivery_main"))
 				.build();
 	}
 

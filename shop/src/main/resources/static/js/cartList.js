@@ -72,7 +72,7 @@ $(function(){
 					 <img src="/attachment/download/item?itemNo=${item.itemNo}" class="ms-5" style="width: 80px; height: 80px;">
 	                </a>
 					 <a  href="/item/detail?itemNo=${item.itemNo}" class="card-body ms-5 text-decoration-none">
-	                    <h5 class="card-title">${item.itemTitle}</h5>
+	                    <h5 class="card-title">${item.itemTitle}, ${item.sizeName}</h5>
 	                    <span class="card-title">${item.itemCategory}</span>
 	                  
 	                    <span class="card-text">${item.itemDetail}</span>

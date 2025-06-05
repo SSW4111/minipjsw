@@ -3,7 +3,7 @@
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
  <jsp:include page="/WEB-INF/views/template/header.jsp"></jsp:include>
  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/js/selectList.js"></script>
+<script src="/js/selectList-cart.js"></script>
 <style>
   .tag {
     font-size: 0.75rem;
@@ -48,7 +48,7 @@
 		<div class="container mt-5">
 		  <div class="card shadow-sm" style="max-width: 1000px; margin: auto;">
 		    <div class="address-header d-flex align-items-center">
-		      <h5 class="mb-0">기본 배송지 | <strong>${usersDto.usersNickname}</strong></h5>
+		      <h5 class="mb-0">기본 배송지 | <strong>${selectedItemVO.usersDto.usersNickname}</strong></h5>
 			  <button class="btn btn-outline-secondary btn-sm ms-auto" data-bs-toggle="modal" data-bs-target="#addressModal">배송지 변경</button>
 		    </div>
 		    <hr class="card-full-hr">
@@ -57,8 +57,8 @@
 				
 		      <p class="mb-1" id="integratedAddress"></p>
 			  
-		      <p class="mb-1">${usersDto.usersEmail}</p>
-		      <p class="text-muted">${usersDto.usersContact}</p>
+		      <p class="mb-1">${selectedItemVO.itemList[0].usersEmail}</p>
+		      <p class="text-muted">${selectedItemVO.usersDto.usersContact}</p>
 		    </div>
 		  </div>
 		</div>
@@ -84,17 +84,19 @@
 		  		    </div>
 		    <hr class="card-full-hr">
 			<div class="p-3">
+				<c:forEach var="item" items="${selectedItemVO.itemList}">
 				       <div class="list-group-item d-flex justify-content-between align-items-start">
 				         <div>
-				           <div class="fw-semibold">${itemDetail.item.itemTitle}</div>
-				           <small class="text-muted">${itemDetail.item.sizeName} / ${itemDetail.qty}개</small>
+				           <div class="fw-semibold">${item.itemTitle}</div>
+				           <small class="text-muted">${item.sizeName} / ${item.cartQty}개</small>
 				         </div>
 				         <div class="text-end">
 				           <div class="fw-bold">
-				             ${itemDetail.item.itemPrice * itemDetail.qty}원
+				             ${item.itemPrice * item.cartQty}원
 				           </div>
 				         </div>
 				       </div>
+				     </c:forEach>
 			</div>
 		  </div>
 		</div>

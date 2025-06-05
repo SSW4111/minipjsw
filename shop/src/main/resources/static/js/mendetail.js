@@ -32,10 +32,6 @@ $(function() {
 	});	
 	
 
-	$("order-button").click(function(){
-		console.log($())
-		console.log($("#itemQty").val());
-	})
 	
 	function displayItems(items) {
 	  const container = $('#reviewsList');
@@ -144,13 +140,12 @@ $(function() {
 		})
 		
 		$(".order-button").click(function(){
-			//console.log("hwhwhw");
-			var itemNum = $("#itemNO").val();
-			var cartQty = $("#itemQty").val();
-			var itemIo = $("#itemIo").val();
-			/*console.log(itemNum);
-			console.log(cartQty);
-			console.log(itemIo);*/
+			const qty = $("#itemQty").val();
+			const io = $("#itemIo").val();
+			isValid = qty.length > 0 && io.length > 0;
+			if(isValid){
+				$("#orderForm").submit();
+			}
 		})
 		
 		

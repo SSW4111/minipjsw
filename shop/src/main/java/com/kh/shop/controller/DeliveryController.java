@@ -61,21 +61,21 @@ public class DeliveryController {
 		return "redirect:list";
 	}
 	
-	@GetMapping("/update")
-	public String update(@RequestParam int deliveryNo, Model model) {
-		DeliveryDto deliveryDto = deliveryDao.selectOne(deliveryNo);
-		if(deliveryDto == null) throw new TargetNotFoundException("존재하지 않는 주소");
-		model.addAttribute(deliveryDto);
-		return "/WEB-INF/views/delivery/update.jsp";
-	}
-	
-	@PostMapping("/update")
-	public String update(@ModelAttribute DeliveryDto deliveryDto) {
-		int deliveryNo = deliveryDto.getDeliveryNo();
-		DeliveryDto originDto = deliveryDao.selectOne(deliveryNo);
-		if(originDto == null)throw new TargetNotFoundException("존재하지 않는 주소");
-		deliveryDao.update(deliveryDto);
-		return "redirect:list";
-	}
+//	@GetMapping("/update")
+//	public String update(@RequestParam int deliveryNo, Model model) {
+//		DeliveryDto deliveryDto = deliveryDao.selectOne(deliveryNo);
+//		if(deliveryDto == null) throw new TargetNotFoundException("존재하지 않는 주소");
+//		model.addAttribute(deliveryDto);
+//		return "/WEB-INF/views/delivery/update.jsp";
+//	}
+//	
+//	@PostMapping("/update")
+//	public String update(@ModelAttribute DeliveryDto deliveryDto) {
+//		int deliveryNo = deliveryDto.getDeliveryNo();
+//		DeliveryDto originDto = deliveryDao.selectOne(deliveryNo);
+//		if(originDto == null)throw new TargetNotFoundException("존재하지 않는 주소");
+//		deliveryDao.update(deliveryDto);
+//		return "redirect:list";
+//	}
 	
 }

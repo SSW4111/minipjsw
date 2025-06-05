@@ -13,5 +13,5 @@ public class DeliveryDto {
 	private String deliveryAddress1;
 	private String deliveryAddress2;
 	private String deliveryType;
-
+	private String deliveryMain;
 }
