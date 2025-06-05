@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.shop.dto.DeliveryDto;
-import com.kh.shop.dto.ItemDto;
 import com.kh.shop.mapper.DeliveryMapper;
 
 @Repository
@@ -52,9 +52,10 @@ public class DeliveryDao {
 		return jdbcTemplate.queryForObject(sql, int.class,data);
 	}
 	//주소한개의 정보
-	public DeliveryDto selectOne(int deliveryNo) {
-		String sql="select * from delivery where delivery_no=?";
-		Object[] data = {deliveryNo};
+	public DeliveryDto selectOne(String usersEmail) {
+		String sql="select * from delivery where users_email = ? "
+				+ "and delivery_main = 'Y'";
+		Object[] data = {usersEmail};
 		List<DeliveryDto> list = jdbcTemplate.query(sql,deliveryMapper,data);
 		return list.isEmpty()? null : list.get(0);
 	} 
@@ -67,5 +68,30 @@ public class DeliveryDao {
 				deliveryDto.getDeliveryAddress2(), deliveryDto.getDeliveryType(), deliveryDto.getDeliveryNo()};
 		return jdbcTemplate.update(sql, data)>0;
 	}
+
+	@Transactional
+	public boolean setMain(String usersEmail, long deliveryNo) {
+		String sql1 = "update delivery set delivery_main = 'N' where delivery_main = 'Y' and users_email = ?";
+		Object[] data1 = {usersEmail};
+		jdbcTemplate.update(sql1,data1);
+		
+		String sql2 = "update delivery set delivery_main = 'Y' where delivery_no = ? and users_email = ? ";
+		Object[] data2 = {deliveryNo, usersEmail};
+		return jdbcTemplate.update(sql2, data2) > 0;
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 

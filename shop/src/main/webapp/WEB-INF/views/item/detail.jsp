@@ -59,10 +59,12 @@
 	         </a>
 	       </c:forEach>
 	     </div>
-
-	     <!-- 사이즈 선택 -->
+		 <form method="get" action="/order/selectList" id="orderForm">
+		<input type="hidden" name="itemNo" value="${itemDetailViewDto.itemNo}">
+		
+	     <!-- 사이즈 선택 --> 
 	     <div class="mt-4" style="max-width: 200px;">
-	       <select class="form-select"  id="itemIo" name="itemIo">
+	       <select class="form-select"  id="itemIo" name="itemIoNo">
 	         <option value="">사이즈 선택</option>
 	         <c:forEach var="ioDto" items="${iolist}">
 	           <option value="${ioDto.itemIoNo}">${ioDto.sizeName}, ${ioDto.itemIoTotal}개 재고</option>	 
@@ -82,12 +84,13 @@
 
 	     <!-- 버튼 -->
 	     <div class="mt-4 d-flex gap-2">
-	       <button class="btn btn-outline-secondary order-button">주문하러가기</button>
-	       <button class="btn btn-outline-secondary cart-button">장바구니</button>
+	       <button type="button" class="btn btn-outline-secondary order-button">주문하러가기</button>
+	       <button type="button" class="btn btn-outline-secondary cart-button">장바구니</button>
 	     </div>
 	   </div>
 	 </div>
 
+		   </form>
 	
 
 
