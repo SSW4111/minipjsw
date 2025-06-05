@@ -21,11 +21,11 @@ public class ItemIoLogDao {
 		return jdbcTemplate.queryForObject(sql, int.class);
 	}
 	
-	public void insert(ItemIoLogDto itemIoLogDto) {
+	public boolean insert(ItemIoLogDto itemIoLogDto) {
 		String sql = "insert into item_io_log(item_io_log_no, item_io_log_event, item_io_log_number, item_io_no)"
 				+ "	values(?,?,?,?)";
 		Object[]data = {itemIoLogDto.getItemIoLogNo(), itemIoLogDto.getItemIoLogEvent(),
 							itemIoLogDto.getItemIoLogNumber(),itemIoLogDto.getItemIoNo()};
-		jdbcTemplate.update(sql,data);
+		return jdbcTemplate.update(sql,data) >0;
 	}
 }
