@@ -50,27 +50,19 @@ public class AdminItemController {
 	
 	@Autowired
 	private AttachmentDao attachmentDao;
+	
+	@GetMapping("/item-io-list")
+	public String itemIoList(@RequestParam int itemNo, Model model) {
+		
+		return "/WEB-INF/views/admin/item-io-list.jsp";
+	}
 
 	@RequestMapping("/item-list")
 	public String itemList (@ModelAttribute("adminItemVO")AdminItemVO adminItemVO,
 											Model model, HttpSession session) {
-//		String level = (String)session.getAttribute("usersLevel");
-//		if(level.equals("관리자") || level ==null) {
-//			throw new TargetNotFoundException("안돼요");
-//		}
 		List<ItemListViewDto> list = itemListViewDao.adminItemList(adminItemVO);
 		adminItemVO.setCount(itemListViewDao.adminItemCount(adminItemVO));
 		model.addAttribute("list",list);
-//		System.out.println("highStar: " + adminItemVO.getHighStar());
-
-//		System.out.println("isHighStar(): " + adminItemVO.isHighStar());
-//		System.out.println("recent :" + adminItemVO.isRecent());
-//		   System.out.println("page: " + adminItemVO.getPage()); 
-//		   System.out.println("page       : " + adminItemVO.getPage());
-//		    System.out.println("size       : " + adminItemVO.getSize());
-//		    System.out.println("recent     : " + adminItemVO.getRecent());
-//		    System.out.println("highStar   : " + adminItemVO.getHighStar());
-//		    System.out.println("parameters : " + adminItemVO.getParameters());
 		return "/WEB-INF/views/admin/item-list.jsp";
 	}
 	

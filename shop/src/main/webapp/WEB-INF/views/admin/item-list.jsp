@@ -75,10 +75,8 @@
                     <td>${item.itemPrice}</td>
                     <td>
                     	 <i class="fa-solid fa-trash text-danger delete-btn" data-item-no="${item.itemNo}"></i>
-                    	<i class="fas fa-box text-warning manage-io-btn" 
-				               data-bs-toggle="modal" 
-				               data-bs-target="#itemIoModal"
-				               data-item-no="${item.itemNo}"></i>
+                    	<a href="/admin/item-io-list?itemNo=${item.itemNo}"><i class="fas fa-box text-warning" ></i></a>
+						
                     </td>
                     
                 </tr>
