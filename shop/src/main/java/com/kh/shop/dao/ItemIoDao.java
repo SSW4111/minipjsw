@@ -37,7 +37,7 @@ public class ItemIoDao {
 		return jdbcTemplate.update(sql,data);
 	}
 	
-	
+
 	
 	//수정 (수정시각변경)
 	public boolean update(ItemIoDto itemIoDto) {
@@ -76,6 +76,13 @@ public class ItemIoDao {
 	public ItemIoDto selectOne(int itemIoNo) {
 		String sql = "select * from item_io where item_io_no= ?";
 		Object[] data = {itemIoNo};
+		List<ItemIoDto> list = jdbcTemplate.query(sql, itemIoMapper, data);
+		return list.isEmpty() ? null : list.get(0);
+	}
+	
+	public ItemIoDto selectOne2(int itemIoNo, String sizeName) {
+		String sql = "select * from item_io where item_io_no= ? and size_name =? ";
+		Object[] data = {itemIoNo, sizeName};
 		List<ItemIoDto> list = jdbcTemplate.query(sql, itemIoMapper, data);
 		return list.isEmpty() ? null : list.get(0);
 	}
